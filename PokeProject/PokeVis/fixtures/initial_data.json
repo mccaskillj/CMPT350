@@ -1,0 +1,27 @@
+[
+  {"model": "PokeVis.pokemon", "pk": 1, "fields": {
+    "egg_group_2": "Grass",
+      "speed": "45",
+      "pr_male": "0.875",
+      "special_defense": "65",
+      "weight_kg": "6.9",
+      "catch_rate": "45",
+      "special_attack": "65",
+      "color": "Green",
+      "type_1": "Grass",
+      "has_gender": "TRUE",
+      "body_style": "quadruped",
+      "height_m": "0.71",
+      "egg_group_1": "Monster",
+      "has_mega_evolution": "FALSE",
+      "name": "Bulbasaur", "hp": "45",
+      "is_legendary": "FALSE",
+      "total": "318",
+      "generation": "1",
+      "type_2": "Poison",
+      "number": "1",
+      "defense": "49",
+      "attack": "49"
+  }}
+
+]
