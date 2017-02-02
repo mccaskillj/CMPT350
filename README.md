@@ -21,3 +21,6 @@ Urls:
   
   http://127.0.0.1:8000/PokeVis/ken
 
+
+https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png
+https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png
