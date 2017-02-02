@@ -24,3 +24,20 @@ Urls:
 
 https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png
 https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png
+
+
+
+
+Physical Sweeper = Attack + Speed
+
+
+Special Sweeper = Sp. Attack + Speed
+
+
+Wall = HP + Defense + Sp. Defense
+
+
+Physical Tank = Attack + Defense
+
+
+Special Tank = Sp. Attack + Sp. Defense
