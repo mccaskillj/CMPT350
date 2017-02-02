@@ -1,2 +1,3 @@
 .idea/
 *.pyc
+PokeProject/db.sqlite3
