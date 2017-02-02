@@ -8,6 +8,8 @@ D3 is in the project and it worked on my end.
 
 
 Urls:
+
+
   http://127.0.0.1:8000/PokeVis/graham
   
   
