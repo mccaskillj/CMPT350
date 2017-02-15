@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Poke Page</title>
+    <title>{{ file }}</title>
 
     <script type="text/javascript" src="{% static "js/d3.js" %}"></script>
 </head>
@@ -65,6 +65,11 @@
 
     <br>
 
+
+    <script type="text/javascript">
+
+    </script>
+
     <script>
         /*
         var i = 0
@@ -124,6 +129,22 @@
                 }
             }*/
     </script>
+
+    <script>
+
+        d3.select("body").selectAll("p")
+                .data({{ file|safe }})
+                .enter()
+                .append("p")
+                .text(function(d) {
+                    return d.fields.name + " " + d.fields.type_1 + " " + d.fields.attack;
+                });
+
+
+        console.log({{ file|safe }});
+
+    </script>
+
 
 </body>
 </html>
