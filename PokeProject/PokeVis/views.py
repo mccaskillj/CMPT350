@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from PokeVis.models import Pokemon
 from django.core import serializers
-import json
 
 # Create your views here.
 from django.views import generic
