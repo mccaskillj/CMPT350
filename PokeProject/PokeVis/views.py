@@ -53,3 +53,4 @@ def TcomparisionView(request):
 
 def BattleView(request):
     return render(request, 'battle.html', {})
+
