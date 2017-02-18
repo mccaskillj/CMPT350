@@ -1,0 +1,97 @@
+html, body {
+    width: 1024px;
+    height: 768px;
+    background-color: lavender;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.container {
+    width: inherit;
+    height: inherit;
+    margin: 0;
+    padding: 0;
+    background-color: antiquewhite;
+}
+h1 {
+    margin: 0;
+    padding: 0;
+}
+
+.searchStyle {
+    background-color: #90caf9;
+    color: black;
+    width: 205px;
+    text-align: center;
+}
+
+.overviewStyle {
+    background-color: #92d36e;
+    color: black;
+    width: 205px;
+    text-align: center;
+}
+
+.singleStyle {
+    background-color: #ff5d55;
+    color: black;
+    width: 205px;
+    text-align: center;
+}
+
+.doubleStyle {
+    background-color: #ff5d55;
+    color: black;
+    width: 205px;
+    text-align: center;
+}
+
+.teamStyle {
+    background-color: #fefb64;
+    color: black;
+    width: 205px;
+    text-align: center;
+}
+
+.battleStyle {
+    background-color: #f54378;
+    color: black;
+    width: 204px;
+    text-align: center;
+}
+
+.one {
+    width: 255px;
+    height: 718px;
+    background: #aaaaaa;
+    float: left;
+}
+.two {
+    width: 1024px;
+    height: 718px;
+    background: white;
+}
+
+.filters {
+
+}
+
+.bubbleSize {
+    width: 1024px;
+    height: 60px;
+    background: #aaaaaa;
+    padding-top: 10px;
+}
+
+.paddingBubble {
+    padding-left: 20px;
+}
+
+.paddingBubbleRadio {
+    padding-left: 275px;
+}
+
+.genSelect {
+    width: 200px;
+    background-color: white;
+}

@@ -26,3 +26,13 @@ class LiamView(generic.TemplateView):
 class GrahamView(generic.TemplateView):
     template_name = 'graham.html'
 
+'''
+class SearchView(generic.TemplateView):
+    template_name = 'search.html'
+'''
+
+
+def SearchView(request):
+    types = ["Fire", "Water", "Grass", "Bug", "Ghost", "Electric", "Fairy", "Dragon", "Poison",
+             "Rock", "Steel", "Normal", "Fighting", "Ground", "Psychic"]
+    return render(request, 'search.html', {'types': types})
