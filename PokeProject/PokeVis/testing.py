@@ -13,7 +13,7 @@ pokelist = Pokemon.objects.filter(
 )
 
 print(pokelist)
-# comment
+
 pokelist = Pokemon.objects.all()
 
 array = []
@@ -26,3 +26,4 @@ for i in pokelist:
         array.append(i.color)
 
 print(array)
+
