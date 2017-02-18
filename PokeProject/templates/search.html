@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+<script>
+     $(".dropdown-menu li a").click(function(){
+          var selText = $(this).text();
+          $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+        });
+</script>
+
+{% block content %}
+
+<div class="one">
+    <div style="padding-left: 25px; padding-top: 10px; padding-right: 20px">
+        <label>Choose Generation:</label>
+        <div class="btn-group">
+            <button class="btn dropdown-toggle genSelect" name="recordinput" data-toggle="dropdown">
+            Generation 1
+            <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu genSelect">
+                {% for i in "123456" %}
+                    <li><a href="#">Generation {{ i }}</a></li>
+                {% endfor %}
+                <li><a href="#">All Generations</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div style="padding-left: 25px; padding-top: 25px; padding-right: 20px">
+        <label>Choose Type:</label>
+        <div class="btn-group">
+            <button class="btn dropdown-toggle genSelect" name="recordinput" data-toggle="dropdown">
+            All Types
+            <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu genSelect">
+                {% for i in types %}
+                    <li><a href="#">{{ i }}</a></li>
+                {% endfor %}
+            <li><a href="#">All Types</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="two">
+    <div class="bubbleSize">
+        <label class="paddingBubble">Bubble Size By:</label>
+        <form action="" class="paddingBubbleRadio">
+            <label class="radio-inline">
+                <input type="radio" name="optradio">Total
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio">HP
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio">Attack
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio">Defense
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio">Sp. Attack
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio">Sp. Defense
+            </label>
+        </form>
+    </div>
+
+
+</div>
+
+<script>
+ $(".dropdown-menu li a").click(function(){
+      var selText = $(this).text();
+      $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+    });
+</script>
+
+{% endblock %}
+
