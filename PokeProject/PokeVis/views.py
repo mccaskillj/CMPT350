@@ -35,4 +35,21 @@ class SearchView(generic.TemplateView):
 def SearchView(request):
     types = ["Fire", "Water", "Grass", "Bug", "Ghost", "Electric", "Fairy", "Dragon", "Poison",
              "Rock", "Steel", "Normal", "Fighting", "Ground", "Psychic"]
-    return render(request, 'search.html', {'types': types})
+    colors = ['Green', 'Red', 'Blue', 'White', 'Brown', 'Yellow', 'Purple', 'Pink', 'Grey', 'Black']
+    return render(request, 'search.html', {'types': types, 'colors': colors})
+
+
+def OverviewView(request):
+    return render(request, 'overview.html', {})
+
+
+def PcomparisionView(request):
+    return render(request, 'pcomparision.html', {})
+
+
+def TcomparisionView(request):
+    return render(request, 'tcomparision.html', {})
+
+
+def BattleView(request):
+    return render(request, 'battle.html', {})

@@ -14,3 +14,15 @@ pokelist = Pokemon.objects.filter(
 
 print(pokelist)
 # comment
+pokelist = Pokemon.objects.all()
+
+array = []
+
+count = 0
+for i in pokelist:
+    if i.color in array:
+        count = 0
+    else:
+        array.append(i.color)
+
+print(array)
