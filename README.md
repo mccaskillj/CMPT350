@@ -22,6 +22,12 @@
 * http://127.0.0.1:8000/PokeVis/liam
 * http://127.0.0.1:8000/PokeVis/graham
 
+### URLS for Project
+* http://127.0.0.1:8000/PokeVis/overview
+* http://127.0.0.1:8000/PokeVis/pokeCompare
+* http://127.0.0.1:8000/PokeVis/teamCompare
+* http://127.0.0.1:8000/PokeVis/search
+* http://127.0.0.1:8000/PokeVis/battle
 
 ### Other Stat Fields we can calculate
 * Physical Sweeper = Attack + Speed
