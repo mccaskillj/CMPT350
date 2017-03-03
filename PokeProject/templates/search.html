@@ -5,65 +5,64 @@
 {% block content %}
 
 <div class="one">
-    <div style="padding-left: 25px; padding-top: 10px; padding-right: 20px">
-        <label>Choose Generation:</label>
-        <div class="btn-group">
-            <button class="btn dropdown-toggle genSelect" name="recordinput" data-toggle="dropdown">
-            Generation 1
-            <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu genSelect">
+
+    <div style="padding-left: 25px; padding-top: 10px; padding-right: 25px">
+        <div>
+            <label>Choose Generation:</label>
+        </div>
+        <div>
+            <select class="selectpicker" name="gen" id="genBody">
+                <option>All Generations</option>
                 {% for i in "123456" %}
-                    <li><a href="#">Generation {{ i }}</a></li>
+                    <option>Generation {{ i }}</option>
                 {% endfor %}
-                <li><a href="#">All Generations</a></li>
-            </ul>
+            </select>
         </div>
+
     </div>
 
-    <div style="padding-left: 25px; padding-top: 25px; padding-right: 20px">
-        <label>Choose Type:</label>
-        <div class="btn-group">
-            <button class="btn dropdown-toggle genSelect" name="recordinput" data-toggle="dropdown">
-            All Types
-            <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu genSelect">
+    <div style="padding-left: 25px; padding-top: 10px; padding-right: 25px">
+        <div>
+            <label>Choose Type:</label>
+        </div>
+        <div>
+            <select class="selectpicker" name="type" id="typeBody">
+                <option>All Types</option>
                 {% for i in types %}
-                    <li><a href="#">{{ i }}</a></li>
+                    <option>{{ i }}</option>
                 {% endfor %}
-            <li><a href="#">All Types</a></li>
-            </ul>
+            </select>
         </div>
     </div>
 
-    <div style="padding-left: 25px; padding-top: 25px; padding-right: 20px">
-        <label>Choose Color:</label>
-        <div class="btn-group">
-            <button class="btn dropdown-toggle genSelect" name="recordinput" data-toggle="dropdown">
-            All Colors
-            <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu genSelect">
+    <div style="padding-left: 25px; padding-top: 10px; padding-right: 25px">
+        <div>
+            <label>Choose Color:</label>
+        </div>
+        <div>
+            <select class="selectpicker" name="color" id="colorBody">
+                <option>All Colors</option>
                 {% for i in colors %}
-                    <li><a href="#">{{ i }}</a></li>
+                    <option>{{ i }}</option>
                 {% endfor %}
-            <li><a href="#">All Colors</a></li>
-            </ul>
+            </select>
         </div>
     </div>
+
 
     <div style="padding-left: 25px; padding-top: 25px; padding-right: 20px">
         <p style="background-color: #aaaaaa">
-            <label for="amount">Attack range:</label>
+            <label for="amount">Weight range:</label>
             <input type="text" id="amount" readonly style="font-weight:bold; background-color: #aaaaaa">
+            <label id="amount">3</label>
         </p>
 
         <div id="slider-range"></div>
     </div>
 
-    <div style="padding-left: 25px; padding-top: 25px; padding-right: 20px" id="slider-handles">
-
+    <div style="padding-top: 30px; width: 240px; padding-left: 25px">
+        <label for="amount" id="value" style="padding-bottom: 10px">Weight range:</label>
+        <div class="flat-slider" id="flat-slider" ></div>
     </div>
 
 <div>
@@ -81,7 +80,7 @@
         <label class="paddingBubble">Bubble Size By:</label>
         <form action="" class="paddingBubbleRadio">
             <label class="radio-inline">
-                <input type="radio" name="optradio">Total
+                <input type="radio" name="optradio" checked>Total
             </label>
             <label class="radio-inline">
                 <input type="radio" name="optradio">HP
@@ -248,6 +247,13 @@
 </script>
 
 <script>
+    $('.selectpicker').selectpicker({
+      style: 'btn-info',
+      size: 4
+    });
+</script>
+
+<script>
     $( function() {
     $( "#slider-range" ).slider({
       range: true,
@@ -263,6 +269,16 @@
     } );
 
 </script>
+
+<script>
+    $('#flat-slider').slider({
+        orientation: 'horizontal',
+        range:       true,
+        values:      [0, 952],
+
+    });
+</script>
+
 
 {% endblock %}
 
