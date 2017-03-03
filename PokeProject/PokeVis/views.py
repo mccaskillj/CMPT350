@@ -48,6 +48,7 @@ def SearchView(request):
     return render(request, 'search.html', {'types': types, 'colors': colors, 'pokemon': data})
 
 
+
 def OverviewView(request):
     return render(request, 'overview.html', {})
 
@@ -81,4 +82,3 @@ def get_filter_options(request):
     json_string = json.dumps([ob.__dict__ for ob in temp_array])
 
     return HttpResponse(json_string, content_type='application/json')
-
