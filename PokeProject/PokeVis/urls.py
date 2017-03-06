@@ -15,5 +15,4 @@ urlpatterns = [
     url(r'^ajax/get_filter_options/$', views.get_filter_options, name='get_filter_options'),
     url(r'^ajax/get_pokemon/$', views.get_pokemon, name='get_pokemon'),
     url(r'^ajax/get_single_pokemon/$', views.get_single_pokemon, name='get_single_pokemon'),
-    url(r'^ajax/testing/$', views.testing, name='testing'),
 ]
