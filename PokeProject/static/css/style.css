@@ -83,7 +83,12 @@ h1 {
     width: 50%;
     height: 50px;
     float: left;
-    text-align: center;
+}
+
+.singleInfo {
+    width: 50%;
+    height: 353px;
+    float: left;
 }
 
 .two {
@@ -106,6 +111,11 @@ h1 {
 .secondPoke {
     margin-left: 50%;
     height: 50px;
+}
+
+.singleStats {
+    margin-left: 50%;
+    height: 353px;
 }
 
 .filters {
@@ -239,6 +249,7 @@ div.tab a:focus, .active {
     padding-left: 40px;
 }
 
+/* Badges */
 .grassBadge {
     color: white;
     background-color: #92d36e;
@@ -247,4 +258,9 @@ div.tab a:focus, .active {
 .fireBadge {
     color: white;
     background-color: #f54378;
+}
+
+.monsterBadge {
+    color: white;
+    background-color: burlywood;
 }

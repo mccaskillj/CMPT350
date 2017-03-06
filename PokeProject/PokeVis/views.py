@@ -113,11 +113,12 @@ def get_single_pokemon(request):
 
     for item in pokemons:
         poke = Poke(item.number, item.total, item.hp, item.attack, item.defense, item.special_attack,
-                    item.special_defense, item.speed, item.weight_kg, item.height_m, item.color, item.name)
+                    item.special_defense, item.speed, item.weight_kg, item.height_m, item.color, item.name,
+                    item.egg_group_1, item.egg_group_2, item.generation, item.catch_rate, item.is_legendary,
+                    item.body_style)
         temp_array.append(poke)
 
     json_string = json.dumps([ob.__dict__ for ob in temp_array])
     print(json_string)
 
     return HttpResponse(json_string, content_type='application/json')
-
