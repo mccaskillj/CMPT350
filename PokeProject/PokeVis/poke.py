@@ -13,9 +13,16 @@ class Poke:
     height = 0
     color = ""
     name = ""
+    egg_group_1 = ""
+    egg_group_2 = ""
+    generation = ""
+    catch_rate = ""
+    is_legendary = ""
+    body_style = ""
 
     def __init__(self, index="", total="", hp="", attack="", defense="", sp_attack="", sp_defense="", speed="",
-                 weight="", height="", color="", name=""):
+                 weight="", height="", color="", name="", egg_group_1="", egg_group_2="", generation="",
+                 catch_rate="", is_legendary="", body_style=""):
         self.id = index
         self.total = total
         self.hp = hp
@@ -28,6 +35,12 @@ class Poke:
         self.height = height
         self.color = color
         self.name = name
+        self.egg_group_1 = egg_group_1
+        self.egg_group_2 = egg_group_2
+        self.generation = generation
+        self.catch_rate = catch_rate
+        self.is_legendary = is_legendary
+        self.body_style = body_style
 
     def __str__(self, *args, **kwargs):
         return super().__str__(*args, **kwargs)

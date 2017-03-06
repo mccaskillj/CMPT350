@@ -13,12 +13,19 @@ function showPokemon() {
         dataType: 'JSON',                //data format
         success: function(pokemons) {
             var dict = [];
-            var unwanted = ['color', 'name', 'id', ]
+            var unwanted = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
+                            'generation', 'egg_group_1', 'egg_group_2'];
 
-            var id = pokemons[0]['id']
+            var id = pokemons[0]['id'];
 
             $("#frontImg").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + id + '.png');
             $("#backImg").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/' + id + '.png');
+
+            document.getElementById('pokedex').innerHTML = pokemons[0]['id'];
+            document.getElementById('singleLegend').innerHTML = pokemons[0]['is_legendary'];
+            document.getElementById('singleCatch').innerHTML = pokemons[0]['catch_rate'];
+            document.getElementById('singleBStyle').innerHTML = pokemons[0]['body_style'];
+            document.getElementById('singleGen').innerHTML = pokemons[0]['generation'];
 
             for (var key in pokemons[0]) {
                 var value = pokemons[0][key];
@@ -30,43 +37,8 @@ function showPokemon() {
                     });
                 }
             }
+            console.log(dict);
             // d3 stuff
-            var width = 460,
-                height = 300;
-
-            var y = d3.scale.linear()
-                .range([height, 0]);
-
-            var chart = d3.select(".singleChart")
-                .attr("width", width)
-                .attr("height", height);
-
-            d3.json(dict, type, function(error, data) {
-                y.domain([0, d3.max(data, function(d) { return d.value; })]);
-
-                var barWidth = width / data.length;
-
-                var bar = chart.selectAll("g")
-                  .data(data)
-                .enter().append("g")
-                  .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
-
-                bar.append("rect")
-                  .attr("y", function(d) { return y(d.value); })
-                  .attr("height", function(d) { return height - y(d.value); })
-                  .attr("width", barWidth - 1);
-
-                bar.append("text")
-                  .attr("x", barWidth / 2)
-                  .attr("y", function(d) { return y(d.value) + 3; })
-                  .attr("dy", ".75em")
-                  .text(function(d) { return d.value; });
-            });
-
-            function type(d) {
-                d.value = +d.value; // coerce to number
-                return d;
-            }
 
         },
         failure: function(pokemons) {
