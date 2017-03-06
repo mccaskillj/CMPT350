@@ -57,6 +57,22 @@ function testAjax(){
     });
 }
 
+function getPokemonAjax(){
+    $.ajax({
+        type: "GET",
+        url: 'ajax/get_pokemon/', //the script to call to get data
+        data: {"type": type},            //you can insert url arguments here
+        dataType: 'JSON',                //data format
+        success: function(pokemons) {
+
+        },
+        failure: function(pokemons) {
+            alert('Got an error dude');
+        }
+    });
+}
+
+
 //For getting CSRF token
 function getCookie(name) {
           var cookieValue = null;

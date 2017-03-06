@@ -54,7 +54,14 @@ def OverviewView(request):
 
 
 def PcomparisionView(request):
-    return render(request, 'pcomparision.html', {})
+    temp_array = []
+    pokemons = Pokemon.objects.all()
+
+    for item in pokemons:
+        poke = Poke(item.number, item.total, item.hp, item.attack, item.defense, item.special_attack,
+                    item.special_defense, item.speed, item.weight_kg, item.height_m, item.color, item.name)
+        temp_array.append(poke)
+    return render(request, 'pcomparision.html', {'pokemon': temp_array})
 
 
 def TcomparisionView(request):
@@ -82,3 +89,35 @@ def get_filter_options(request):
     json_string = json.dumps([ob.__dict__ for ob in temp_array])
 
     return HttpResponse(json_string, content_type='application/json')
+
+
+def get_pokemon(request):
+    temp_array = []
+
+    pokemons = Pokemon.objects.all()
+
+    for item in pokemons:
+        poke = Poke(item.number, item.total, item.hp, item.attack, item.defense, item.special_attack,
+                    item.special_defense, item.speed, item.weight_kg, item.height_m, item.color, item.name)
+        temp_array.append(poke)
+
+    json_string = json.dumps([ob.__dict__ for ob in temp_array])
+
+    return HttpResponse(json_string, content_type='application/json')
+
+
+def get_single_pokemon(request):
+    temp_array = []
+    name_val = request.GET.get('name', None)
+    pokemons = Pokemon.objects.filter(name=name_val)
+
+    for item in pokemons:
+        poke = Poke(item.number, item.total, item.hp, item.attack, item.defense, item.special_attack,
+                    item.special_defense, item.speed, item.weight_kg, item.height_m, item.color, item.name)
+        temp_array.append(poke)
+
+    json_string = json.dumps([ob.__dict__ for ob in temp_array])
+    print(json_string)
+
+    return HttpResponse(json_string, content_type='application/json')
+

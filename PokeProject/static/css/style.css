@@ -66,10 +66,46 @@ h1 {
     background: #aaaaaa;
     float: left;
 }
+
+.leftCompare {
+    width: 350px;
+    height: 540px;
+    background: #aaaaaa;
+    float: left;
+}
+
+.singleImageFront {
+    width: 50%;
+    float: left;
+}
+
+.firstPoke {
+    width: 50%;
+    height: 50px;
+    float: left;
+    text-align: center;
+}
+
 .two {
     width: 1024px;
     height: 718px;
     background: white;
+}
+
+.rightCompare {
+    width: 647px;
+    height: 540px;
+    background: #aaaaaa;
+    float: left;
+}
+
+.singleImageBack {
+    margin-left: 50%;
+}
+
+.secondPoke {
+    margin-left: 50%;
+    height: 50px;
 }
 
 .filters {
@@ -100,4 +136,115 @@ h1 {
     padding-left: 20px;
     padding-top: 25px;
     padding-right: 20px;
+}
+
+/*tab experiment*/
+
+/* Style the tab */
+div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    width: 1024px;
+}
+
+/* Style the links inside the tab */
+div.tab a {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of links on hover */
+div.tab a:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+div.tab a:focus, .active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    width: 1024px;
+    height: 768px;
+}
+
+/*compare*/
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.grad {
+    background: red; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#6DF5E9, #57E142); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#6DF5E9, #57E142); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#6DF5E9, #57E142); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#6DF5E9, #57E142); /* Standard syntax */
+    height: 350px;
+    text-align: center;
+    padding-top: 175px;
+    font-family: sans-serif;
+    font-size: 25px;
+    font-style: italic;
+    border-radius: 5px;
+    border: 4px solid black;
+}
+
+.grad2 {
+    background: red; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#6DF5E9, #57E142); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#6DF5E9, #57E142); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#6DF5E9, #57E142); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#6DF5E9, #57E142); /* Standard syntax */
+    height: 350px;
+    font-family: sans-serif;
+    font-size: 25px;
+    font-style: italic;
+    border-radius: 5px;
+    border: 4px solid black;
+}
+
+.doublePokeStatsDiv {
+    background-color: #F0F0FF;
+    height: 410px;
+    border-radius: 5px;
+    border: 4px solid black;
+}
+
+.doubleComparePosition {
+    padding-top: 8px;
+    padding-left: 120px;
+}
+
+.singleComparePosition {
+    padding-top: 8px;
+    padding-left: 40px;
+}
+
+.grassBadge {
+    color: white;
+    background-color: #92d36e;
+}
+
+.fireBadge {
+    color: white;
+    background-color: #f54378;
 }
