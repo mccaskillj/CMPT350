@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'teamCompare', views.TcomparisionView, name='teamCompare'),
     url(r'battle', views.BattleView, name='battle'),
     url(r'^ajax/get_filter_options/$', views.get_filter_options, name='get_filter_options'),
+    url(r'^ajax/get_pokemon/$', views.get_pokemon, name='get_pokemon'),
+    url(r'^ajax/get_single_pokemon/$', views.get_single_pokemon, name='get_single_pokemon'),
 ]

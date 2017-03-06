@@ -3,7 +3,151 @@
 {% load static %}
 
 {% block content %}
+<html lang="en">
 
+<div class="tab">
+      <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Single')"  id="defaultOpen">Single Compare</a>
+      <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Double')">Double Compare</a>
+</div>
+
+<div id="Single" class="tabcontent" style="background-color: white">
+    <div class="grad2">
+        <div class="singleImageFront" style="padding-left: 70px">
+            <img style="width: 400px; height: 350px;" src="{% static "images/front/1.png" %}" alt="My image"/>
+        </div>
+        <div class="singleImageBack" style="padding-left: 20px">
+            <img style="width: 400px; height: 350px" src="{% static "images/back/1.png" %}" alt="My image"/>
+        </div>
+    </div>
+    <div class="doublePokeStatsDiv">
+        <div class="firstPoke">
+            <div class="singleComparePosition">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search Pokemon" id="tags">
+                    <span class="input-group-btn" style="width:0;">
+                        <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="secondPoke">
+
+        </div>
+    </div>
+
+
+</div>
+
+<div id="Double" class="tabcontent" style="background-color: white">
+    <div class="grad">
+      VS
+    </div>
+    <div class="doublePokeStatsDiv">
+        <div class="firstPoke">
+            <div class="doubleComparePosition">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search Pokemon" id="tags">
+                    <span class="input-group-btn" style="width:0;">
+                        <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="secondPoke">
+            <div class="doubleComparePosition">
+                <div class="input-group" style="text-align: center;">
+                    <input type="text" class="form-control" placeholder="Search Pokemon" id="tags">
+                    <span class="input-group-btn" style="width:0;">
+                        <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>
+
+<script>
+$( function() {
+    var pokemonNames = []
+
+    $.ajax({
+        type: "GET",
+        url: 'ajax/get_pokemon/', //the script to call to get data
+        dataType: 'JSON',                //data format
+        success: function(pokemons) {
+            for(var i = 0; i < pokemons.length; i++) {
+                pokemonNames.push(pokemons[i]['name'])
+            }
+
+        },
+        failure: function(pokemons) {
+            alert('Got an error dude');
+        }
+    });
+
+    $( "#tags" ).autocomplete({
+      source: pokemonNames
+    });
+  } );
+</script>
+
+<script>
+    function showPokemon() {
+        var selectPoke = document.getElementById("tags").value
+        console.log(selectPoke)
+
+        $.ajax({
+        type: "GET",
+        url: 'ajax/get_single_pokemon/', //the script to call to get data
+        data: {"name": selectPoke},
+        dataType: 'JSON',                //data format
+        success: function(pokemons) {
+            var dict = [];
+            var unwanted = ['color', 'name', 'id', ]
+
+            for (var key in pokemons[0]) {
+                var value = pokemons[0][key];
+                // Use `key` and `value`
+                console.log("Hello:" + key);
+                console.log(value);
+                if (unwanted.includes(key) != true) {
+                    dict.push({
+                        stat: key,
+                        value: value
+                    });
+                }
+            }
+
+                console.log(dict);
+
+        },
+        failure: function(pokemons) {
+            alert('Got an error dude');
+        }
+    });
+
+    }
+
+</script>
 
 
 {% endblock %}
