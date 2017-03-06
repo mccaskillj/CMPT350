@@ -73,6 +73,8 @@ function getPokemonAjax(){
 }
 
 
+
+
 //For getting CSRF token
 function getCookie(name) {
           var cookieValue = null;
