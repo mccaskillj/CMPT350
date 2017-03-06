@@ -120,4 +120,3 @@ def get_single_pokemon(request):
     print(json_string)
 
     return HttpResponse(json_string, content_type='application/json')
-
