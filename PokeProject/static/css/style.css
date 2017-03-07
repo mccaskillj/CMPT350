@@ -83,7 +83,12 @@ h1 {
     width: 50%;
     height: 50px;
     float: left;
-    text-align: center;
+}
+
+.singleInfo {
+    width: 50%;
+    height: 353px;
+    float: left;
 }
 
 .two {
@@ -106,6 +111,11 @@ h1 {
 .secondPoke {
     margin-left: 50%;
     height: 50px;
+}
+
+.singleStats {
+    margin-left: 50%;
+    height: 353px;
 }
 
 .filters {
@@ -239,12 +249,88 @@ div.tab a:focus, .active {
     padding-left: 40px;
 }
 
+/* Badges */
 .grassBadge {
     color: white;
-    background-color: #92d36e;
+    background-color: #6cb649;
 }
 
 .fireBadge {
     color: white;
+    background-color: #ff5d55;
+}
+
+.waterBadge {
+    color: white;
+    background-color: #5382ea;
+}
+
+.fightingBadge {
+    color: white;
+    background-color: #a02a26;
+}
+
+.steelBadge {
+    color: white;
+    background-color: #a7a8be;
+}
+
+.electricBadge {
+    color: white;
+    background-color: #f2c735;
+}
+
+.iceBadge {
+    color: white;
+    background-color: #84cfcf;
+}
+
+.normalBadge {
+    color: white;
+    background-color: #99986a;
+}
+
+.bugBadge {
+    color: white;
+    background-color: #95a22c;
+}
+
+.dragonBadge {
+    color: white;
+    background-color: #5b2eef;
+}
+
+.psychicBadge {
+    color: white;
     background-color: #f54378;
+}
+
+.ghostBadge {
+    color: white;
+    background-color: #5d4b7e;
+}
+
+.poisonBadge {
+    color: white;
+    background-color: #933f93;
+}
+
+.fariyBadge {
+    color: white;
+    background-color: #e287e2;
+}
+
+.darkBadge {
+    color: white;
+    background-color: #5d483d;
+}
+
+.rockBadge {
+    color: white;
+    background-color: #a48f3a;
+}
+
+.monsterBadge {
+    color: white;
+    background-color: burlywood;
 }
