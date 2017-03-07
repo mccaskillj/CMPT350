@@ -14,7 +14,7 @@ function showPokemon() {
         success: function(pokemons) {
             var dict = [];
             var unwanted = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
-                            'generation', 'egg_group_1', 'egg_group_2'];
+                            'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1'];
 
             var id = pokemons[0]['id'];
 
@@ -26,6 +26,13 @@ function showPokemon() {
             document.getElementById('singleCatch').innerHTML = pokemons[0]['catch_rate'];
             document.getElementById('singleBStyle').innerHTML = pokemons[0]['body_style'];
             document.getElementById('singleGen').innerHTML = pokemons[0]['generation'];
+
+            document.getElementById('singleGen').innerHTML = pokemons[0]['generation'];
+
+            $("#singleType  span").remove();
+            addType(pokemons[0]['type_1']);
+            addType(pokemons[0]['type_2']);
+
 
             for (var key in pokemons[0]) {
                 var value = pokemons[0][key];
@@ -47,6 +54,66 @@ function showPokemon() {
     });
 
 }
+
+function addType(type){
+
+    var elem = document.getElementById('singleType');
+
+
+    switch(type) {
+        case 'Fire':
+            elem.innerHTML += '<span class="badge fireBadge">Fire</span>';
+            break;
+        case 'Water':
+            elem.innerHTML += '<span class="badge waterBadge">Water</span>';
+            break;
+        case 'Grass':
+            elem.innerHTML += '<span class="badge grassBadge">Grass</span>';
+            break;
+        case 'Fighting':
+            elem.innerHTML += '<span class="badge fightingBadge">Fighting</span>';
+            break;
+        case 'Steel':
+            elem.innerHTML += '<span class="badge steelBadge">Steel</span>';
+            break;
+        case 'Electric':
+            elem.innerHTML += '<span class="badge electricBadge">Electric</span>';
+            break;
+        case 'Ice':
+            elem.innerHTML += '<span class="badge iceBadge">Ice</span>';
+            break;
+        case 'Normal':
+            elem.innerHTML += '<span class="badge normalBadge">Normal</span>';
+            break;
+        case 'Bug':
+            elem.innerHTML += '<span class="badge bugBadge">Bug</span>';
+            break;
+        case 'Dragon':
+            elem.innerHTML += '<span class="badge dragonBadge">Dragon</span>';
+            break;
+        case 'Psychic':
+            elem.innerHTML += '<span class="badge psychicBadge">Psychic</span>';
+            break;
+        case 'Ghost':
+            elem.innerHTML += '<span class="badge ghostBadge">Ghost</span>';
+            break;
+        case 'Poison':
+            elem.innerHTML += '<span class="badge poisonBadge">Poison</span>';
+            break;
+        case 'Fariy':
+            elem.innerHTML += '<span class="badge fariyBadge">Fairy</span>';
+            break;
+        case 'Dark':
+            elem.innerHTML += '<span class="badge darkBadge">Dark</span>';
+            break;
+        case 'Rock':
+            elem.innerHTML += '<span class="badge rockBadge">Rock</span>';
+            break;
+        default:
+            break;
+    }
+}
+
 
 function openCity(evt, cityName) {
         var i, tabcontent, tablinks;
