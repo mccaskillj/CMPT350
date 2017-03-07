@@ -3,55 +3,57 @@
  */
 
 function showPokemon() {
-        var selectPoke = document.getElementById("tags").value
-        console.log(selectPoke)
+        var selectPoke = document.getElementById("tags").value;
+        console.log(selectPoke);
 
-        $.ajax({
-        type: "GET",
-        url: 'ajax/get_single_pokemon/', //the script to call to get data
-        data: {"name": selectPoke},
-        dataType: 'JSON',                //data format
-        success: function(pokemons) {
-            var dict = [];
-            var unwanted = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
-                            'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1'];
+        if (selectPoke != ""){
+            $.ajax({
+            type: "GET",
+            url: 'ajax/get_single_pokemon/', //the script to call to get data
+            data: {"name": selectPoke},
+            dataType: 'JSON',                //data format
+            success: function(pokemons) {
+                var dict = [];
+                var unwanted = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
+                                'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1'];
 
-            var id = pokemons[0]['id'];
+                var id = pokemons[0]['id'];
 
-            $("#frontImg").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + id + '.png');
-            $("#backImg").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/' + id + '.png');
+                $("#frontImg").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + id + '.png');
+                $("#backImg").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/' + id + '.png');
 
-            document.getElementById('pokedex').innerHTML = pokemons[0]['id'];
-            document.getElementById('singleLegend').innerHTML = pokemons[0]['is_legendary'];
-            document.getElementById('singleCatch').innerHTML = pokemons[0]['catch_rate'];
-            document.getElementById('singleBStyle').innerHTML = pokemons[0]['body_style'];
-            document.getElementById('singleGen').innerHTML = pokemons[0]['generation'];
+                document.getElementById('pokedex').innerHTML = pokemons[0]['id'];
+                document.getElementById('singleLegend').innerHTML = pokemons[0]['is_legendary'];
+                document.getElementById('singleCatch').innerHTML = pokemons[0]['catch_rate'] + '%';
+                document.getElementById('singleBStyle').innerHTML = pokemons[0]['body_style'];
+                document.getElementById('singleGen').innerHTML = pokemons[0]['generation'];
 
-            document.getElementById('singleGen').innerHTML = pokemons[0]['generation'];
+                document.getElementById('singleGen').innerHTML = pokemons[0]['generation'];
 
-            $("#singleType  span").remove();
-            addType(pokemons[0]['type_1']);
-            addType(pokemons[0]['type_2']);
+                $("#singleType  span").remove();
+                addType(pokemons[0]['type_1']);
+                addType(pokemons[0]['type_2']);
 
 
-            for (var key in pokemons[0]) {
-                var value = pokemons[0][key];
-                // Use `key` and `value`
-                if (unwanted.includes(key) != true) {
-                    dict.push({
-                        stat: key,
-                        value: value
-                    });
+                for (var key in pokemons[0]) {
+                    var value = pokemons[0][key];
+                    // Use `key` and `value`
+                    if (unwanted.includes(key) != true) {
+                        dict.push({
+                            stat: key,
+                            value: value
+                        });
+                    }
                 }
-            }
-            console.log(dict);
-            // d3 stuff
+                console.log(dict);
+                // d3 stuff
 
-        },
-        failure: function(pokemons) {
-            alert('Got an error dude');
+            },
+            failure: function(pokemons) {
+                alert('Got an error dude');
+            }
+            });
         }
-    });
 
 }
 
