@@ -98,24 +98,72 @@
 			//Width and height
 			var w = 769;
 			var h = 628;
+			var r = 40;
 
-			var dataset = [[385,314,0],
-                [30,30,0],
-                [740,600,0],
-                [30,600,0],
-                [740,30,0]];
+			var h1 = r+20;
+			var h5 = h - h1;
+			var h3 = h/2;
+			var hi = (h3-h1)/2;
+			var h4 = h3+hi;
+			var h2 = h1+hi;
 
-			var data = [0,10,15,20,25];
+			var w1 = h1;
+			var w5 = w/2;
+			var w9 = w-w1;
+			var wi = (w5-w1)/2;
+			var w3 = w1 + wi;
+			var w7 = w5 + wi;
+			wi = (w3-w1)/2;
+			var w2 = w1 + wi;
+			var w4 = w3 + wi;
+			var w6 = w5 + wi;
+			var w8 = w7 + wi;
 
-			for (var i=0;i<data.length;i++){
-			    dataset[i][2] = data[i];
-            }
+			var dataset = [
+			    [w5,h3,0,""],
+                [w2,h2,0,""],
+                [w8,h4,0,""],
+                [w8,h2,0,""],
+                [w2,h4,0,""],
+                [w5,h1,0,""],
+                [w5,h5,0,""],
+                [w4,h2,0,""],
+                [w6,h4,0,""],
+                [w6,h2,0,""],
+                [w4,h4,0,""],
+                [w3,h1,0,""],
+                [w7,h5,0,""],
+                [w7,h1,0,""],
+                [w3,h5,0,""],
+                [w3,h3,0,""],
+                [w7,h3,0,""],
+                [w1,h1,0,""],
+                [w9,h5,0,""],
+                [w9,h1,0,""],
+                [w1,h5,0,""],
+                [w1,h3,0,""],
+			    [w9,h3,0,""]];
+
+			var data = [40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40];
+			var url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png";
+
+			for (var i=0;i<dataset.length;i++){
+			    if (i<data.length){
+			        dataset[i][2] = data[i];
+			        dataset[i][3] = url;
+                }
+                else {
+			        dataset[i][2]=0;
+			        dataset[i][3] = "";
+                }
+			}
 
 			//Create SVG element
 			var svg = d3.select("#mydiv")
 						.append("svg")
 						.attr("width", w)
-						.attr("height", h);
+						.attr("height", h)
+                .append("g");
 
 			svg.selectAll("circle")
 			   .data(dataset)
@@ -130,8 +178,18 @@
 			   .attr("r", function (d) {
                    return d[2];
                })
-                .attr("fill", "white")
-                .attr("stroke", "black");
+                .attr("fill", "transparent")
+                .attr("stroke", "black")
+                .append("svg:image")
+                .attr("xlink:href","https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png");
+
+			svg.selectAll("svg:image")
+                .data(dataset)
+                .enter()
+                .append("svg:image")
+                .attr("width",30)
+                .attr("height",24)
+                .attr("xlink:href","https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png");
 		</script>
 
 
