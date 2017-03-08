@@ -22,6 +22,13 @@ class Poke:
     type_1 = ""
     type_2 = ""
 
+    # Derived stats
+    phys_sweeper = 0    # Physical Sweeper = Attack + Speed
+    sp_sweeper = 0      # Special_Sweeper = Sp.Attack + Speed
+    wall = 0            # Wall = HP + Defense + Sp. Defense
+    phys_tank = 0       # Physical_Tank = Attack + Defense
+    sp_tank = 0         # Special_Tank = Sp.Attack + Sp.Defense
+
     def __init__(self, index="", total="", hp="", attack="", defense="", sp_attack="", sp_defense="", speed="",
                  weight="", height="", color="", name="", egg_group_1="", egg_group_2="", generation="",
                  catch_rate="", is_legendary="", body_style="", type_1="", type_2=""):
@@ -45,6 +52,12 @@ class Poke:
         self.body_style = body_style
         self.type_1 = type_1
         self.type_2 = type_2
+        # Derived data
+        self.phys_sweeper = attack + speed
+        self.sp_sweeper = sp_attack + speed
+        self.wall = hp + defense + sp_defense
+        self.phys_tank = attack + defense
+        self.sp_tank = sp_attack + sp_defense
 
     def __str__(self, *args, **kwargs):
         return super().__str__(*args, **kwargs)
