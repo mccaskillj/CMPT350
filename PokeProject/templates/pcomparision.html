@@ -37,10 +37,10 @@
             <div class="secondPoke" style="font-family: sans-serif; font-size: 20px;">
                 <div id="radioBut" style="padding-top: 15px">
                     <label class="radio-inline" id="normal">
-                        <input type="radio" name="optradio" checked>Normal
+                        <input id="checkNormal" type="radio" name="optradio" checked>Normal
                     </label>
                     <label class="radio-inline" id="shinny">
-                        <input type="radio" name="optradio">Shinny
+                        <input type="radio" name="optradio">Shiny
                     </label>
                 </div>
             </div>
@@ -93,7 +93,7 @@
         <div>
             <div id="radioBut2" class="singleBarRadio">
                 <label class="radio-inline">
-                    <input type="radio" name="optradio2" checked>Bar Chart
+                    <input id="checkBar" type="radio" name="optradio2" checked>Bar Chart
                 </label>
                 <label class="radio-inline">
                     <input type="radio" name="optradio2">Pie Chart
@@ -105,10 +105,21 @@
 
         <!-- Svg bar graph div-->
         <div style="height: 534px" >
-            <div id="singleChart" >
+            <div class="testLeft">
+                <h4 style="padding-left: 200px">Pokemon Stats</h4>
+                <div id="singleChart" >
 
 
+                </div>
             </div>
+
+            <div class="testRight">
+                <h4 style="padding-left: 160px; padding-top: 10px">Derived Pokemon Stats</h4>
+                <div id="singleChart2">
+
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -173,6 +184,5 @@
 </div>
 
 <script type="text/javascript" src="{% static "js/pcompare.js" %}"></script>
-<script type="text/javascript" src="{% static "js/initalizeCompare.js" %}"></script>
 
 {% endblock %}
