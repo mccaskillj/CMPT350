@@ -6,8 +6,9 @@
 <html lang="en">
 
 <div class="tab">
-      <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Single')"  id="defaultOpen">Single Lookup</a>
-      <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Double')">Double Compare</a>
+    <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Single')"  id="defaultOpen">Single Lookup</a>
+    <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Double')">Double Compare</a>
+    <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Multi')">Multiple Pokemon</a>
 </div>
 
 <div id="Single" class="tabcontent" style="background-color: white">
@@ -44,6 +45,9 @@
                 </div>
             </div>
         </div>
+
+        <hr style="background-color: black">
+
         <div>
             <div class="fontStyleSinglePoke singleStatsLeft">
                 <div id="singleIndex">
@@ -104,7 +108,7 @@
             <div id="singleChart" >
 
 
-        </div>
+            </div>
         </div>
 
     </div>
@@ -113,7 +117,7 @@
 </div>
 
 <div id="Double" class="tabcontent" style="background-color: white">
-    <div class="grad">
+    <div class="grad" >
       VS
     </div>
     <div class="doublePokeStatsDiv">
@@ -140,6 +144,35 @@
     </div>
 </div>
 
+<div id="Multi" class="tabcontent" style="background-color: white">
+    <div class="multiTop" >
+        <div class="multiTextInputPad">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search Pokemon" id="addPoke">
+                <span class="input-group-btn" style="width:0;">
+                    <button class="btn btn-default" type="button" onclick="addB()">Add Pokemon</button>
+                </span>
+
+            </div>
+        </div>
+
+        <hr style="background-color: black">
+
+        <div id="pokeBadges" style="padding-left: 40px;">
+
+
+        </div>
+    </div>
+
+    <div class="multiStatsDiv">
+        <div id="multiChart" >
+
+
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript" src="{% static "js/pcompare.js" %}"></script>
+<script type="text/javascript" src="{% static "js/initalizeCompare.js" %}"></script>
 
 {% endblock %}
