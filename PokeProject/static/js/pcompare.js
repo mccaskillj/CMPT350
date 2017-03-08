@@ -15,7 +15,7 @@ function showPokemon() {
             success: function(pokemons) {
                 var dict = [];
                 var unwanted = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
-                                'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1'];
+                                'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total'];
 
                 var id = pokemons[0]['id'];
 
@@ -46,7 +46,70 @@ function showPokemon() {
                     }
                 }
                 console.log(dict);
+
+                $("#singleChart  svg").remove();
                 // d3 stuff
+                var width = 930, height = 480;
+                var margin = {top: 20, right: 20, bottom: 30, left: 40};
+
+                //x and y Scales
+                var xScale = d3.scale.ordinal()
+                    .rangeRoundBands([0, width], .1);
+
+                var yScale = d3.scale.linear()
+                    .range([height, 0]);
+
+                xScale.domain(dict.map(function(d) { return d.stat; }));
+                yScale.domain([0, d3.max(dict, function(d) { return d.value; })]);
+
+                //x and y Axes
+                var xAxis = d3.svg.axis()
+                    .scale(xScale)
+                    .orient("bottom");
+
+                var yAxis = d3.svg.axis()
+                    .scale(yScale)
+                    .orient("left")
+                    .ticks(10, "%");
+
+                //create svg container
+                var svg = d3.select("#singleChart")
+                    .append("svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                //create bars
+                svg.selectAll(".bar")
+                    .data(dict)
+                    .enter()
+                    .append("rect")
+                    .attr("class", "bar")
+                    .attr("fill", "#90caf9")
+                    .attr("x", function(d) { return xScale(d.stat); })
+                    .attr("width", xScale.rangeBand())
+                    .attr("y", function(d) { return yScale(d.value); })
+                    .attr("height", function(d) { return height - yScale(d.value); });
+
+                //drawing the x axis on svg
+                svg.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .style("font-size","13px")
+                    .call(xAxis);
+
+                //drawing the y axis on svg
+                svg.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxis)
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".71em")
+                    .style("font-size","13px")
+                    .style("text-anchor", "end")
+
 
             },
             failure: function(pokemons) {
