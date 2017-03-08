@@ -51,19 +51,19 @@
         <div>
             <div class="fontStyleSinglePoke singleStatsLeft">
                 <div id="singleIndex">
-                    Pokedex: <span id="pokedex">4</span>
+                    Pokedex: <span id="pokedex"></span>
                 </div>
                 <div>
-                    Generation: <span id="singleGen">1</span>
+                    Generation: <span id="singleGen"></span>
                 </div>
                 <div>
-                    Legendary: <span id="singleLegend">Yes</span>
+                    Legendary: <span id="singleLegend"></span>
                 </div>
                 <div>
-                    Catch Rate: <span id="singleCatch">30%</span>
+                    Catch Rate: <span id="singleCatch"></span>
                 </div>
                 <div>
-                    Body Style: <span id="singleBStyle">mon</span>
+                    Body Style: <span id="singleBStyle"></span>
                 </div>
 
             </div>
@@ -108,7 +108,7 @@
             <div class="testLeft">
                 <h4 style="padding-left: 200px">Pokemon Stats</h4>
                 <div id="singleChart" >
-
+                    <svg id="sChart"></svg>
 
                 </div>
             </div>
@@ -116,7 +116,7 @@
             <div class="testRight">
                 <h4 style="padding-left: 160px; padding-top: 10px">Derived Pokemon Stats</h4>
                 <div id="singleChart2">
-
+                    <svg id="sChart2"></svg>
                 </div>
             </div>
 
@@ -129,30 +129,157 @@
 
 <div id="Double" class="tabcontent" style="background-color: white">
     <div class="grad" >
-      VS
+        <div class="singleImageFront" style="padding-left: 70px">
+            <img id="frontImgDouble" style="width: 400px; height: 350px;" src="{% static "images/back/0.png" %}" alt="My image"/>
+        </div>
+        <div class="singleImageBack" style="padding-left: 20px">
+            <img id="backImgDouble" style="width: 400px; height: 350px" src="{% static "images/front/0.png" %}" alt="My image"/>
+        </div>
     </div>
     <div class="doublePokeStatsDiv">
-        <div class="firstPoke">
-            <div class="doubleComparePosition">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search Pokemon" id="poke1">
-                    <span class="input-group-btn" style="width:0;">
-                        <button class="btn btn-default" type="button">Go!</button>
-                    </span>
+        <div>
+            <div class="firstPoke">
+                <div class="doubleComparePosition">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search Pokemon" id="poke1">
+                        <span class="input-group-btn" style="width:0;">
+                            <button class="btn btn-default" type="button" onclick="addPokeOneDouble()">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="secondPoke">
+                <div class="doubleComparePosition">
+                    <div class="input-group" style="text-align: center">
+                        <input type="text" class="form-control" placeholder="Search Pokemon" id="poke2">
+                        <span class="input-group-btn" style="width:0;">
+                            <button class="btn btn-default" type="button" onclick="addPokeTwoDouble()">Go!</button>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="secondPoke">
-            <div class="doubleComparePosition">
-                <div class="input-group" style="text-align: center;">
-                    <input type="text" class="form-control" placeholder="Search Pokemon" id="poke2">
-                    <span class="input-group-btn" style="width:0;">
-                        <button class="btn btn-default" type="button">Go!</button>
-                    </span>
+
+        <hr style="background-color: black">
+
+        <div>
+            <div class="fontStyleSinglePoke singleStatsLeft">
+                <div id="singleIndex">
+                    Pokedex: <span id="pokedexDouble"></span>
+                </div>
+                <div>
+                    Generation: <span id="singleGenDouble"></span>
+                </div>
+                <div>
+                    Legendary: <span id="singleLegendDouble"></span>
+                </div>
+                <div>
+                    Catch Rate: <span id="singleCatchDouble"></span>
+                </div>
+                <div>
+                    Body Style: <span id="singleBStyleDouble"></span>
+                </div>
+            </div>
+            <div class="singleStatsRight fontStyleSinglePoke">
+                <div id="singleIndex">
+                    Pokedex: <span id="pokedexDouble2"></span>
+                </div>
+                <div>
+                    Generation: <span id="singleGenDouble2"></span>
+                </div>
+                <div>
+                    Legendary: <span id="singleLegendDouble2"></span>
+                </div>
+                <div>
+                    Catch Rate: <span id="singleCatchDouble2"></span>
+                </div>
+                <div>
+                    Body Style: <span id="singleBStyleDouble2"></span>
                 </div>
             </div>
         </div>
+
+        <hr style="background-color: black">
+
+        <div>
+            <div class="fontStyleSinglePoke singleStatsLeft">
+                <div>
+                    <div>
+                        Type:
+                    </div>
+                    <div style="padding-left: 60px" id="singleTypeDouble">
+                        <span class="badge">None</span>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        Egg Group:
+                    </div>
+                    <div style="padding-left: 60px" id="singleEggDouble">
+                        <span class="badge monsterBadge">Monster</span>
+                    </div>
+                </div>
+            </div>
+            <div class="fontStyleSinglePoke singleStatsLeft">
+                <div>
+                    <div>
+                        Type:
+                    </div>
+                    <div style="padding-left: 60px" id="singleTypeDouble2">
+                        <span class="badge">None</span>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        Egg Group:
+                    </div>
+                    <div style="padding-left: 60px" id="singleEggDouble2">
+                        <span class="badge monsterBadge">Monster</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr style="background-color: black">
+
+        <div>
+            <div id="radioBut2" class="singleBarRadio">
+                <label class="radio-inline">
+                    <input id="checkBarDouble" type="radio" name="optradio3" checked>Bar Chart
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio3">Pie Chart
+                </label>
+            </div>
+        </div>
+
+        <hr style="background-color: black">
+
+        <!-- Svg bar graph div-->
+        <div style="height: 534px" >
+            <div class="testLeft">
+                <h4 style="padding-left: 200px" id="dPoke">Poke name</h4>
+                <div id="singleChart" >
+                    <svg id="dChart"></svg>
+
+                </div>
+            </div>
+
+            <div class="testRight">
+                <h4 style="padding-left: 160px; padding-top: 10px" id="dPoke">Poke name</h4>
+                <div id="singleChart2">
+                    <svg id="dChart2"></svg>
+                </div>
+            </div>
+
+        </div>
+
+
     </div>
+
+
+
+
 </div>
 
 <div id="Multi" class="tabcontent" style="background-color: white">
@@ -184,5 +311,6 @@
 </div>
 
 <script type="text/javascript" src="{% static "js/pcompare.js" %}"></script>
+<script type="text/javascript" src="{% static "js/pcompareDouble.js" %}"></script>
 
 {% endblock %}
