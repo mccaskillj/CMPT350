@@ -33,28 +33,17 @@ function showPokemon() {
                 document.getElementById('singleGen').innerHTML = pokemons[0]['generation'];
 
                 $("#singleType  span").remove();
-                addType(pokemons[0]['type_1']);
-                addType(pokemons[0]['type_2']);
+                addType(pokemons[0]['type_1'], 'singleType');
+                addType(pokemons[0]['type_2'], 'singleType');
 
-
-                for (var key in pokemons[0]) {
-                    var value = pokemons[0][key];
-                    // Use `key` and `value`
-                    if (unwantedFirst.includes(key) != true) {
-                        dict.push({
-                            stat: key,
-                            value: value
-                        });
-                    }
-                }
 
                 var data1 = getValuesForReg(pokemons, unwantedFirst);
                 var data2 = getValuesForDerived(pokemons, unwantedSecond);
 
-                $("#singleChart  svg").remove();
-                createDefaultGraphs("#singleChart", data1);
-                $("#singleChart2  svg").remove();
-                createDefaultGraphs("#singleChart2", data2);
+                createDefaultGraphs("#sChart", data1);
+                createDefaultGraphs("#sChart2", data2);
+
+
 
                 document.getElementById("checkNormal").checked = true;
                 document.getElementById("checkBar").checked = true;
@@ -124,11 +113,10 @@ function getValuesForReg(pokemons){
     return dict;
 }
 
-function addType(type){
 
-    var elem = document.getElementById('singleType');
+function addType(type, id){
 
-
+    var elem = document.getElementById(id);
     switch(type) {
         case 'Fire':
             elem.innerHTML += '<span class="badge fireBadge">Fire</span>';
@@ -341,15 +329,14 @@ $("#tags").keyup(function(event){
     }
 });
 
-createDefaultGraphs("#singleChart", []);
-createDefaultGraphs("#singleChart2", []);
+createDefaultGraphs("#sChart", []);
+createDefaultGraphs("#sChart2", []);
+
 
 function createDefaultGraphs(id, data){
     // Have default empty table for compare screen
-    var dict = [];
-
     var width = 350, height = 480;
-    var margin = {top: 20, right: 20, bottom: 60, left: 40};
+    var margin = {top: 20, right: 20, bottom: 80, left: 40};
 
     //x and y Scales
     var xScale = d3.scale.ordinal()
@@ -373,11 +360,13 @@ function createDefaultGraphs(id, data){
 
     //create svg container
     var svg = d3.select(id)
-        .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+    var bar = svg.selectAll(".bar");
 
     //create bars
     svg.selectAll(".bar")
@@ -395,7 +384,7 @@ function createDefaultGraphs(id, data){
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
-        .style("font-size","13px")
+        .style("font-size","15px")
         .call(xAxis)
         .selectAll("text")
         .attr("transform", "rotate(-30)")
@@ -406,9 +395,74 @@ function createDefaultGraphs(id, data){
         .attr("class", "y axis")
         .call(yAxis)
         .append("text")
+        .style("font-size","14px")
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
         .attr("dy", ".71em")
-        .style("font-size","13px")
         .style("text-anchor", "end");
+
+
+
+
+}
+
+function updateGraphData(id, data){
+    var svg = d3.select(id)
+
+    var width = 350, height = 480;
+    var margin = {top: 20, right: 20, bottom: 60, left: 40};
+
+    //x and y Scales
+    var xScale = d3.scale.ordinal()
+        .rangeRoundBands([0, width], .1);
+
+    var yScale = d3.scale.linear()
+        .range([height, 0]);
+
+
+    svg.selectAll(".rect")
+    .data(data)
+    .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) { return xScale(d.stat); })
+        .attr("width", xScale.rangeBand())
+        .attr("y", function(d) { return yScale(d.value); })
+        .attr("height", function(d) { return height - yScale(d.value); });
+
+    var bar = svg.selectAll("rect")
+    .data(data, function(d) { return d.stat; });
+
+    // new data:
+    bar.enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) { return xScale(d.stat); })
+        .attr("width", xScale.rangeBand())
+        .attr("y", function(d) { return yScale(d.value); })
+        .attr("height", function(d) { return height - yScale(d.value); });
+    // removed data:
+    bar.exit().remove();
+    // updated data:
+
+    bar
+    .attr("y", function(d) { return yScale(d.value); })
+    .attr("height", function(d) { return height - yScale(d.value); });
+    // "x" and "width" will already be set from when the data was
+    // first added from "enter()".
+
+    // Remove previous y-axis:
+    svg.select(".y.axis").remove(); // << this line added
+    // Existing code to draw y-axis:
+    svg.append("g")
+    .attr("class", "y axis")
+    .call(yAxis)
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 6)
+    .attr("dy", ".71em")
+    .style("text-anchor", "end");
+
+    bar
+    .transition().duration(750)  // <<< added this
+    .attr("y", function(d) { return yScale(d.value); })
+    .attr("height", function(d) { return height - yScale(d.value); });
 }
