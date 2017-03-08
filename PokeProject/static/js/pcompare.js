@@ -48,9 +48,8 @@ function showPokemon() {
                     }
                 }
 
-                var data1 = seperateValues(pokemons, unwantedFirst);
-                var data2 = seperateValues(pokemons, unwantedSecond);
-                seperateValues(pokemons, unwantedSecond);
+                var data1 = getValuesForReg(pokemons, unwantedFirst);
+                var data2 = getValuesForDerived(pokemons, unwantedSecond);
 
                 $("#singleChart  svg").remove();
                 createDefaultGraphs("#singleChart", data1);
@@ -68,19 +67,61 @@ function showPokemon() {
 
 }
 
-function seperateValues(pokemons, unwanted){
+function getValuesForDerived(pokemons){
     var dict = [];
-    for (var key in pokemons[0]) {
-        var value = pokemons[0][key];
-        // Use `key` and `value`
-        if (unwanted.includes(key) != true) {
-            dict.push({
-                stat: key,
-                value: value
+
+    dict.push({
+                stat: 'Wall',
+                value: pokemons[0]['wall']
             });
-        }
-    }
-    return dict
+    dict.push({
+                stat: 'Phys. Tank',
+                value: pokemons[0]['phys_tank']
+            });
+    dict.push({
+                stat: 'Sp. Tank',
+                value: pokemons[0]['sp_tank']
+            });
+    dict.push({
+                stat: 'Phys. Sweeper',
+                value: pokemons[0]['phys_sweeper']
+            });
+    dict.push({
+                stat: 'Sp. Sweeper',
+                value: pokemons[0]['sp_sweeper']
+            });
+
+    return dict;
+}
+
+function getValuesForReg(pokemons){
+    var dict = [];
+
+    dict.push({
+                stat: 'Hp',
+                value: pokemons[0]['hp']
+            });
+    dict.push({
+                stat: 'Attack',
+                value: pokemons[0]['attack']
+            });
+    dict.push({
+                stat: 'Sp. Attack',
+                value: pokemons[0]['sp_attack']
+            });
+    dict.push({
+                stat: 'Defense',
+                value: pokemons[0]['defense']
+            });
+    dict.push({
+                stat: 'Sp. Defense',
+                value: pokemons[0]['sp_defense']
+            });
+    dict.push({
+                stat: 'Speed',
+                value: pokemons[0]['speed']
+            });
+    return dict;
 }
 
 function addType(type){
