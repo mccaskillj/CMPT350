@@ -6,8 +6,9 @@
 <html lang="en">
 
 <div class="tab">
-      <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Single')"  id="defaultOpen">Single Lookup</a>
-      <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Double')">Double Compare</a>
+    <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Single')"  id="defaultOpen">Single Lookup</a>
+    <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Double')">Double Compare</a>
+    <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Multi')">Multiple Pokemon</a>
 </div>
 
 <div id="Single" class="tabcontent" style="background-color: white">
@@ -26,7 +27,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search Pokemon" id="tags">
                         <span class="input-group-btn" style="width:0;">
-                            <button class="btn btn-default" type="button" onclick="showPokemon()">Go!</button>
+                            <button class="btn btn-default" type="button" onclick="showPokemon()" id="sb">Go!</button>
                         </span>
                     </div>
                 </div>
@@ -36,14 +37,17 @@
             <div class="secondPoke" style="font-family: sans-serif; font-size: 20px;">
                 <div id="radioBut" style="padding-top: 15px">
                     <label class="radio-inline" id="normal">
-                        <input type="radio" name="optradio" checked>Normal
+                        <input id="checkNormal" type="radio" name="optradio" checked>Normal
                     </label>
                     <label class="radio-inline" id="shinny">
-                        <input type="radio" name="optradio">Shinny
+                        <input type="radio" name="optradio">Shiny
                     </label>
                 </div>
             </div>
         </div>
+
+        <hr style="background-color: black">
+
         <div>
             <div class="fontStyleSinglePoke singleStatsLeft">
                 <div id="singleIndex">
@@ -89,7 +93,7 @@
         <div>
             <div id="radioBut2" class="singleBarRadio">
                 <label class="radio-inline">
-                    <input type="radio" name="optradio2" checked>Bar Chart
+                    <input id="checkBar" type="radio" name="optradio2" checked>Bar Chart
                 </label>
                 <label class="radio-inline">
                     <input type="radio" name="optradio2">Pie Chart
@@ -101,10 +105,21 @@
 
         <!-- Svg bar graph div-->
         <div style="height: 534px" >
-            <div id="singleChart" >
+            <div class="testLeft">
+                <h4 style="padding-left: 200px">Pokemon Stats</h4>
+                <div id="singleChart" >
 
 
-        </div>
+                </div>
+            </div>
+
+            <div class="testRight">
+                <h4 style="padding-left: 160px; padding-top: 10px">Derived Pokemon Stats</h4>
+                <div id="singleChart2">
+
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -113,7 +128,7 @@
 </div>
 
 <div id="Double" class="tabcontent" style="background-color: white">
-    <div class="grad">
+    <div class="grad" >
       VS
     </div>
     <div class="doublePokeStatsDiv">
@@ -136,6 +151,34 @@
                     </span>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div id="Multi" class="tabcontent" style="background-color: white">
+    <div class="multiTop" >
+        <div class="multiTextInputPad">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search Pokemon" id="addPoke">
+                <span class="input-group-btn" style="width:0;">
+                    <button class="btn btn-default" type="button" onclick="addB()">Add Pokemon</button>
+                </span>
+
+            </div>
+        </div>
+
+        <hr style="background-color: black">
+
+        <div id="pokeBadges" style="padding-left: 40px;">
+
+
+        </div>
+    </div>
+
+    <div class="multiStatsDiv">
+        <div id="multiChart" >
+
+
         </div>
     </div>
 </div>

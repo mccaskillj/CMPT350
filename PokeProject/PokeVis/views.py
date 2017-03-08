@@ -119,6 +119,5 @@ def get_single_pokemon(request):
         temp_array.append(poke)
 
     json_string = json.dumps([ob.__dict__ for ob in temp_array])
-    print(json_string)
 
     return HttpResponse(json_string, content_type='application/json')
