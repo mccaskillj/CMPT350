@@ -4,7 +4,6 @@
 
 function addPokeOneDouble() {
     var selectPoke = document.getElementById("poke1").value;
-        console.log(selectPoke);
 
         if (selectPoke != ""){
             $.ajax({
@@ -13,6 +12,8 @@ function addPokeOneDouble() {
             data: {"name": selectPoke},
             dataType: 'JSON',                //data format
             success: function(pokemons) {
+                console.log(pokemons);
+
                 var unwantedFirst = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
                                 'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
                                 'phys_sweeper', 'sp_sweeper', 'wall', 'phys_tank', 'sp_tank'];
@@ -35,6 +36,8 @@ function addPokeOneDouble() {
                 document.getElementById('singleGenDouble').innerHTML = pokemons[0]['generation'];
 
                 document.getElementById('singleGenDouble').innerHTML = pokemons[0]['generation'];
+
+                document.getElementById('dPoke').innerHTML = selectPoke;
 
                 $("#singleTypeDouble  span").remove();
                 addType(pokemons[0]['type_1'], "singleTypeDouble");
@@ -96,6 +99,9 @@ function addPokeTwoDouble() {
                 document.getElementById('singleGenDouble2').innerHTML = pokemons[0]['generation'];
 
                 document.getElementById('singleGenDouble2').innerHTML = pokemons[0]['generation'];
+
+
+                document.getElementById('dPoke2').innerHTML = selectPoke;
 
                 $("#singleTypeDouble2  span").remove();
                 addType(pokemons[0]['type_1'], "singleTypeDouble2");

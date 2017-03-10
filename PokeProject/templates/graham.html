@@ -1,10 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% load static %}
+
+{% block content %}
+<html lang="en">
+
+<div class="tab">
+    <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Single')"  id="defaultOpen">Single Lookup</a>
+</div>
+
+<div id="Single" class="tabcontent" style="background-color: white">
+    <div class="grad2">
+        <div class="singleImageFront" style="padding-left: 70px">
+            <img id="frontImg" style="width: 400px; height: 350px;" src="{% static "images/front/0.png" %}" alt="My image"/>
+        </div>
+        <div class="singleImageBack" style="padding-left: 20px">
+            <img id="backImg" style="width: 400px; height: 350px" src="{% static "images/back/0.png" %}" alt="My image"/>
+        </div>
+    </div>
+    <div class="doublePokeStatsDiv">
+        <div>
+            <div class="firstPoke">
+                <div class="singleComparePosition">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search Pokemon" id="tags">
+                        <span class="input-group-btn" style="width:0;">
+                            <button class="btn btn-default" type="button" id="sb">Go!</button>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="secondPoke" style="font-family: sans-serif; font-size: 20px;">
+                <div id="radioBut" style="padding-top: 15px">
+                    <label class="radio-inline" id="normal">
+                        <input id="checkNormal" type="radio" name="optradio" checked>Normal
+                    </label>
+                    <label class="radio-inline" id="shinny">
+                        <input type="radio" name="optradio">Shiny
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Svg bar graph div-->
+        <div style="height: 534px" >
+            <div class="testLeft">
+                <h4 style="padding-left: 200px">Pokemon Stats</h4>
+                <div id="singleChart">
+                    <svg id="sChart"></svg>
+
+                </div>
+            </div>
+
+            <div class="testRight">
+                <h4 style="padding-left: 160px; padding-top: 10px">Derived Pokemon Stats</h4>
+
+                <div id="singleChart2">
+                    <svg id="sChart2"></svg>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+<script type="text/javascript" src="{% static "js/testingChart.js" %}"></script>
+
+
+{% endblock %}

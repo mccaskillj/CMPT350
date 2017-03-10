@@ -1,0 +1,13 @@
+[{"model": "PokeVis.type", "pk": 1, "fields": {"type": "Normal", "zero_damage": "Ghost",
+        "normal": "Normal,Fighting,Flying,Poison,Ground,Bug,Fire,Water,Grass,Electric,Psychic,Ice,Dragon,Dark,Fairy",
+        "two_times": "", "half_damage": "Rock,Steel"}},
+  {"model": "PokeVis.type", "pk": 2, "fields": {"type": "Fighting", "zero_damage": "Ghost",
+        "normal": "Fighting,Ground,Fire,Water,Grass,Electric,Dragon",
+        "two_times": "Normal,Rock,Steel,Ice,Dark", "half_damage": "Flying,Poison,Bug,Psychic,Fairy"}},
+  {"model": "PokeVis.type", "pk": 3, "fields": {"type": "Flying", "zero_damage": "",
+          "normal": "Normal,Flying,Poison,Ground,Ghost,Fire,Water,Psychic,Ice,Dragon,Dark,Fairy",
+          "two_times": "Fighting,Bug,Grass", "half_damage": "Rock,Steel,Electric"}},
+  {"model": "PokeVis.type", "pk": 4, "fields": {"type": "Poison", "zero_damage": "Steel",
+            "normal": "Normal,Fighting,Flying,Bug,Fire,Water,Electric,Psychic,Ice,Dragon,Dark",
+            "two_times": "Grass,Fairy", "half_damage": "Poison,Ground,Rock,Ghost"}}]
+
