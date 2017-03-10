@@ -21,6 +21,7 @@ class Poke:
     body_style = ""
     type_1 = ""
     type_2 = ""
+    url = ""
 
     # Derived stats
     phys_sweeper = 0    # Physical Sweeper = Attack + Speed
@@ -58,6 +59,7 @@ class Poke:
         self.wall = hp + defense + sp_defense
         self.phys_tank = attack + defense
         self.sp_tank = sp_attack + sp_defense
+        self.url = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + str(index) + 'png'
 
     def __str__(self, *args, **kwargs):
         return super().__str__(*args, **kwargs)

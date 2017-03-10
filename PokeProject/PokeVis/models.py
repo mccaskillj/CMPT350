@@ -30,3 +30,14 @@ class Pokemon(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Type(models.Model):
+    type = models.CharField(max_length=25)
+    zero_damage = models.CharField(max_length=150)
+    normal = models.CharField(max_length=150)
+    two_times = models.CharField(max_length=150)
+    half_damage = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.name
