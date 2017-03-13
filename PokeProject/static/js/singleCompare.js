@@ -126,7 +126,7 @@ function drawGraphs(id, id2, data, w, h){
         .delay(function (d, i) {
             return i / data.length * 2000;   // <-- Where the magic happens
         })
-        .duration(1500)
+        .duration(2000)
         .attr("class", "bar")
         .attr("fill", "#90caf9")
         .attr("x", function(d) { return xScale(d.stat); })
