@@ -27,7 +27,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search Pokemon" id="tags">
                         <span class="input-group-btn" style="width:0;">
-                            <button class="btn btn-default" type="button" onclick="showPokemon()" id="sb">Go!</button>
+                            <button class="btn btn-default" type="button" onclick="singleLookup()" id="sb">Go!</button>
                         </span>
                     </div>
                 </div>
@@ -310,8 +310,10 @@
     </div>
 </div>
 
-<script type="text/javascript" src="{% static "js/pcompare.js" %}"></script>
-<script type="text/javascript" src="{% static "js/pcompareDouble.js" %}"></script>
-<script type="text/javascript" src="{% static "js/pcompareMulti.js" %}"></script>
+<!--new JS files-->
+<script type="text/javascript" src="{% static "js/pcompareHelpers.js" %}"></script>
+<script type="text/javascript" src="{% static "js/singleCompare.js" %}"></script>
+<script type="text/javascript" src="{% static "js/doubleCompare.js" %}"></script>
+<script type="text/javascript" src="{% static "js/multiCompare.js" %}"></script>
 
 {% endblock %}
