@@ -126,13 +126,21 @@ def get_single_pokemon(request):
 
 def get_filtered_pokemon(request):
     temp_array = []
+    pokemons = []
     gen_val = request.GET.get('gen', None)
     type_val = request.GET.get('type', None)
     color_val = request.GET.get('color', None)
-    pokemons = Pokemon.objects.filter(generation=gen_val,
-                                      type_1=type_val,
-                                      type_2=type_val,
-                                      color=color_val)
+
+    if gen_val == "All Generations" and type_val == "All Types" and color_val == "All Colors":
+        pokemons = Pokemon.objects.all()
+    elif gen_val != "All Generations" and type_val == "All Types" and color_val == "All Colors":
+        temp = gen_val.split(" ")
+        pokemons = Pokemon.objects.filter(generation=temp[1])
+    elif gen_val == "All Generations" and type_val != "All Types" and color_val == "All Colors":
+        pokemons = Pokemon.objects.filter(type_1=type_val,
+                                          type_2=type_val)
+    elif gen_val == "All Generations" and type_val == "All Types" and color_val != "All Colors":
+        pokemons = Pokemon.objects.filter(color=color_val)
 
     for item in pokemons:
         poke = Poke(item.number, item.total, item.hp, item.attack, item.defense, item.special_attack,

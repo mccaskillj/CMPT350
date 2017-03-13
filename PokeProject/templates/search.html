@@ -5,6 +5,7 @@
 {% block content %}
 
 <div class='one'>
+    <!-- Generation select drop down-->
     <div style='padding-left: 25px; padding-top: 10px; padding-right: 25px'>
         <div>
             <label>Choose Generation:</label>
@@ -20,6 +21,7 @@
 
     </div>
 
+    <!-- Type select drop down-->
     <div style='padding-left: 25px; padding-top: 10px; padding-right: 25px'>
         <div>
             <label>Choose Type:</label>
@@ -34,6 +36,7 @@
         </div>
     </div>
 
+    <!-- Color select drop down-->
     <div style='padding-left: 25px; padding-top: 10px; padding-right: 25px'>
         <div>
             <label>Choose Color:</label>
@@ -48,21 +51,84 @@
         </div>
     </div>
 
-
+    <!-- Weight range slider-->
     <div style='padding-left: 25px; padding-top: 25px; padding-right: 20px'>
         <p style='background-color: #aaaaaa'>
             <label for='amount'>Weight range:</label>
-            <input type='text' id='amount' readonly style='font-weight:bold; background-color: #aaaaaa'>
-            <label id='amount'>3</label>
+            <input type='text' id='amountW' readonly style='font-weight:bold; background-color: white'>
         </p>
 
         <div id='slider-range'></div>
     </div>
 
+    <!-- height range slider-->
+    <div style='padding-left: 25px; padding-top: 25px; padding-right: 20px'>
+        <p style='background-color: #aaaaaa'>
+            <label for='amount'>Height range:</label>
+            <input type='text' id='amountH' readonly style='font-weight:bold; background-color: white'>
+        </p>
 
-    <div style='padding-top: 30px; width: 240px; padding-left: 25px'>
-        <label for='amount' id='value' style='padding-bottom: 10px'>Weight range:</label>
-        <div class='flat-slider' id='flat-slider' ></div>
+        <div id='slider-range2'></div>
+    </div>
+
+    <!-- HP range slider-->
+    <div style='padding-left: 25px; padding-top: 25px; padding-right: 20px'>
+        <p style='background-color: #aaaaaa'>
+            <label for='amount'>HP range:</label>
+            <input type='text' id='amountHP' readonly style='font-weight:bold; background-color: white'>
+        </p>
+        <div id='slider-range3'></div>
+    </div>
+
+    <!-- Attack range slider-->
+    <div style='padding-left: 25px; padding-top: 25px; padding-right: 20px'>
+        <p style='background-color: #aaaaaa'>
+            <label for='amount'>Attack range:</label>
+            <input type='text' id='amountA' readonly style='font-weight:bold; background-color: white'>
+        </p>
+        <div id='slider-range4'></div>
+    </div>
+
+    <!-- Defense range slider-->
+    <div style='padding-left: 25px; padding-top: 25px; padding-right: 20px'>
+        <p style='background-color: #aaaaaa'>
+            <label for='amount'>Defense range:</label>
+            <input type='text' id='amountD' readonly style='font-weight:bold; background-color: white'>
+        </p>
+        <div id='slider-range5'></div>
+    </div>
+
+    <!-- Sp. Attack range slider-->
+    <div style='padding-left: 25px; padding-top: 25px; padding-right: 20px'>
+        <p style='background-color: #aaaaaa'>
+            <label for='amount'>Sp. Attack range:</label>
+            <input type='text' id='amountSA' readonly style='font-weight:bold; background-color: white'>
+        </p>
+        <div id='slider-range6'></div>
+    </div>
+
+    <!-- Sp. Defense range slider-->
+    <div style='padding-left: 25px; padding-top: 25px; padding-right: 20px'>
+        <p style='background-color: #aaaaaa'>
+            <label for='amount'>Sp. Defense range:</label>
+            <input type='text' id='amountSD' readonly style='font-weight:bold; background-color: white'>
+        </p>
+        <div id='slider-range7'></div>
+    </div>
+
+    <!-- Speed range slider-->
+    <div style='padding-left: 25px; padding-top: 25px; padding-right: 20px'>
+        <p style='background-color: #aaaaaa'>
+            <label for='amount'>Speed range:</label>
+            <input type='text' id='amountSP' readonly style='font-weight:bold; background-color: white'>
+        </p>
+        <div id='slider-range8'></div>
+    </div>
+
+    <br><br>
+
+    <div style="padding-left: 25px;">
+        <input style="width: 220px" class="btn btn-default" type="submit" value="Submit" onclick="getFilteredPokemon()">
     </div>
 
 </div>
@@ -295,39 +361,8 @@
     });
 </script>
 
-<script>
-    $('.selectpicker').selectpicker({
-      style: 'btn-info',
-      size: 4
-    });
-</script>
-
-<script>
-    $( function() {
-    $( '#slider-range' ).slider({
-      range: true,
-      min: 0,
-      max: 952,
-      values: [ 75, 300 ],
-      slide: function( event, ui ) {
-        $( '#amount' ).val(ui.values[ 0 ] + ' - ' + ui.values[ 1 ] );
-      }
-    });
-    $( '#amount' ).val( $( '#slider-range' ).slider( 'values', 0 ) +
-      ' - ' + $( '#slider-range' ).slider( 'values', 1 ) );
-    } );
-
-</script>
-
-<script>
-    $('#flat-slider').slider({
-        orientation: 'horizontal',
-        range:       true,
-        values:      [0, 952],
-
-    });
-</script>
-
+    <script type="text/javascript" src="{% static "js/searchAjax.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/searchHelpers.js" %}"></script>
 
 {% endblock %}
 
