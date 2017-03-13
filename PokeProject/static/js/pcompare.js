@@ -349,8 +349,6 @@ function createDefaultGraphs(id, data){
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-    var bar = svg.selectAll(".bar");
-
     //create bars
     svg.selectAll(".bar")
         .data(data)
@@ -360,8 +358,7 @@ function createDefaultGraphs(id, data){
         .delay(function (d, i) {
             return i / data.length * 2000;   // <-- Where the magic happens
         })
-        .duration(2000)
-        .ease("elastic")
+        .duration(1500)
         .attr("class", "bar")
         .attr("fill", "#90caf9")
         .attr("x", function(d) { return xScale(d.stat); })
@@ -382,9 +379,9 @@ function createDefaultGraphs(id, data){
     //drawing the y axis on svg
     svg.append("g")
         .attr("class", "y axis")
+        .style("font-size","15px")
         .call(yAxis)
         .append("text")
-        .style("font-size","14px")
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
         .attr("dy", ".71em")

@@ -9,5 +9,14 @@
           "two_times": "Fighting,Bug,Grass", "half_damage": "Rock,Steel,Electric"}},
   {"model": "PokeVis.type", "pk": 4, "fields": {"type": "Poison", "zero_damage": "Steel",
             "normal": "Normal,Fighting,Flying,Bug,Fire,Water,Electric,Psychic,Ice,Dragon,Dark",
-            "two_times": "Grass,Fairy", "half_damage": "Poison,Ground,Rock,Ghost"}}]
+            "two_times": "Grass,Fairy", "half_damage": "Poison,Ground,Rock,Ghost"}},
+  {"model": "PokeVis.type", "pk": 5, "fields": {"type": "Ground", "zero_damage": "Flying",
+            "normal": "Normal,Fighting,Ground,Ghost,Water,Psychic,Ice,Dragon,Dark,Fairy",
+            "two_times": "Poison,Rock,Steel,Fire,Electric", "half_damage": "Bug,Grass"}},
+  {"model": "PokeVis.type", "pk": 6, "fields": {"type": "Ground", "zero_damage": "Flying",
+            "normal": "Normal,Fighting,Ground,Ghost,Water,Psychic,Ice,Dragon,Dark,Fairy",
+            "two_times": "Poison,Rock,Steel,Fire,Electric", "half_damage": "Bug,Grass"}},
+  {"model": "PokeVis.type", "pk": 7, "fields": {"type": "Rock", "zero_damage": "",
+            "normal": "Normal,Poison,Rock,Ghost,Water,Grass,Psychic,Electric,Dragon,Dark,Fairy",
+            "two_times": "Flying,Bug,Fire,Ice", "half_damage": "Fighting,Ground,Steel"}}]
 
