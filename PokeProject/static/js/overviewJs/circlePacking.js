@@ -2,7 +2,6 @@
  * Created by carmichael on 2017-03-15.
  */
 
-console.log("Hi");
 fetchData();
 
 function  fetchData() {
@@ -15,14 +14,11 @@ function  fetchData() {
             console.log(pokemons);
             drawPacking(pokemons);
 
-            console.log("Hi9");
         },
         failure: function(pokemons) {
             alert('Got an error dude');
-            console.log("Hi9");
         }
     });
-    console.log("Hi5");
 }
 
 function drawPacking(data) {
@@ -38,9 +34,6 @@ function drawPacking(data) {
         .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
         .interpolate(d3.interpolateHcl);
 
-    var pack = d3.pack()
-        .size([diameter - margin, diameter - margin])
-        .padding(2);
 
     d3.data(data, function (error, root) {
         if (error) throw error;
@@ -52,6 +45,10 @@ function drawPacking(data) {
             .sort(function (a, b) {
                 return b.value - a.value;
             });
+
+        var pack = d3.pack()
+        .size([diameter - margin, diameter - margin])
+        .padding(2);
 
         var focus = root;
         var nodes = pack(root).descendants();
