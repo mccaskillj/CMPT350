@@ -152,3 +152,34 @@ def get_filtered_pokemon(request):
     json_string = json.dumps([ob.__dict__ for ob in temp_array])
 
     return HttpResponse(json_string, content_type='application/json')
+
+
+def get_data(request):
+    pokemonDictionary = {"name": "Pokemon"}
+    tempGendict = []
+    type = set()
+    size = 1000
+
+    for i in range(1, 7):
+        pokelist = Pokemon.objects.filter(generation=str(i))
+        for j in pokelist:
+            type.add(j.type_1)
+        tempTypeArray = []
+        for ty in type:
+            refinedlist = Pokemon.objects.filter(generation=str(i), type_1=ty)
+            temp = []
+            for k in refinedlist:
+                temp.append({"name": k.name, "size": size})
+            tempTypeArray.append({"name": ty, "children": temp})
+
+        tempGendict.append({"name": "Generation " + str(i), "children": tempTypeArray})
+
+        type.clear()
+
+    pokemonDictionary["children"] = tempGendict
+
+    json_string = json.dumps(pokemonDictionary)
+
+    print(json_string)
+
+    return HttpResponse(json_string, content_type='application/json')

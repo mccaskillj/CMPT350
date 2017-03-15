@@ -4,30 +4,41 @@
 
 {% block content %}
 
+    <style>
+
+    .node {
+      cursor: pointer;
+    }
+
+    .node:hover {
+      stroke: #000;
+      stroke-width: 1.5px;
+    }
+
+    .node--leaf {
+      fill: white;
+    }
+
+    .label {
+      font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+      text-anchor: middle;
+      text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+    }
+
+    .label,
+    .node--root,
+    .node--leaf {
+      pointer-events: none;
+    }
+
+    </style>
+
+
     <div id="cirlcesd3" style="background-color: white; width: 1024px; height: 718px">
-        <script type="text/javascript">
-			//Width and height
-			var w = 1024;
-			var h = 918;
-
-			//Create SVG element
-			var svg = d3.select("#cirlcesd3")
-						.append("svg")
-						.attr("width", w)
-						.attr("height", h);
-
-			//Draw the Circle
-            var circle = svg.append("circle")
-                            .attr("cx", 500)
-                            .attr("cy", 359)
-                            .attr("r", 355)
-                            .attr("fill", "white")
-                            .attr("stroke", "black");
-
-
-		</script>
-
+        <svg width="960" height="960"></svg>
 
     </div>
+
+    <script type="text/javascript" src="{% static "js/overviewJs/circlePacking.js" %}"></script>
 
 {% endblock %}
