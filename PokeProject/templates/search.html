@@ -125,12 +125,6 @@
         <div id='slider-range8'></div>
     </div>
 
-    <br><br>
-
-    <div style="padding-left: 25px;">
-        <input style="width: 220px" class="btn btn-default" type="submit" value="Submit" onclick="getFilteredPokemon()">
-    </div>
-
 </div>
 
 <div class='two'>
@@ -138,22 +132,22 @@
         <label class='paddingBubble'>Bubble Size By:</label>
         <form action='' class='paddingBubbleRadio' id="StatRadio">
             <label class='radio-inline'>
-                <input type='radio' name='optradio' checked>Total
+                <input type='radio' name='optradio' value="total" checked>Total
             </label>
             <label class='radio-inline'>
-                <input type='radio' name='optradio'>HP
+                <input type='radio' name='optradio' value="hp">HP
             </label>
             <label class='radio-inline'>
-                <input type='radio' name='optradio'>Attack
+                <input type='radio' name='optradio' value="attack">Attack
             </label>
             <label class='radio-inline'>
-                <input type='radio' name='optradio'>Defense
+                <input type='radio' name='optradio' value="defense">Defense
             </label>
             <label class='radio-inline'>
-                <input type='radio' name='optradio'>Sp. Attack
+                <input type='radio' name='optradio' value="sp_attack">Sp. Attack
             </label>
             <label class='radio-inline'>
-                <input type='radio' name='optradio'>Sp. Defense
+                <input type='radio' name='optradio' value="sp_defense">Sp. Defense
             </label>
         </form>
     </div>
@@ -243,9 +237,9 @@
     });
 </script>
 
-    <script type="text/javascript" src="{% static "js/searchAjax.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/searchHelpers.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/searchDisplay.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/searchJs/searchAjax.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/searchJs/searchHelpers.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/searchJs/searchDisplay.js" %}"></script>
 
 {% endblock %}
 

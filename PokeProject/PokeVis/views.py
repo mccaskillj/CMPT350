@@ -2,8 +2,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from PokeVis.models import Pokemon
 from django.core import serializers
-from django.http import JsonResponse
+from django.db.models import Q
 from PokeVis.poke import Poke
+from PokeVis.searchData import SearchData
+
 import json
 
 # Create your views here.
@@ -127,26 +129,83 @@ def get_single_pokemon(request):
 def get_filtered_pokemon(request):
     temp_array = []
     pokemons = []
+    new = []
+
     gen_val = request.GET.get('gen', None)
     type_val = request.GET.get('type', None)
     color_val = request.GET.get('color', None)
+    weight_val = request.GET.get('weight', None)
+    height_val = request.GET.get('height', None)
+    hp_val = request.GET.get('hp', None)
+    attack_val = request.GET.get('attack', None)
+    defense_val = request.GET.get('defense', None)
+    sp_attack_val = request.GET.get('sp_attack', None)
+    sp_defense_val = request.GET.get('sp_defense', None)
+    speed_val = request.GET.get('speed', None)
+    radio = request.GET.get('radio', None)
 
-    if gen_val == "All Generations" and type_val == "All Types" and color_val == "All Colors":
-        pokemons = Pokemon.objects.all()
-    elif gen_val != "All Generations" and type_val == "All Types" and color_val == "All Colors":
+    pokemons = Pokemon.objects.all()
+
+    if gen_val != "All Generations":
         temp = gen_val.split(" ")
-        pokemons = Pokemon.objects.filter(generation=temp[1])
-    elif gen_val == "All Generations" and type_val != "All Types" and color_val == "All Colors":
-        pokemons = Pokemon.objects.filter(type_1=type_val,
-                                          type_2=type_val)
-    elif gen_val == "All Generations" and type_val == "All Types" and color_val != "All Colors":
-        pokemons = Pokemon.objects.filter(color=color_val)
+        new = pokemons.filter(generation=temp[1])
+        print("Gen: ", new.count())
+    if type_val != "All Types":
+        new = new.filter(Q(type_1=type_val) | Q(type_2=type_val))
+        print("type: ",new.count())
+    if color_val != "All Colors":
+        new = new.filter(color=color_val)
+        print("color: ",new.count())
 
-    for item in pokemons:
-        poke = Poke(item.number, item.total, item.hp, item.attack, item.defense, item.special_attack,
-                    item.special_defense, item.speed, item.weight_kg, item.height_m, item.color, item.name,
-                    item.egg_group_1, item.egg_group_2, item.generation, item.catch_rate, item.is_legendary,
-                    item.body_style, item.type_1, item.type_2)
+    # Weight
+    temp = weight_val.split(" - ")
+    new = new.filter(Q(weight_kg__gte=int(temp[0])) & Q(weight_kg__lte=temp[1]))
+
+    # Height
+    temp = height_val.split(" - ")
+    new = new.filter(Q(height_m__gte=int(temp[0])) & Q(height_m__lte=temp[1]))
+
+    # Hp
+    temp = hp_val.split(" - ")
+    new = new.filter(Q(hp__gte=int(temp[0])) & Q(hp__lte=temp[1]))
+
+    # Attack
+    temp = attack_val.split(" - ")
+    new = new.filter(Q(attack__gte=int(temp[0])) & Q(attack__lte=temp[1]))
+
+    # Defense
+    temp = defense_val.split(" - ")
+    new = new.filter(Q(defense__gte=int(temp[0])) & Q(defense__lte=temp[1]))
+
+    # Sp Attack
+    temp = sp_attack_val.split(" - ")
+    new = new.filter(Q(special_attack__gte=int(temp[0])) & Q(special_attack__lte=temp[1]))
+
+    # Sp Defense
+    temp = sp_defense_val.split(" - ")
+    new = new.filter(Q(special_defense__gte=int(temp[0])) & Q(special_defense__lte=temp[1]))
+
+    # Speed
+    temp = speed_val.split(" - ")
+    new = new.filter(Q(speed__gte=int(temp[0])) & Q(speed__lte=temp[1]))
+
+    print("hp: ", new.count())
+
+    # Passing back data: what ever radio button is selected -> stat value. name, pokedex, height, weight
+
+    for item in new:
+        if radio == "total":
+            poke = SearchData(item.number, item.total, item.weight_kg, item.height_m, item.name)
+        elif radio == "hp":
+            poke = SearchData(item.number, item.hp, item.weight_kg, item.height_m, item.name)
+        elif radio == "attack":
+            poke = SearchData(item.number, item.attack, item.weight_kg, item.height_m, item.name)
+        elif radio == "defense":
+            poke = SearchData(item.number, item.defense, item.weight_kg, item.height_m, item.name)
+        elif radio == "sp_attack":
+            poke = SearchData(item.number, item.special_attack, item.weight_kg, item.height_m, item.name)
+        elif radio == "sp_defense":
+            poke = SearchData(item.number, item.special_defense, item.weight_kg, item.height_m, item.name)
         temp_array.append(poke)
 
     json_string = json.dumps([ob.__dict__ for ob in temp_array])
