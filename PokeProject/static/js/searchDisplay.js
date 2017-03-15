@@ -102,11 +102,11 @@ svg.selectAll("circle")
     })
     .attr('stroke','black');
 
-d3.select('#genBody').on('change', function () {
-    for(var i =0;i<23;i++){
-        var num = Math.floor(Math.random()*35)+26;
+function updater(dataset,svg,rScale,offset) {
+    for (var i = 0; i < 23; i++) {
+        var num = Math.floor(Math.random() * 35) + 26;
         dataset[i][3] = num;
-        dataset[i][2] = Math.floor(Math.random()*721)+1;
+        dataset[i][2] = Math.floor(Math.random() * 721) + 1;
     }
 
     rScale.domain(minmax(dataset));
@@ -121,214 +121,52 @@ d3.select('#genBody').on('change', function () {
         .attr('r', function (d) {
             return rScale(d[3]);
         })
+}
+
+d3.select('#genBody').on('change', function () {
+    updater(dataset,svg,rScale,offset);
 });
 
 d3.select('#typeBody').on('change', function () {
-    for(var i =0;i<23;i++){
-        var num = Math.floor(Math.random()*35)+26;
-        dataset[i][3] = num;
-        dataset[i][2] = Math.floor(Math.random()*721)+1;
-    }
-
-    rScale.domain(minmax(dataset));
-    offset.domain(minmax(dataset));
-
-    for (i = 0; i < 23; i++) {
-        $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
-            .attr('x', offset(dataset[i][3]))
-            .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
-    }
-    svg.selectAll("circle")
-        .attr('r', function (d) {
-            return rScale(d[3]);
-        })
+    updater(dataset,svg,rScale,offset);
 });
 
 d3.select('#colorBody').on('change', function () {
-    for(var i =0;i<23;i++){
-        var num = Math.floor(Math.random()*35)+26;
-        dataset[i][3] = num;
-        dataset[i][2] = Math.floor(Math.random()*721)+1;
-    }
-
-    rScale.domain(minmax(dataset));
-    offset.domain(minmax(dataset));
-
-    for (i = 0; i < 23; i++) {
-        $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
-            .attr('x', offset(dataset[i][3]))
-            .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
-    }
-    svg.selectAll("circle")
-        .attr('r', function (d) {
-            return rScale(d[3]);
-        })
+    updater(dataset,svg,rScale,offset);
 });
 
 d3.select('#slider-range').on('click', function () {
-    for(var i =0;i<23;i++){
-        var num = Math.floor(Math.random()*35)+26;
-        dataset[i][3] = num;
-        dataset[i][2] = Math.floor(Math.random()*721)+1;
-    }
-
-    rScale.domain(minmax(dataset));
-    offset.domain(minmax(dataset));
-
-    for (i = 0; i < 23; i++) {
-        $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
-            .attr('x', offset(dataset[i][3]))
-            .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
-    }
-    svg.selectAll("circle")
-        .attr('r', function (d) {
-            return rScale(d[3]);
-        })
+    updater(dataset,svg,rScale,offset);
 });
 
 d3.select('#slider-range2').on('click', function () {
-    for(var i =0;i<23;i++){
-        var num = Math.floor(Math.random()*35)+26;
-        dataset[i][3] = num;
-        dataset[i][2] = Math.floor(Math.random()*721)+1;
-    }
-
-    rScale.domain(minmax(dataset));
-    offset.domain(minmax(dataset));
-
-    for (i = 0; i < 23; i++) {
-        $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
-            .attr('x', offset(dataset[i][3]))
-            .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
-    }
-    svg.selectAll("circle")
-        .attr('r', function (d) {
-            return rScale(d[3]);
-        })
+    updater(dataset,svg,rScale,offset);
 });
 
 d3.select('#slider-range3').on('click', function () {
-    for(var i =0;i<23;i++){
-        var num = Math.floor(Math.random()*35)+26;
-        dataset[i][3] = num;
-        dataset[i][2] = Math.floor(Math.random()*721)+1;
-    }
-
-    rScale.domain(minmax(dataset));
-    offset.domain(minmax(dataset));
-
-    for (i = 0; i < 23; i++) {
-        $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
-            .attr('x', offset(dataset[i][3]))
-            .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
-    }
-    svg.selectAll("circle")
-        .attr('r', function (d) {
-            return rScale(d[3]);
-        })
+    updater(dataset,svg,rScale,offset);
 });
 
 d3.select('#slider-range4').on('click', function () {
-    for(var i =0;i<23;i++){
-        var num = Math.floor(Math.random()*35)+26;
-        dataset[i][3] = num;
-        dataset[i][2] = Math.floor(Math.random()*721)+1;
-    }
-
-    rScale.domain(minmax(dataset));
-    offset.domain(minmax(dataset));
-
-    for (i = 0; i < 23; i++) {
-        $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
-            .attr('x', offset(dataset[i][3]))
-            .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
-    }
-    svg.selectAll("circle")
-        .attr('r', function (d) {
-            return rScale(d[3]);
-        })
+    updater(dataset,svg,rScale,offset);
 });
 
 d3.select('#slider-range5').on('click', function () {
-    for(var i =0;i<23;i++){
-        var num = Math.floor(Math.random()*35)+26;
-        dataset[i][3] = num;
-        dataset[i][2] = Math.floor(Math.random()*721)+1;
-    }
-
-    rScale.domain(minmax(dataset));
-    offset.domain(minmax(dataset));
-
-    for (i = 0; i < 23; i++) {
-        $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
-            .attr('x', offset(dataset[i][3]))
-            .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
-    }
-    svg.selectAll("circle")
-        .attr('r', function (d) {
-            return rScale(d[3]);
-        })
+    updater(dataset,svg,rScale,offset);
 });
 
 d3.select('#slider-range6').on('click', function () {
-    for(var i =0;i<23;i++){
-        var num = Math.floor(Math.random()*35)+26;
-        dataset[i][3] = num;
-        dataset[i][2] = Math.floor(Math.random()*721)+1;
-    }
-
-    rScale.domain(minmax(dataset));
-    offset.domain(minmax(dataset));
-
-    for (i = 0; i < 23; i++) {
-        $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
-            .attr('x', offset(dataset[i][3]))
-            .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
-    }
-    svg.selectAll("circle")
-        .attr('r', function (d) {
-            return rScale(d[3]);
-        })
+    updater(dataset,svg,rScale,offset);
 });
 
 d3.select('#slider-range7').on('click', function () {
-    for(var i =0;i<23;i++){
-        var num = Math.floor(Math.random()*35)+26;
-        dataset[i][3] = num;
-        dataset[i][2] = Math.floor(Math.random()*721)+1;
-    }
-
-    rScale.domain(minmax(dataset));
-    offset.domain(minmax(dataset));
-
-    for (i = 0; i < 23; i++) {
-        $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
-            .attr('x', offset(dataset[i][3]))
-            .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
-    }
-    svg.selectAll("circle")
-        .attr('r', function (d) {
-            return rScale(d[3]);
-        })
+    updater(dataset,svg,rScale,offset);
 });
 
 d3.select('#slider-range8').on('click', function () {
-    for(var i =0;i<23;i++){
-        var num = Math.floor(Math.random()*35)+26;
-        dataset[i][3] = num;
-        dataset[i][2] = Math.floor(Math.random()*721)+1;
-    }
+    updater(dataset,svg,rScale,offset);
+});
 
-    rScale.domain(minmax(dataset));
-    offset.domain(minmax(dataset));
-
-    for (i = 0; i < 23; i++) {
-        $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
-            .attr('x', offset(dataset[i][3]))
-            .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
-    }
-    svg.selectAll("circle")
-        .attr('r', function (d) {
-            return rScale(d[3]);
-        })
+d3.select('#StatRadio').on('change', function () {
+    updater(dataset,svg,rScale,offset);
 });

@@ -1,3 +1,4 @@
 .idea/
 *.pyc
 PokeProject/db.sqlite3
+*migrations*
