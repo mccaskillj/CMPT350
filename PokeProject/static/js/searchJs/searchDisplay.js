@@ -44,25 +44,11 @@ var dataset = [
     [w9,h3,0,0]];
 
 
-for (var i = 0; i<23; i++){
-    var num = Math.floor(Math.random()*1000)+26;
-    dataset[i][2] = Math.floor(Math.random()*721)+1;
-    dataset[i][3]=num;
-}
-
 var offset = d3.scale.linear()
-    .domain(minmax(dataset))
     .range([-2,30]);
 
 var rScale =  d3.scale.linear()
-    .domain(minmax(dataset))
     .range([25,60]);
-
-for (i = 0; i < 23; i++){
-    $('#image'+i+' image').attr('y',offset(dataset[i][3]))
-        .attr('x',offset(dataset[i][3]))
-        .attr('xlink:href','https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'+dataset[i][2]+'.png');
-}
 
 function minmax(dataset) {
     var min = dataset[0][3];
@@ -82,6 +68,19 @@ function minmax(dataset) {
 
 var url = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png';
 
+var generation = document.getElementById("genBody").value;
+var type = document.getElementById("typeBody").value;
+var color = document.getElementById("colorBody").value;
+var weight = "0 - 952";
+var height = "0 - 14";
+var hp = "0 - 255";
+var attack = "0 - 165";
+var defense = "0 - 230";
+var sp_attack = "0 - 154";
+var sp_defense = "0 - 230";
+var speed = "0 - 160";
+var radio = document.querySelector('input[name = "optradio"]:checked').value;
+
 var svg = d3.select('#mydiv').append('svg').attr('height', h).attr('width', w);
 
 svg.selectAll("circle")
@@ -94,13 +93,55 @@ svg.selectAll("circle")
     .attr('cy',function (d) {
         return d[1];
     })
-    .attr('r', function (d) {
-        return rScale(d[3]);
-    })
     .style('fill', function (d,i) {
         return 'url(#image'+i+')';
     })
     .attr('stroke','black');
+
+
+console.log(generation, type, color, weight, height, hp, attack, defense, sp_attack, sp_defense, speed, radio);
+$.ajax({
+    type: "GET",
+    url: 'ajax/get_filtered_pokemon/', //the script to call to get data
+    data: {"gen": generation, "type":type, "color": color, "weight": weight, "height": height, "hp": hp,
+        "attack": attack, "defense": defense, "sp_attack": sp_attack, "sp_defense": sp_defense, "speed": speed,
+    "radio": radio},
+    dataType: 'json',                //data format
+success: function(pokemons) {
+    var pos = 0;
+    for (var i = 0 ; i < 23; i++){
+        if (pos<pokemons.length) {
+            dataset[i][2] = pokemons[i].id;
+            dataset[i][3] = pokemons[i].stat;
+        } else {
+            dataset[i][2] = 0;
+            dataset[i][3] = 0;
+        }
+        pos++;
+    }
+    rScale.domain(minmax(dataset));
+    offset.domain(minmax(dataset));
+
+    for (i = 0; i < 23; i++) {
+        $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
+            .attr('x', offset(dataset[i][3]))
+            .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
+    }
+    svg.selectAll("circle")
+            .attr('r', function (d) {
+                if (d[3] != 0) {
+                    return rScale(d[3]);
+                } else {
+                    return d[3];
+                }
+            })
+},
+failure: function(pokemons) {
+    alert('Got an error dude');
+}
+});
+
+
 
 function updater(dataset,svg,rScale,offset) {
 
@@ -125,15 +166,35 @@ function updater(dataset,svg,rScale,offset) {
         data: {"gen": generation, "type":type, "color": color, "weight": weight, "height": height, "hp": hp,
             "attack": attack, "defense": defense, "sp_attack": sp_attack, "sp_defense": sp_defense, "speed": speed,
         "radio": radio},
-        dataType: 'JSON',                //data format
+        dataType: 'json',                //data format
     success: function(pokemons) {
-        console.log(pokemons);
-        for (var i = 0 ; i < pokemons.length; i++){
-            pokemonSearchData.push(pokemons[i]);
-                console.log(i + ':' + pokemons[i].name);
-
+        var pos = 0;
+        for (var i = 0 ; i < 23; i++){
+            if (pos<pokemons.length) {
+                dataset[i][2] = pokemons[i].id;
+                dataset[i][3] = pokemons[i].stat;
+            } else {
+                dataset[i][2] = 0;
+                dataset[i][3] = 0;
+            }
+            pos++;
         }
+        rScale.domain(minmax(dataset));
+        offset.domain(minmax(dataset));
 
+        for (i = 0; i < 23; i++) {
+            $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
+                .attr('x', offset(dataset[i][3]))
+                .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
+        }
+        svg.selectAll("circle")
+            .attr('r', function (d) {
+                if (d[3] != 0) {
+                    return rScale(d[3]);
+                } else {
+                    return d[3];
+                }
+            })
 
 
     },
@@ -141,26 +202,6 @@ function updater(dataset,svg,rScale,offset) {
         alert('Got an error dude');
     }
     });
-
-
-    for (var i = 0; i < 23; i++) {
-        var num = Math.floor(Math.random() * 35) + 26;
-        dataset[i][3] = num;
-        dataset[i][2] = Math.floor(Math.random() * 721) + 1;
-    }
-
-    rScale.domain(minmax(dataset));
-    offset.domain(minmax(dataset));
-
-    for (i = 0; i < 23; i++) {
-        $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
-            .attr('x', offset(dataset[i][3]))
-            .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
-    }
-    svg.selectAll("circle")
-        .attr('r', function (d) {
-            return rScale(d[3]);
-        })
 }
 
 d3.select('#genBody').on('change', function () {
