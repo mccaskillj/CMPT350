@@ -104,6 +104,44 @@ svg.selectAll("circle")
     })
     .on("mouseout", function () {
         $("#information").text('Pokemon: "None" Height: "None" Weight: "None"');
+    })
+    .on("click", function (d) {
+        console.log(dataset[0]);
+        var pos = dataset[24];
+        console.log(pos);
+        if (pos - 1 < dataset[23].length) {
+            d[2] = dataset[23][pos].id;
+            d[3] = dataset[23][pos].stat;
+            d[4] = dataset[23][pos].name;
+            d[5] = dataset[23][pos].height;
+            d[6] = dataset[23][pos].weight;
+            dataset[24] = dataset[24] + 1;
+        } else {
+            d[2] = 0;
+            d[3] = 0;
+            d[4] = 0;
+            d[5] = 0;
+            d[6] = 0;
+        }
+
+        rScale.domain(minmax(dataset));
+    offset.domain(minmax(dataset));
+
+    for (i = 0; i < 23; i++) {
+        $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
+            .attr('x', offset(dataset[i][3]))
+            .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
+    }
+    svg.selectAll("circle")
+            .attr('r', function (d) {
+                if (d[3] != 0) {
+                    return rScale(d[3]);
+                } else {
+                    return d[3];
+                }
+            })
+
+        console.log(dataset[0]);
     });
 
 
