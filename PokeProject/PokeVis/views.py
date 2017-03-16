@@ -144,6 +144,7 @@ def get_filtered_pokemon(request):
     speed_val = request.GET.get('speed', None)
     radio = request.GET.get('radio', None)
     print(gen_val)
+
     pokemons = Pokemon.objects.all()
 
     if gen_val != "All Generations":
@@ -212,7 +213,6 @@ def get_filtered_pokemon(request):
 
     json_string = json.dumps([ob.__dict__ for ob in temp_array])
 
-    print(json_string)
     return HttpResponse(json_string, content_type='application/json')
 
 
