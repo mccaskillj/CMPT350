@@ -18,30 +18,32 @@ var w2 = w1 + wi;
 var w4 = w3 + wi;
 var w6 = w5 + wi;
 var w8 = w7 + wi;
+
+//[xvalue, yvalue, pokedex, stat, name, height, weight, radius]
 var dataset = [
-    [w5,h3,0,0,"",0,0],
-    [w2,h2,0,0,"",0,0],
-    [w8,h4,0,0,"",0,0],
-    [w8,h2,0,0,"",0,0],
-    [w2,h4,0,0,"",0,0],
-    [w5,h1,0,0,"",0,0],
-    [w5,h5,0,0,"",0,0],
-    [w4,h2,0,0,"",0,0],
-    [w6,h4,0,0,"",0,0],
-    [w6,h2,0,0,"",0,0],
-    [w4,h4,0,0,"",0,0],
-    [w3,h1,0,0,"",0,0],
-    [w7,h5,0,0,"",0,0],
-    [w7,h1,0,0,"",0,0],
-    [w3,h5,0,0,"",0,0],
-    [w3,h3,0,0,"",0,0],
-    [w7,h3,0,0,"",0,0],
-    [w1,h1,0,0,"",0,0],
-    [w9,h5,0,0,"",0,0],
-    [w9,h1,0,0,"",0,0],
-    [w1,h5,0,0,"",0,0],
-    [w1,h3,0,0,"",0,0],
-    [w9,h3,0,0,"",0,0],
+    [w5,h3,0,0,"",0,0,0],
+    [w2,h2,0,0,"",0,0,0],
+    [w8,h4,0,0,"",0,0,0],
+    [w8,h2,0,0,"",0,0,0],
+    [w2,h4,0,0,"",0,0,0],
+    [w5,h1,0,0,"",0,0,0],
+    [w5,h5,0,0,"",0,0,0],
+    [w4,h2,0,0,"",0,0,0],
+    [w6,h4,0,0,"",0,0,0],
+    [w6,h2,0,0,"",0,0,0],
+    [w4,h4,0,0,"",0,0,0],
+    [w3,h1,0,0,"",0,0,0],
+    [w7,h5,0,0,"",0,0,0],
+    [w7,h1,0,0,"",0,0,0],
+    [w3,h5,0,0,"",0,0,0],
+    [w3,h3,0,0,"",0,0,0],
+    [w7,h3,0,0,"",0,0,0],
+    [w1,h1,0,0,"",0,0,0],
+    [w9,h5,0,0,"",0,0,0],
+    [w9,h1,0,0,"",0,0,0],
+    [w1,h5,0,0,"",0,0,0],
+    [w1,h3,0,0,"",0,0,0],
+    [w9,h3,0,0,"",0,0,0],
     [],
     0];
 
@@ -53,8 +55,15 @@ var rScale =  d3.scale.linear()
     .range([25,60]);
 
 function minmax(dataset) {
-    var min = dataset[0][3];
-    var max = dataset[0][3];
+    var cnt = 0;
+    while(dataset[cnt][3] == 0 && cnt < 23){
+        cnt = cnt + 1;
+    }
+    if (cnt == 23){
+        return [0,0];
+    }
+    var min = dataset[cnt][3];
+    var max = dataset[cnt][3];
     for (var i = 1; i<23; i++){
         if (dataset[i][3] != 0) {
             if (dataset[i][3] < min){
@@ -108,38 +117,64 @@ svg.selectAll("circle")
     .on("click", function (d) {
         console.log(dataset[0]);
         var pos = dataset[24];
+        console.log(dataset[23]);
+        console.log(pos+" "+dataset[23].length);
         console.log(pos);
-        if (pos - 1 < dataset[23].length) {
+        if (pos < dataset[23].length) {
             d[2] = dataset[23][pos].id;
             d[3] = dataset[23][pos].stat;
             d[4] = dataset[23][pos].name;
             d[5] = dataset[23][pos].height;
             d[6] = dataset[23][pos].weight;
-            dataset[24] = dataset[24] + 1;
         } else {
             d[2] = 0;
             d[3] = 0;
-            d[4] = 0;
+            d[4] = "";
             d[5] = 0;
             d[6] = 0;
         }
+        dataset[24] = dataset[24] + 1;
 
-        rScale.domain(minmax(dataset));
-    offset.domain(minmax(dataset));
+        var mm = minmax(dataset);
 
-    for (i = 0; i < 23; i++) {
-        $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
-            .attr('x', offset(dataset[i][3]))
-            .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
-    }
-    svg.selectAll("circle")
-            .attr('r', function (d) {
-                if (d[3] != 0) {
-                    return rScale(d[3]);
+        rScale.domain(mm);
+        offset.domain(mm);
+        console.log(mm);
+
+        for (var i = 0; i<23; i++){
+            if (dataset[i][3] != 0){
+                if (mm[0] == mm[1]){
+                    dataset[i][7] = 60;
                 } else {
-                    return d[3];
+                    dataset[i][7] = rScale(dataset[i][3]);
+                }
+            } else {
+                dataset[i][7]=0
+            }
+        }
+
+        for (i = 0; i < 23; i++) {
+            $('#image' + i + ' image')
+                .attr('y', function () {
+                if (mm[0] == mm[1]){
+                    return 30;
+                }else {
+                    return offset(dataset[i][3]);
                 }
             })
+            .attr('x', function () {
+                if (mm[0] == mm[1]){
+                    return 30;
+                }else {
+                    return offset(dataset[i][3]);
+                }
+            })
+            .attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
+        }
+        svg.selectAll("circle")
+            .attr('r', function (d) {
+                    return d[7];
+            });
 
         console.log(dataset[0]);
     });
