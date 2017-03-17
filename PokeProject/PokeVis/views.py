@@ -209,6 +209,10 @@ def get_filtered_pokemon(request):
             poke = SearchData(item.number, item.special_attack, item.weight_kg, item.height_m, item.name)
         elif radio == "sp_defense":
             poke = SearchData(item.number, item.special_defense, item.weight_kg, item.height_m, item.name)
+
+        # poke = SearchData(item.number, item.special_defense, item.weight_kg, item.height_m, item.name, item.total,
+        #                   item.hp, item.attack, item.defense, item.special_attack, item.special_defense, item.speed)
+
         temp_array.append(poke)
 
     json_string = json.dumps([ob.__dict__ for ob in temp_array])
