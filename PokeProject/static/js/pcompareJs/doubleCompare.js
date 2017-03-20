@@ -111,8 +111,7 @@ d3.select("#doubleClick")
 
                     var id = pokemons[0]['id'];
 
-                    $("#frontImgDouble").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + id + '.png');
-                    //$("#backImgDouble").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/' + id + '.png');
+                    $("#frontImgDouble").attr('src', frontPath + id + '.png');
 
                     document.getElementById('pokedexDouble').innerHTML = pokemons[0]['id'];
                     if (pokemons[0]['is_legendary'] == "TRUE") {
@@ -260,8 +259,7 @@ d3.select("#doubleClick2")
 
                     var id = pokemons[0]['id'];
 
-                    //$("#frontImgDouble").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + id + '.png');
-                    $("#backImgDouble").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + id + '.png');
+                    $("#backImgDouble").attr('src', frontPath + id + '.png');
 
                     document.getElementById('pokedexDouble2').innerHTML = pokemons[0]['id'];
                     if (pokemons[0]['is_legendary'] == "TRUE") {

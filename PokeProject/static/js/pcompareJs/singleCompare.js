@@ -3,27 +3,27 @@
  */
 var inital = [{
             stat: 'Hp',
-            value: 30,
+            value: 0,
             info: 'Hp: Pokemons Health'
         },{
             stat: 'Attack',
-            value: 70,
+            value: 0,
             info: 'Attack'
         },{
             stat: 'Sp. Attack',
-            value: 90,
+            value: 0,
             info: 'Special Attack'
         },{
             stat: 'Defense',
-            value: 160,
+            value: 0,
             info: 'Defense'
         },{
             stat: 'Sp. Defense',
-            value: 250,
+            value: 0,
             info: 'Special Defense'
         },{
             stat: 'Speed',
-            value: 190,
+            value: 0,
             info: 'Speed'
         }
 ];
@@ -257,10 +257,14 @@ d3.select("#sb")
                     var id = pokemons[0]['id'];
 
                 $("#frontImg").attr('src', frontPath + id + '.png');
-                $("#backImg").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/' + id + '.png');
+                $("#backImg").attr('src', backPath + id + '.png');
 
                     document.getElementById('pokedex').innerHTML = pokemons[0]['id'];
-                    document.getElementById('singleLegend').innerHTML = pokemons[0]['is_legendary'];
+                    if (pokemons[0]['is_legendary'] == "TRUE") {
+                        document.getElementById('singleLegend').innerHTML = 'Yes';
+                    } else {
+                        document.getElementById('singleLegend').innerHTML = 'No';
+                    }
                     document.getElementById('singleCatch').innerHTML = pokemons[0]['catch_rate'] + '%';
                     document.getElementById('singleBStyle').innerHTML = pokemons[0]['body_style'];
                     document.getElementById('singleGen').innerHTML = pokemons[0]['generation'];
