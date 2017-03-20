@@ -256,8 +256,8 @@ d3.select("#sb")
 
                     var id = pokemons[0]['id'];
 
-                    $("#frontImg").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + id + '.png');
-                    $("#backImg").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/' + id + '.png');
+                $("#frontImg").attr('src', frontPath + id + '.png');
+                $("#backImg").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/' + id + '.png');
 
                     document.getElementById('pokedex').innerHTML = pokemons[0]['id'];
                     document.getElementById('singleLegend').innerHTML = pokemons[0]['is_legendary'];
