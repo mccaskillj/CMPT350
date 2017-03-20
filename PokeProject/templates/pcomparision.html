@@ -4,6 +4,46 @@
 
 {% block content %}
 <html lang="en">
+<style>
+
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis--x path {
+  display: none;
+}
+
+    #tooltip {
+				position: absolute;
+				width: 200px;
+				height: auto;
+				padding: 10px;
+				background-color: white;
+				-webkit-border-radius: 10px;
+				-moz-border-radius: 10px;
+				border-radius: 10px;
+				-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				pointer-events: none;
+			}
+
+			#tooltip.hidden {
+				display: none;
+			}
+
+			#tooltip p {
+				margin: 0;
+				font-family: sans-serif;
+				font-size: 16px;
+				line-height: 20px;
+			}
+</style>
 
 <div class="tab">
     <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Single')"  id="defaultOpen">Single Lookup</a>
@@ -27,7 +67,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search Pokemon" id="tags">
                         <span class="input-group-btn" style="width:0;">
-                            <button class="btn btn-default" type="button" onclick="singleLookup()" id="sb">Go!</button>
+                            <button class="btn btn-default" type="button"  id="sb">Go!</button>
                         </span>
                     </div>
                 </div>
@@ -108,7 +148,7 @@
             <div class="testLeft">
                 <h4 style="padding-left: 200px">Pokemon Stats</h4>
                 <div id="singleChart">
-                    <svg id="sChart"></svg>
+{#                    <svg id="sChart"></svg>#}
 
                 </div>
             </div>
@@ -117,7 +157,7 @@
                 <h4 style="padding-left: 160px; padding-top: 10px">Derived Pokemon Stats</h4>
 
                 <div id="singleChart2">
-                    <svg id="sChart2"></svg>
+{#                    <svg id="sChart2"></svg>#}
                 </div>
             </div>
 
@@ -143,7 +183,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search Pokemon" id="poke1">
                         <span class="input-group-btn" style="width:0;">
-                            <button class="btn btn-default" type="button" onclick="addPokeOneDouble()">Go!</button>
+                            <button class="btn btn-default" type="button" id="doubleClick" >Go!</button>
                         </span>
                     </div>
                 </div>
@@ -153,7 +193,7 @@
                     <div class="input-group" style="text-align: center">
                         <input type="text" class="form-control" placeholder="Search Pokemon" id="poke2">
                         <span class="input-group-btn" style="width:0;">
-                            <button class="btn btn-default" type="button" onclick="addPokeTwoDouble()">Go!</button>
+                            <button class="btn btn-default" type="button" id="doubleClick2" >Go!</button>
                         </span>
                     </div>
                 </div>
@@ -259,16 +299,14 @@
         <div style="height: 534px" >
             <div class="testLeft">
                 <h4 style="padding-left: 200px" id="dPoke">Poke name</h4>
-                <div id="singleChart" >
-                    <svg id="dChart"></svg>
+                <div id="doubleChart" >
 
                 </div>
             </div>
 
             <div class="testRight">
                 <h4 style="padding-left: 160px; padding-top: 10px" id="dPoke2">Poke name</h4>
-                <div id="singleChart2">
-                    <svg id="dChart2"></svg>
+                <div id="doubleChart2">
                 </div>
             </div>
 
@@ -310,10 +348,16 @@
     </div>
 </div>
 
+<div id="tooltip" class="hidden">
+			<p><strong id="header">Important Label Heading</strong></p>
+			<p><span id="value">100</span></p>
+</div>
+
 <!--new JS files-->
 <script type="text/javascript" src="{% static "js/pcompareJs/pcompareHelpers.js" %}"></script>
 <script type="text/javascript" src="{% static "js/pcompareJs/singleCompare.js" %}"></script>
 <script type="text/javascript" src="{% static "js/pcompareJs/doubleCompare.js" %}"></script>
 <script type="text/javascript" src="{% static "js/pcompareJs/multiCompare.js" %}"></script>
+
 
 {% endblock %}

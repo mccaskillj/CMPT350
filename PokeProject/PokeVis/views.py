@@ -249,3 +249,16 @@ def get_data(request):
     print(json_string)
 
     return HttpResponse(json_string, content_type='application/json')
+
+
+def exists(request):
+    name_val = request.GET.get('name', None)
+
+    if Pokemon.objects.filter(name=name_val).exists():
+        val = {"val": 0}
+    else:
+        val = {"val": 1}
+
+    json_string = json.dumps(val)
+
+    return HttpResponse(json_string, content_type='application/json')
