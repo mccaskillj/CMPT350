@@ -216,7 +216,7 @@ success: function(pokemons) {
         $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
             .attr('x', offset(dataset[i][3]))
             //.attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png')
-            .attr('xlink:href', frontPath + dataset[i][2] + '.png')
+            .attr('xlink:href', frontPath + dataset[i][2] + '.png');
     }
     svg.selectAll("circle")
             .attr('r', function (d) {
