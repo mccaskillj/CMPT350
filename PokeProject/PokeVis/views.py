@@ -209,6 +209,10 @@ def get_filtered_pokemon(request):
             poke = SearchData(item.number, item.special_attack, item.weight_kg, item.height_m, item.name)
         elif radio == "sp_defense":
             poke = SearchData(item.number, item.special_defense, item.weight_kg, item.height_m, item.name)
+
+        # poke = SearchData(item.number, item.special_defense, item.weight_kg, item.height_m, item.name, item.total,
+        #                   item.hp, item.attack, item.defense, item.special_attack, item.special_defense, item.speed)
+
         temp_array.append(poke)
 
     json_string = json.dumps([ob.__dict__ for ob in temp_array])
@@ -243,5 +247,18 @@ def get_data(request):
     json_string = json.dumps(pokemonDictionary)
 
     print(json_string)
+
+    return HttpResponse(json_string, content_type='application/json')
+
+
+def exists(request):
+    name_val = request.GET.get('name', None)
+
+    if Pokemon.objects.filter(name=name_val).exists():
+        val = {"val": 0}
+    else:
+        val = {"val": 1}
+
+    json_string = json.dumps(val)
 
     return HttpResponse(json_string, content_type='application/json')
