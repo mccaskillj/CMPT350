@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^ajax/get_single_pokemon/$', views.get_single_pokemon, name='get_single_pokemon'),
     url(r'^ajax/get_filtered_pokemon/$', views.get_filtered_pokemon, name='get_filtered_pokemon'),
     url(r'^ajax/get_data/$', views.get_data, name='get_data'),
+    url(r'^ajax/exists/$', views.exists, name='exists'),
 ]

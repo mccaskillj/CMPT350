@@ -1,60 +1,71 @@
 /**
  * Created by carmichael on 2017-03-13.
  */
-function getValuesForDerived(pokemons){
-    var dict = [];
-
-    dict.push({
-                stat: 'Wall',
-                value: pokemons[0]['wall']
-            });
-    dict.push({
-                stat: 'Phys. Tank',
-                value: pokemons[0]['phys_tank']
-            });
-    dict.push({
-                stat: 'Sp. Tank',
-                value: pokemons[0]['sp_tank']
-            });
-    dict.push({
-                stat: 'Phys. Sweeper',
-                value: pokemons[0]['phys_sweeper']
-            });
-    dict.push({
-                stat: 'Sp. Sweeper',
-                value: pokemons[0]['sp_sweeper']
-            });
-
-    return dict;
-}
-
 function getValuesForReg(pokemons){
     var dict = [];
 
     dict.push({
                 stat: 'Hp',
-                value: pokemons[0]['hp']
+                value: pokemons[0]['hp'],
+                info: 'Hp'
             });
     dict.push({
                 stat: 'Attack',
-                value: pokemons[0]['attack']
+                value: pokemons[0]['attack'],
+                info: 'Attack'
             });
     dict.push({
                 stat: 'Sp. Attack',
-                value: pokemons[0]['sp_attack']
+                value: pokemons[0]['sp_attack'],
+                info: 'Sp. Attack'
             });
     dict.push({
                 stat: 'Defense',
-                value: pokemons[0]['defense']
+                value: pokemons[0]['defense'],
+                info: 'Defense'
             });
     dict.push({
                 stat: 'Sp. Defense',
-                value: pokemons[0]['sp_defense']
+                value: pokemons[0]['sp_defense'],
+                info: 'Sp. Defense'
             });
     dict.push({
                 stat: 'Speed',
-                value: pokemons[0]['speed']
+                value: pokemons[0]['speed'],
+                info: 'Speed'
             });
+    return dict;
+}
+
+function getValuesForDerived(pokemons){
+    var dict = [];
+
+    dict.push({
+                stat: 'Wall',
+                value: pokemons[0]['wall'],
+                info: 'Wall = HP + Defense + Sp. Defense'
+            });
+    dict.push({
+                stat: 'Phys. Tank',
+                value: pokemons[0]['phys_tank'],
+                info: 'Physical Tank = Attack + Defense'
+            });
+    dict.push({
+                stat: 'Sp. Tank',
+                value: pokemons[0]['sp_tank'],
+                info: 'Special Tank = Sp. Attack + Sp. Defense'
+            });
+    dict.push({
+                stat: 'Phys. Sweeper',
+                value: pokemons[0]['phys_sweeper'],
+                info: 'Physical Sweeper = Attack + Speed'
+            });
+    dict.push({
+                stat: 'Sp. Sweeper',
+                value: pokemons[0]['sp_sweeper'],
+                info: 'Special Sweeper = Sp. Attack + Speed'
+            });
+
     return dict;
 }
 
@@ -182,6 +193,20 @@ $('#normal').on("click",function(){
 $("#tags").keyup(function(event){
     if(event.keyCode == 13){
         $("#sb").click();
+    }
+});
+
+// Add listener for enter key press
+$("#poke1").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#doubleClick").click();
+    }
+});
+
+// Add listener for enter key press
+$("#poke2").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#doubleClick2").click();
     }
 });
 

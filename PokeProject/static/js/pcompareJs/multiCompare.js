@@ -113,58 +113,58 @@ function remove(elm){
 // Multi
 var dict = [];
 
-var width = 880, height = 680;
+var multiw = 880, multih = 680;
 var margin = {top: 20, right: 20, bottom: 30, left: 80};
 
 //x and y Scales
-var xScale = d3.scale.ordinal()
-    .rangeRoundBands([0, width], .1);
+var xScaleM = d3.scale.ordinal()
+    .rangeRoundBands([0, multiw], .1);
 
-var yScale = d3.scale.linear()
-    .range([height, 0]);
+var yScaleM = d3.scale.linear()
+    .range([multih, 0]);
 
-xScale.domain(dict.map(function(d) { return d.stat; }));
-yScale.domain([0, d3.max(dict, function(d) { return d.value; })]);
+xScaleM.domain(dict.map(function(d) { return d.stat; }));
+yScaleM.domain([0, d3.max(dict, function(d) { return d.value; })]);
 
 //x and y Axes
 var xAxis = d3.svg.axis()
-    .scale(xScale)
+    .scale(xScaleM)
     .orient("bottom");
 
 var yAxis = d3.svg.axis()
-    .scale(yScale)
+    .scale(yScaleM)
     .orient("left")
     .ticks(10, "%");
 
 //create svg container
-var svg = d3.select("#multiChart")
+var muiltsvg = d3.select("#multiChart")
     .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", multiw + margin.left + margin.right)
+    .attr("height", multih + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 //create bars
-svg.selectAll(".bar")
+muiltsvg.selectAll(".bar")
     .data(dict)
     .enter()
     .append("rect")
     .attr("class", "bar")
     .attr("fill", "#90caf9")
-    .attr("x", function(d) { return xScale(d.stat); })
-    .attr("width", xScale.rangeBand())
-    .attr("y", function(d) { return yScale(d.value); })
-    .attr("height", function(d) { return height - yScale(d.value); });
+    .attr("x", function(d) { return xScaleM(d.stat); })
+    .attr("width", xScaleM.rangeBand())
+    .attr("y", function(d) { return yScaleM(d.value); })
+    .attr("height", function(d) { return multih - yScaleM(d.value); });
 
 //drawing the x axis on svg
-svg.append("g")
+muiltsvg.append("g")
     .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
+    .attr("transform", "translate(0," + multih + ")")
     .style("font-size","13px")
     .call(xAxis);
 
 //drawing the y axis on svg
-svg.append("g")
+muiltsvg.append("g")
     .attr("class", "y axis")
     .call(yAxis)
     .append("text")
