@@ -212,7 +212,7 @@ def get_filtered_pokemon(request):
 
         # poke = SearchData(item.number, item.special_defense, item.weight_kg, item.height_m, item.name, item.total,
         #                   item.hp, item.attack, item.defense, item.special_attack, item.special_defense, item.speed)
-
+        # and primary and secondary type
         temp_array.append(poke)
 
     json_string = json.dumps([ob.__dict__ for ob in temp_array])

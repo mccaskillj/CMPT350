@@ -123,23 +123,25 @@ svg.selectAll(".bar")
                 var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.rangeBand() / 2;
                 var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + height / 2 + 534;
                 //Update the tooltip position and value
-                d3.select("#tooltip")
+                d3.select("#tooltip2")
                     .style("left", xPosition + "px")
                     .style("top", yPosition + "px")
                     .select("#value")
                     .text(d.value);
 
-                d3.select("#tooltip")
+                console.log("hi");
+
+                d3.select("#tooltip2")
                     .select("#header")
                     .text(d.info);
 
                 //Show the tooltip
-                d3.select("#tooltip").classed("hidden", false);
+                d3.select("#tooltip2").classed("hidden", false);
            })
     .on("mouseout", function() {
 
                 //Hide the tooltip
-                d3.select("#tooltip").classed("hidden", true);
+                d3.select("#tooltip2").classed("hidden", true);
 
            });
 
@@ -188,27 +190,27 @@ svg2.selectAll(".bar")
     .attr("y", function(d) { return yScale(d.value); })
     .attr("height", function(d) { return height - yScale(d.value); })
     .on("mouseover", function(d) {
-                //Get this bar's x/y values, then augment for the tooltip
-                var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.rangeBand() / 2 + 550;
-                var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + height / 2 + 534;
-                //Update the tooltip position and value
-                d3.select("#tooltip")
-                    .style("left", xPosition + "px")
-                    .style("top", yPosition + "px")
-                    .select("#value")
-                    .text(d.value);
+            //Get this bar's x/y values, then augment for the tooltip
+            var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.rangeBand() / 2 + 550;
+            var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + height / 2 + 534;
+            //Update the tooltip position and value
+            d3.select("#tooltip2")
+                .style("left", xPosition + "px")
+                .style("top", yPosition + "px")
+                .select("#value")
+                .text(d.value);
 
-                d3.select("#tooltip")
-                    .select("#header")
-                    .text(d.info);
+            d3.select("#tooltip2")
+                .select("#header")
+                .text(d.info);
 
-                //Show the tooltip
-                d3.select("#tooltip").classed("hidden", false);
-           })
+            //Show the tooltip
+            d3.select("#tooltip2").classed("hidden", false);
+       })
     .on("mouseout", function() {
 
                 //Hide the tooltip
-                d3.select("#tooltip").classed("hidden", true);
+                d3.select("#tooltip2").classed("hidden", true);
 
            });
 
