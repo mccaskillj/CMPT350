@@ -247,8 +247,6 @@ def get_data(request):
 
     json_string = json.dumps(pokemonDictionary)
 
-    print(json_string)
-
     return HttpResponse(json_string, content_type='application/json')
 
 
