@@ -18,31 +18,108 @@
   display: none;
 }
 
-    #tooltip {
-				position: absolute;
-				width: 200px;
-				height: auto;
-				padding: 10px;
-				background-color: white;
-				-webkit-border-radius: 10px;
-				-moz-border-radius: 10px;
-				border-radius: 10px;
-				-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-				-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-				box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-				pointer-events: none;
-			}
+#tooltip {
+    position: absolute;
+    width: 50px;
+    height: auto;
+    padding: 10px;
+    background-color: white;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+}
 
-			#tooltip.hidden {
-				display: none;
-			}
+#tooltip.hidden {
+    display: none;
+}
 
-			#tooltip p {
-				margin: 0;
-				font-family: sans-serif;
-				font-size: 16px;
-				line-height: 20px;
-			}
+#tooltip p {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+#tooltip2 {
+    position: absolute;
+    width: 200px;
+    height: auto;
+    padding: 10px;
+    background-color: white;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+}
+
+#tooltip2.hidden {
+    display: none;
+}
+
+#tooltip2 p {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+
+.axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+  }
+
+  path.domain {
+    stroke: none;
+  }
+
+  .y .tick line {
+    stroke: #ddd;
+  }
+
+      .axis path, .axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+.axis text {
+    font-family: sans-serif;
+    font-size: 15px;
+}
+.bc-legend span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.bc-y-axis path,
+.bc-y-axis .tick line {
+    fill: transparent;
+
+}
+
+.bc-x-axis path,
+.bc-x-axis line {
+    fill: none;
+    stroke: #eee;
+    shape-rendering: crispEdges;
+}
+
+.bc-axis text {
+    font-family: sans-serif;
+    font-size: 15px;
+    fill: #888;
+
+}
+
+
 </style>
 
 <div class="tab">
@@ -326,7 +403,7 @@
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search Pokemon" id="addPoke">
                 <span class="input-group-btn" style="width:0;">
-                    <button class="btn btn-default" type="button" onclick="addB()">Add Pokemon</button>
+                    <button class="btn btn-default" type="button" onclick="addB()" id="jj">Add Pokemon</button>
                 </span>
 
             </div>
@@ -340,7 +417,7 @@
         </div>
     </div>
 
-    <div class="multiStatsDiv">
+    <div class="multiStatsDiv" style="padding-top: 50px">
         <div id="multiChart" >
 
 
@@ -348,12 +425,18 @@
     </div>
 </div>
 
-<div id="tooltip" class="hidden">
+<div id="tooltip2" class="hidden">
 			<p><strong id="header">Important Label Heading</strong></p>
 			<p><span id="value">100</span></p>
 </div>
 
+<div id="tooltip" class="hidden">
+        <!--<p><strong id="header">Important Label Heading</strong></p>-->
+        <p><span id="value">100</span></p>
+</div>
+
 <!--new JS files-->
+<script type="text/javascript" src="{% static "js/d3.js" %}"></script>
 <script type="text/javascript" src="{% static "js/pcompareJs/pcompareHelpers.js" %}"></script>
 <script type="text/javascript" src="{% static "js/pcompareJs/singleCompare.js" %}"></script>
 <script type="text/javascript" src="{% static "js/pcompareJs/doubleCompare.js" %}"></script>

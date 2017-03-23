@@ -51,23 +51,23 @@ doublesvg.selectAll(".bar")
                 var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.rangeBand() / 2;
                 var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + h / 3 + 934;
                 //Update the tooltip position and value
-                d3.select("#tooltip")
+                d3.select("#tooltip2")
                     .style("left", xPosition + "px")
                     .style("top", yPosition + "px")
                     .select("#value")
                     .text(d.value);
 
-                d3.select("#tooltip")
+                d3.select("#tooltip2")
                     .select("#header")
                     .text(d.info);
 
                 //Show the tooltip
-                d3.select("#tooltip").classed("hidden", false);
+                d3.select("#tooltip2").classed("hidden", false);
            })
     .on("mouseout", function() {
 
                 //Hide the tooltip
-                d3.select("#tooltip").classed("hidden", true);
+                d3.select("#tooltip2").classed("hidden", true);
 
            });
 
@@ -199,23 +199,23 @@ doublesvg2.selectAll(".bar")
                 var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.rangeBand() / 2 + 350;
                 var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + h / 2 + 934;
                 //Update the tooltip position and value
-                d3.select("#tooltip")
+                d3.select("#tooltip2")
                     .style("left", xPosition + "px")
                     .style("top", yPosition + "px")
                     .select("#value")
                     .text(d.value);
 
-                d3.select("#tooltip")
+                d3.select("#tooltip2")
                     .select("#header")
                     .text(d.info);
 
                 //Show the tooltip
-                d3.select("#tooltip").classed("hidden", false);
+                d3.select("#tooltip2").classed("hidden", false);
            })
     .on("mouseout", function() {
 
                 //Hide the tooltip
-                d3.select("#tooltip").classed("hidden", true);
+                d3.select("#tooltip2").classed("hidden", true);
 
            });
 

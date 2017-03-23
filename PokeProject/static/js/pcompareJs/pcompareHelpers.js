@@ -179,14 +179,17 @@ $( function() {
 
 $('#shinny').on("click",function(){
     var id = document.getElementById('pokedex').innerHTML;
-    $("#frontImg").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/' + id + '.png');
-    $("#backImg").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/' + id + '.png');
+
+    $("#frontImg").attr('src', shinyFrontPath + id + '.png');
+    $("#backImg").attr('src', shinyBackPath + id + '.png');
 });
 
 $('#normal').on("click",function(){
     var id = document.getElementById('pokedex').innerHTML;
-    $("#frontImg").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + id + '.png');
-    $("#backImg").attr('src', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/' + id + '.png');
+
+    $("#frontImg").attr('src', frontPath + id + '.png');
+    $("#backImg").attr('src', backPath + id + '.png');
+
 });
 
 // Add listener for enter key press
