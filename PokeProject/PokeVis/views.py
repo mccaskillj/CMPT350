@@ -197,22 +197,23 @@ def get_filtered_pokemon(request):
     # Passing back data: what ever radio button is selected -> stat value. name, pokedex, height, weight
 
     for item in new:
-        if radio == "total":
-            poke = SearchData(item.number, item.total, item.weight_kg, item.height_m, item.name)
-        elif radio == "hp":
-            poke = SearchData(item.number, item.hp, item.weight_kg, item.height_m, item.name)
-        elif radio == "attack":
-            poke = SearchData(item.number, item.attack, item.weight_kg, item.height_m, item.name)
-        elif radio == "defense":
-            poke = SearchData(item.number, item.defense, item.weight_kg, item.height_m, item.name)
-        elif radio == "sp_attack":
-            poke = SearchData(item.number, item.special_attack, item.weight_kg, item.height_m, item.name)
-        elif radio == "sp_defense":
-            poke = SearchData(item.number, item.special_defense, item.weight_kg, item.height_m, item.name)
+        # if radio == "total":
+        #     poke = SearchData(item.number, item.total, item.weight_kg, item.height_m, item.name)
+        # elif radio == "hp":
+        #     poke = SearchData(item.number, item.hp, item.weight_kg, item.height_m, item.name)
+        # elif radio == "attack":
+        #     poke = SearchData(item.number, item.attack, item.weight_kg, item.height_m, item.name)
+        # elif radio == "defense":
+        #     poke = SearchData(item.number, item.defense, item.weight_kg, item.height_m, item.name)
+        # elif radio == "sp_attack":
+        #     poke = SearchData(item.number, item.special_attack, item.weight_kg, item.height_m, item.name)
+        # elif radio == "sp_defense":
+        #     poke = SearchData(item.number, item.special_defense, item.weight_kg, item.height_m, item.name)
 
-        # poke = SearchData(item.number, item.special_defense, item.weight_kg, item.height_m, item.name, item.total,
-        #                   item.hp, item.attack, item.defense, item.special_attack, item.special_defense, item.speed)
-        # and primary and secondary type
+        poke = SearchData(item.number, item.weight_kg, item.height_m, item.name, item.total,
+                          item.hp, item.attack, item.defense, item.special_attack, item.special_defense, item.speed,
+                          item.type_1, item.type_2)
+
         temp_array.append(poke)
 
     json_string = json.dumps([ob.__dict__ for ob in temp_array])
