@@ -1,0 +1,23 @@
+.column-yourteam{
+    float: left;
+    background-color: black;
+    width: 40%;
+    height: 700px;
+    padding-left:100px;
+    padding-top: 40px;
+}
+
+.column-enemyteam{
+    float: right;
+    background-color: black;
+    width: 40%;
+    height: 700px;
+    padding-top: 40px;
+}
+
+.container-fluid{
+    width: 1224px;
+    height: 1000px;
+    padding-top: 30px;
+    background-color: white;
+}
