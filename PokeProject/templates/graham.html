@@ -1,360 +1,261 @@
-{% extends 'base.html' %}
 {% load static %}
-
-{% block content %}
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>d3.js learning</title>
+  <script type="text/javascript" src="{% static "js/d3.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/pcompareJs/testing.js" %}"></script>
+  <style type="text/css">
+  svg {
+    font: 10px sans-serif;
+    shape-rendering: crispEdges;
+  }
 
-.bar {
-  fill: steelblue;
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+  }
+
+  path.domain {
+    stroke: none;
+  }
+
+  .y .tick line {
+    stroke: #ddd;
+  }
+
+      .axis path, .axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+#tooltip {
+    position: absolute;
+    text-align: center;
+    width: 40px;
+    height: auto;
+    padding: 10px;
+    background-color: white;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+}
+#tooltip.hidden {
+    display: none;
+}
+#tooltip p {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 20px;
 }
 
-.bar:hover {
-  fill: brown;
-}
+  </style>
 
-.axis--x path {
-  display: none;
-}
-
-    #tooltip {
-				position: absolute;
-				width: 200px;
-				height: auto;
-				padding: 10px;
-				background-color: white;
-				-webkit-border-radius: 10px;
-				-moz-border-radius: 10px;
-				border-radius: 10px;
-				-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-				-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-				box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-				pointer-events: none;
-			}
-
-			#tooltip.hidden {
-				display: none;
-			}
-
-			#tooltip p {
-				margin: 0;
-				font-family: sans-serif;
-				font-size: 16px;
-				line-height: 20px;
-			}
-</style>
-
-
-<div class="tab">
-    <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Single')"  id="defaultOpen">Single Lookup</a>
-    <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Double')">Double Compare</a>
-    <a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Multi')">Multiple Pokemon</a>
-</div>
-
-
-<div id="Single" class="tabcontent" style="background-color: white">
-    <div class="grad2">
-        <div class="singleImageFront" style="padding-left: 70px">
-            <img id="frontImg" style="width: 400px; height: 350px;" src="{% static "images/front/0.png" %}" alt="My image"/>
-        </div>
-        <div class="singleImageBack" style="padding-left: 20px">
-            <img id="backImg" style="width: 400px; height: 350px" src="{% static "images/back/0.png" %}" alt="My image"/>
-        </div>
-    </div>
-    <div class="doublePokeStatsDiv">
-        <div>
-            <div class="firstPoke">
-                <div class="singleComparePosition">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search Pokemon" id="tags">
-                        <span class="input-group-btn" style="width:0;">
-                            <button class="btn btn-default" type="button"  id="sb">Go!</button>
-                        </span>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="secondPoke" style="font-family: sans-serif; font-size: 20px;">
-                <div id="radioBut" style="padding-top: 15px">
-                    <label class="radio-inline" id="normal">
-                        <input id="checkNormal" type="radio" name="optradio" checked>Normal
-                    </label>
-                    <label class="radio-inline" id="shinny">
-                        <input type="radio" name="optradio">Shiny
-                    </label>
-                </div>
-            </div>
-        </div>
-
-        <hr style="background-color: black">
-
-        <div>
-            <div class="fontStyleSinglePoke singleStatsLeft">
-                <div id="singleIndex">
-                    Pokedex: <span id="pokedex"></span>
-                </div>
-                <div>
-                    Generation: <span id="singleGen"></span>
-                </div>
-                <div>
-                    Legendary: <span id="singleLegend"></span>
-                </div>
-                <div>
-                    Catch Rate: <span id="singleCatch"></span>
-                </div>
-                <div>
-                    Body Style: <span id="singleBStyle"></span>
-                </div>
-
-            </div>
-            <div class="singleStatsRight fontStyleSinglePoke">
-                <div>
-                    <div>
-                        Type:
-                    </div>
-                    <div style="padding-left: 60px" id="singleType">
-                        <span class="badge">None</span>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        Egg Group:
-                    </div>
-                    <div style="padding-left: 60px" id="singleEgg">
-                        <span class="badge monsterBadge">Monster</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <hr style="background-color: black">
-
-        <!-- Radio buttons for bar graph-->
-        <div>
-            <div id="radioBut2" class="singleBarRadio">
-                <label class="radio-inline">
-                    <input id="checkBar" type="radio" name="optradio2" checked>Bar Chart
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="optradio2">Pie Chart
-                </label>
-            </div>
-        </div>
-
-        <hr style="background-color: black">
-
-        <div style="height: 534px" >
-           <div id="svg1" class="testLeft">
-
-            </div>
-
-
-            <div id="svg2" class="testRight" style="padding-left: 80px">
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div id="Double" class="tabcontent" style="background-color: white">
-    <div class="grad" >
-        <div class="singleImageFront" style="padding-left: 70px">
-            <img id="frontImgDouble" style="width: 400px; height: 350px;" src="{% static "images/back/0.png" %}" alt="My image"/>
-        </div>
-        <div class="singleImageBack" style="padding-left: 20px">
-            <img id="backImgDouble" style="width: 400px; height: 350px" src="{% static "images/front/0.png" %}" alt="My image"/>
-        </div>
-    </div>
-    <div class="doublePokeStatsDiv">
-        <div>
-            <div class="firstPoke">
-                <div class="doubleComparePosition">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search Pokemon" id="poke1">
-                        <span class="input-group-btn" style="width:0;">
-                            <button class="btn btn-default" type="button" onclick="addPokeOneDouble()">Go!</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="secondPoke">
-                <div class="doubleComparePosition">
-                    <div class="input-group" style="text-align: center">
-                        <input type="text" class="form-control" placeholder="Search Pokemon" id="poke2">
-                        <span class="input-group-btn" style="width:0;">
-                            <button class="btn btn-default" type="button" onclick="addPokeTwoDouble()">Go!</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <hr style="background-color: black">
-
-        <div>
-            <div class="fontStyleSinglePoke singleStatsLeft">
-                <div id="singleIndex">
-                    Pokedex: <span id="pokedexDouble"></span>
-                </div>
-                <div>
-                    Generation: <span id="singleGenDouble"></span>
-                </div>
-                <div>
-                    Legendary: <span id="singleLegendDouble"></span>
-                </div>
-                <div>
-                    Catch Rate: <span id="singleCatchDouble"></span>
-                </div>
-                <div>
-                    Body Style: <span id="singleBStyleDouble"></span>
-                </div>
-            </div>
-            <div class="singleStatsRight fontStyleSinglePoke">
-                <div id="singleIndex">
-                    Pokedex: <span id="pokedexDouble2"></span>
-                </div>
-                <div>
-                    Generation: <span id="singleGenDouble2"></span>
-                </div>
-                <div>
-                    Legendary: <span id="singleLegendDouble2"></span>
-                </div>
-                <div>
-                    Catch Rate: <span id="singleCatchDouble2"></span>
-                </div>
-                <div>
-                    Body Style: <span id="singleBStyleDouble2"></span>
-                </div>
-            </div>
-        </div>
-
-        <hr style="background-color: black">
-
-        <div>
-            <div class="fontStyleSinglePoke singleStatsLeft">
-                <div>
-                    <div>
-                        Type:
-                    </div>
-                    <div style="padding-left: 60px" id="singleTypeDouble">
-                        <span class="badge">None</span>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        Egg Group:
-                    </div>
-                    <div style="padding-left: 60px" id="singleEggDouble">
-                        <span class="badge monsterBadge">Monster</span>
-                    </div>
-                </div>
-            </div>
-            <div class="fontStyleSinglePoke singleStatsLeft">
-                <div>
-                    <div>
-                        Type:
-                    </div>
-                    <div style="padding-left: 60px" id="singleTypeDouble2">
-                        <span class="badge">None</span>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        Egg Group:
-                    </div>
-                    <div style="padding-left: 60px" id="singleEggDouble2">
-                        <span class="badge monsterBadge">Monster</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <hr style="background-color: black">
-
-        <div>
-            <div id="radioBut2" class="singleBarRadio">
-                <label class="radio-inline">
-                    <input id="checkBarDouble" type="radio" name="optradio3" checked>Bar Chart
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="optradio3">Pie Chart
-                </label>
-            </div>
-        </div>
-
-        <hr style="background-color: black">
-
-        <!-- Svg bar graph div-->
-        <div style="height: 534px" >
-            <div class="testLeft">
-                <h4 style="padding-left: 200px" id="dPoke">Poke name</h4>
-                <div id="singleChart" >
-                    <svg id="dChart"></svg>
-
-                </div>
-            </div>
-
-            <div class="testRight">
-                <h4 style="padding-left: 160px; padding-top: 10px" id="dPoke2">Poke name</h4>
-                <div id="singleChart2">
-                    <svg id="dChart2"></svg>
-                </div>
-            </div>
-
-        </div>
-
-
-    </div>
-
-
-</div>
-
-<div id="Multi" class="tabcontent" style="background-color: white">
-    <div class="multiTop" >
-        <div class="multiTextInputPad">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search Pokemon" id="addPoke">
-                <span class="input-group-btn" style="width:0;">
-                    <button class="btn btn-default" type="button" onclick="addB()">Add Pokemon</button>
-                </span>
-
-            </div>
-        </div>
-
-        <hr style="background-color: black">
-
-        <div id="pokeBadges" style="padding-left: 40px;">
-
-
-        </div>
-    </div>
-
-    <div class="multiStatsDiv">
-        <div id="multiChart" >
-
-
-        </div>
-    </div>
-</div>
-
+</head>
+<body>
 
 <div id="tooltip" class="hidden">
-        <p><strong id="header">Important Label Heading</strong></p>
-        <p><span id="value">100</span></p>
+    <label id="header"></label>
+    <p><span id="value">100</span>
+    </p>
 </div>
 
-<div id="tooltip2" class="hidden">
-        <p><strong id="header">Important Label Heading</strong></p>
-        <p><span id="value">100</span></p>
-</div>
+<script type="text/javascript">
 
-<script type="text/javascript" src="{% static "js/pcompareJs/pcompareHelpers.js" %}"></script>
-<script type="text/javascript" src="{% static "js/pcompareJs/testing.js" %}"></script>
+// Setup svg using Bostock's margin convention
+
+var margin = {top: 40, right: 90, bottom: 40, left: 90};
+
+var width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var svg = d3.select("body")
+  .append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
+/* Data in strings like it would be if imported from a csv */
 
-{% endblock %}
+var data = [
+  { name: "Charmander", Hp: "4", Attack: "10", Defense: "15", "Sp. Attack": "9", "Sp. Defense": "6", Speed: "4" },
+  { name: "Weedle",     Hp: "7", Attack: "12", Defense: "18", "Sp. Attack": "9", "Sp. Defense": "4", Speed: "8" },
+  { name: "Wigglytuff", Hp: "3", Attack: "05", Defense: "20", "Sp. Attack": "8", "Sp. Defense": "2", Speed: "2" },
+  { name: "Meowth",     Hp: "1", Attack: "01", Defense: "15", "Sp. Attack": "5", "Sp. Defense": "4", Speed: "9" },
+  { name: "Growlithe",  Hp: "8", Attack: "02", Defense: "10", "Sp. Attack": "4", "Sp. Defense": "2", Speed: "5" },
+  { name: "Graveler",   Hp: "9", Attack: "03", Defense: "12", "Sp. Attack": "6", "Sp. Defense": "3", Speed: "6" },
+  { name: "Tranquill",  Hp: "5", Attack: "04", Defense: "15", "Sp. Attack": "8", "Sp. Defense": "1", Speed: "3" },
+  { name: "Golduck",    Hp: "7", Attack: "06", Defense: "11", "Sp. Attack": "9", "Sp. Defense": "4", Speed: "7" },
+  { name: "Krabby",     Hp: "4", Attack: "10", Defense: "13", "Sp. Attack": "9", "Sp. Defense": "5", Speed: "3" },
+  { name: "Pidgeot",    Hp: "10",Attack: "16", Defense: "19", "Sp. Attack": "6", "Sp. Defense": "9", Speed: "5" },
+  { name: "Pikachu",    Hp: "2", Attack: "19", Defense: "17", "Sp. Attack": "5", "Sp. Defense": "7", Speed: "4" },
+    { name: "Paras",    Hp: "6", Attack: "22", Defense: "18", "Sp. Attack": "6", "Sp. Defense": "3", Speed: "3" },
+    { name: "Blastoise",    Hp: "8", Attack: "14", Defense: "16", "Sp. Attack": "2", "Sp. Defense": "5", Speed: "6" },
+    { name: "Sandshrew",    Hp: "4", Attack: "11", Defense: "13", "Sp. Attack": "9", "Sp. Defense": "2", Speed: "8" }
+];
+
+// Transpose the data into layers
+var dataset = d3.layout.stack()(["Hp", "Attack", "Defense", "Sp. Attack", "Sp. Defense", "Speed"].map(function(fruit) {
+  return data.map(function(d) {
+    return {x: d.name,
+            y: +d[fruit]};
+  });
+}));
+
+
+// Set x, y and colors
+var x = d3.scale.ordinal()
+  .domain(dataset[0].map(function(d) { return d.x; }))
+  .rangeRoundBands([10, height-10], 0.02);
+
+var y = d3.scale.linear()
+  .domain([0, d3.max(dataset, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
+  .range([width, 0]);
+
+var colors = ["90caf9", "#92d36e", "#ff5d55", "#fefb64", "#f54378", "#5d4b7e"];
+
+
+// Define and draw axes
+var yAxis = d3.svg.axis()
+  .scale(y)
+  .orient("bottom")
+  .ticks(5)
+  .tickSize(-height, 0, 0);
+
+var xAxis = d3.svg.axis()
+  .scale(x)
+  .orient("left");
+
+svg.append("g")
+  .attr("class", "y axis")
+  .call(xAxis);
+
+svg.append("g")
+  .attr("class", "x axis")
+  .attr("transform", "translate(0," + height + ")")
+  .call(yAxis);
+
+
+// Create groups for each series, rects for each segment
+var groups = svg.selectAll("g.cost")
+              .data(dataset)
+              .enter().append("g")
+              .attr("class", "cost")
+              .style("fill", function(d, i) { return colors[i]; });
+
+var rect = groups.selectAll("rect")
+                .data(function(d) {
+                    return d;
+                })
+                .enter()
+                .append("rect")
+                .attr("y", function(d) {
+                    return x(d.x);
+                })
+                .attr("x", function(d) {
+                    return y(d.y+d.y0);
+                })
+                .attr("width", function(d) {
+                    return y(d.y0) - y(d.y0 + d.y);
+                })
+                .attr("height", x.rangeBand())
+                .on("mouseover", function(d) {
+                    //Get this bar's x/y values, then augment for the tooltip
+                    var xPosition = parseFloat(d3.select(this).attr("x")) + x.rangeBand() / 2 + 50;
+                    var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + height / 2;
+                    //Update the tooltip position and value
+                    d3.select("#tooltip")
+                        .style("left", xPosition + "px")
+                        .style("top", yPosition + "px")
+                        .select("#value")
+                        .text(d.y);
+
+                    d3.select("#tooltip")
+                        .select("#header")
+                        .text(d.info);
+
+                    //Show the tooltip
+                    d3.select("#tooltip").classed("hidden", false);
+                })
+                .on("mouseout", function() {
+
+                    //Hide the tooltip
+                    d3.select("#tooltip").classed("hidden", true);
+
+                });
+
+
+// Draw legend
+var legend = svg.selectAll(".legend")
+                  .data(colors)
+                  .enter().append("g")
+                  .attr("class", "legend")
+                  .attr("transform", function(d, i) { return "translate(30," + i * 19 + ")"; });
+
+legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", function(d, i) {return colors.slice().reverse()[i];});
+
+legend.append("text")
+      .attr("x", width + 5)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "start")
+      .text(function(d, i) {
+        switch (i) {
+          case 0: return "Speed";
+          case 1: return "Sp. Defense";
+          case 2: return "Sp. Attack";
+          case 3: return "Defense";
+          case 4: return "Attack";
+          case 5: return "Hp";
+        }
+      });
+
+</script>
+
+
+<div id="vis"></div>
+
+
+<script>
+
+    var svg = d3.select("#vis").append("svg").attr("width", 1000).attr("height", 700),
+        slider1 = new simpleSlider(),
+        slider2 = new simpleSlider(),
+        circle = svg.append("circle").attr("cx", 50).attr("cy", 100).attr("r", 30);
+
+
+    slider1.width(600).x(30).y(200).value(1.0).event(function(){
+        circle.attr("r", 30 * slider1.value());
+    });
+
+    slider2.width(600).x(30).y(230).value(0.5).event(function(){
+        circle.attr("cx", 50 + (170 * slider2.value()));
+    });
+
+    svg.call(slider1);
+    svg.call(slider2);
+
+</script>
+
+<script type="text/javascript" src="{% static "js/d3.js" %}"></script>
+
+
+</body>
+</html>

@@ -34,54 +34,56 @@
     </style>
 
 
-    <div id="cirlcesd3" style="background-color: white; width: 1024px; height: 718px">
+    <div id="cirlcesd3" style="background-color: white; width: 1024px; height: 918px">
         <script type="text/javascript">
-    var w = 640,
-        h = 480;
 
-    var data = {
-      name : "root",
-      children : [
-        { name: '1', size: 100 },
-        { name: '2', size: 85 },
-        { name: '3', size: 70 },
-        { name: '4', size: 55 },
-        { name: '5', size: 900 },
-        { name: '6', size: 25 },
-        { name: '7', size: 0 },
-      ]
-    }
+            $.ajax({
+                type: "GET",
+                url: 'ajax/get_data/', //the script to call to get data
+                data: {"name": "Charizard"},
+                dataType: 'JSON',                //data format
+                success: function(pokemons) {
+                    var w = 1024, h = 910;
 
-    var canvas = d3.select("#cirlcesd3")
-      .append("svg:svg")
-      .attr('width', w)
-      .attr('height', h);
 
-    var nodes = d3.layout.pack()
-      .value(function(d) { return d.size; })
-      .size([w, h])
-      .nodes(data);
+                    var canvas = d3.select("#cirlcesd3")
+                      .append("svg:svg")
+                      .attr('width', w)
+                      .attr('height', h);
 
-    // Get rid of root node
-    nodes.shift();
+                    var nodes = d3.layout.pack()
+                      .value(function(d) { return d.size; })
+                      .size([w, h])
+                      .nodes(pokemons);
 
-    canvas.selectAll('circles')
-        .data(nodes)
-      .enter().append('svg:circle')
-        .attr('cx', function(d) { return d.x; })
-        .attr('cy', function(d) { return d.y; })
-        .attr('r', function(d) { return d.r; })
-        .attr('fill', 'white')
-        .attr('stroke', 'grey')
-        .text(function (d) {
-                    return d.nodes.name;
+                    // Get rid of root node
+
+                    canvas.selectAll('circles')
+                        .data(nodes)
+                      .enter().append('svg:circle')
+                        .attr('cx', function(d) { return d.x; })
+                        .attr('cy', function(d) { return d.y; })
+                        .attr('r', function(d) { return d.r; })
+                        .attr('fill', 'white')
+                        .attr('stroke', 'grey')
+                        .text(function (d) {
+                                    return d.name;
+                            });
+
+
+                },
+                failure: function(pokemons) {
+                    alert('Got an error dude');
+                }
             });
+
+
     </script>
     </div>
 
 
-
-    <script type="text/javascript" src="{% static "js/overviewJs/circlePacking.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/d3.js" %}"></script>
+{#    <script type="text/javascript" src="{% static "js/overviewJs/circlePacking.js" %}"></script>#}
 
 
 {% endblock %}

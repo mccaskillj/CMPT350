@@ -122,7 +122,7 @@ svg.selectAll("circle")
         console.log(pos);
         if (pos < dataset[23].length) {
             d[2] = dataset[23][pos].id;
-            d[3] = dataset[23][pos].stat;
+            d[3] = dataset[23][pos].total; // changed this line to total, so that it works lol
             d[4] = dataset[23][pos].name;
             d[5] = dataset[23][pos].height;
             d[6] = dataset[23][pos].weight;
@@ -194,7 +194,7 @@ success: function(pokemons) {
     for (var i = 0 ; i < 23; i++){
         if (pos<pokemons.length) {
             dataset[i][2] = pokemons[i].id;
-            dataset[i][3] = pokemons[i].stat;
+            dataset[i][3] = pokemons[i].total; // changed this line to total, so that it works lol
             dataset[i][4] = pokemons[i].name;
             dataset[i][5] = pokemons[i].height;
             dataset[i][6] = pokemons[i].weight;
@@ -265,7 +265,7 @@ function updater(dataset,svg,rScale,offset) {
         for (var i = 0 ; i < 23; i++){
            if (pos<pokemons.length) {
             dataset[i][2] = pokemons[i].id;
-            dataset[i][3] = pokemons[i].stat;
+            dataset[i][3] = pokemons[i].total; // changed this line to total, so that it works lol
             dataset[i][4] = pokemons[i].name;
             dataset[i][5] = pokemons[i].height;
             dataset[i][6] = pokemons[i].weight;
