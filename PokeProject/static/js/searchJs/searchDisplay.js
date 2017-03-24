@@ -135,10 +135,18 @@ function statPos() {
 var drag = d3.behavior.drag()
     .on('dragstart',function(){
         dragging = true;
+        d3.select("#tooltipS").classed("hidden", true);
     })
     .on("drag", dragmove)
     .on('dragend',function () {
         dragging = false;
+        var xPosition = parseFloat(d3.select(this).attr("cx"))+275+parseFloat(d3.select(this).attr("r"));
+        var yPosition = parseFloat(d3.select(this).attr("cy"))-15;
+        //Update the tooltip position and value
+        d3.select("#tooltipS")
+            .style("left", xPosition + "px")
+            .style("top", yPosition + "px");
+        d3.select("#tooltipS").classed("hidden", false);
     })
 
 function dragmove(d) {
@@ -180,27 +188,55 @@ svg.selectAll("circle")
         if (!dragging) {
             //Get this bar's x/y values, then augment for the tooltip
             console.log("entered");
-            var xPosition = parseFloat(d3.select(this).attr("cx"));
-            var yPosition = parseFloat(d3.select(this).attr("cy"));
+            var xPosition = parseFloat(d3.select(this).attr("cx"))+275+parseFloat(d3.select(this).attr("r"));
+            var yPosition = parseFloat(d3.select(this).attr("cy"))-15;
             //Update the tooltip position and value
-            d3.select("#tooltip")
+            d3.select("#tooltipS")
                 .style("left", xPosition + "px")
                 .style("top", yPosition + "px")
-                .select("#value")
-                .text(d.value);
+                .select("#name")
+                .text("#"+ d[3] + " " +d[4]);
 
-            d3.select("#tooltip")
-                .select("#header")
-                .text(d.info);
+            d3.select("#tooltipS")
+                .select("#height")
+                .text(d[5]);
+
+            d3.select("#tooltipS")
+                .select("#weight")
+                .text(d[6]);
+
+            d3.select("#tooltipS")
+                .select("#hp")
+                .text(d[8]);
+
+            d3.select("#tooltipS")
+                .select("#attack")
+                .text(d[9]);
+
+            d3.select("#tooltipS")
+                .select("#defense")
+                .text(d[10]);
+
+            d3.select("#tooltipS")
+                .select("#sp_attack")
+                .text(d[11]);
+
+            d3.select("#tooltipS")
+                .select("#sp_defense")
+                .text(d[12]);
+
+            d3.select("#tooltipS")
+                .select("#speed")
+                .text(d[13]);
 
             //Show the tooltip
-            d3.select("#tooltip").classed("hidden", false);
+            d3.select("#tooltipS").classed("hidden", false);
         }
     })
     .on("mouseout", function () {
         if (!dragging) {
             //Hide the tooltip
-            d3.select("#tooltip").classed("hidden", true);
+            d3.select("#tooltipS").classed("hidden", true);
         }
     })
     .call(drag)
@@ -277,6 +313,46 @@ svg.selectAll("circle")
                     return d[2];
             });
 
+        var xPosition = parseFloat(d3.select(this).attr("cx"))+275+parseFloat(d3.select(this).attr("r"));
+        var yPosition = parseFloat(d3.select(this).attr("cy"))-15;
+        //Update the tooltip position and value
+        d3.select("#tooltipS")
+            .style("left", xPosition + "px")
+            .style("top", yPosition + "px")
+            .select("#name")
+            .text("#"+ d[3] + " " +d[4]);
+
+        d3.select("#tooltipS")
+            .select("#height")
+            .text(d[5]);
+
+        d3.select("#tooltipS")
+            .select("#weight")
+            .text(d[6]);
+
+        d3.select("#tooltipS")
+            .select("#hp")
+            .text(d[8]);
+
+        d3.select("#tooltipS")
+            .select("#attack")
+            .text(d[9]);
+
+        d3.select("#tooltipS")
+            .select("#defense")
+            .text(d[10]);
+
+        d3.select("#tooltipS")
+            .select("#sp_attack")
+            .text(d[11]);
+
+        d3.select("#tooltipS")
+            .select("#sp_defense")
+            .text(d[12]);
+
+        d3.select("#tooltipS")
+            .select("#speed")
+            .text(d[13]);
     });
 
 
