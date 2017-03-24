@@ -144,7 +144,7 @@ var dataset = d3.layout.stack()(items.map(function(fruit) {
 
 var UNIT_LABEL_WIDTH = 100;
 var UNIT_LABEL_HEIGHT = 40;
-var GUTTER_WIDTH = 25;
+var GUTTER_WIDTH = 40;
 
 var chartContainer = '.chart-container';
 var chartLegendContainer = '.chart-legend-container';
@@ -156,7 +156,7 @@ var margins = {
 };
 
 var sizes = {
-    width: 860,
+    width: 1060,
     height: 700
 };
 

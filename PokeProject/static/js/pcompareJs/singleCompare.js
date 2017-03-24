@@ -74,7 +74,7 @@ function checkPoke(pokename){
     return poke;
 }
 
-var width = 350, height = 480;
+var width = 450, height = 550;
 var margin = {top: 20, right: 20, bottom: 80, left: 40};
 
 //x and y Scales
