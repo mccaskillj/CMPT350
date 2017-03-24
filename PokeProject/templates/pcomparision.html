@@ -4,121 +4,8 @@
 
 {% block content %}
 <html lang="en">
-<style>
 
-.bar {
-  fill: steelblue;
-}
-
-.bar:hover {
-  fill: brown;
-}
-
-.axis--x path {
-  display: none;
-}
-
-#tooltip {
-    position: absolute;
-    width: 50px;
-    height: auto;
-    padding: 10px;
-    background-color: white;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-    -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-    pointer-events: none;
-}
-
-#tooltip.hidden {
-    display: none;
-}
-
-#tooltip p {
-    margin: 0;
-    font-family: sans-serif;
-    font-size: 16px;
-    line-height: 20px;
-}
-
-#tooltip2 {
-    position: absolute;
-    width: 200px;
-    height: auto;
-    padding: 10px;
-    background-color: white;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-    -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-    pointer-events: none;
-}
-
-#tooltip2.hidden {
-    display: none;
-}
-
-#tooltip2 p {
-    margin: 0;
-    font-family: sans-serif;
-    font-size: 16px;
-    line-height: 20px;
-}
-
-
-.axis path,
-  .axis line {
-    fill: none;
-    stroke: #000;
-  }
-
-  path.domain {
-    stroke: none;
-  }
-
-  .y .tick line {
-    stroke: #ddd;
-  }
-
-      .axis path, .axis line {
-    fill: none;
-    stroke: black;
-    shape-rendering: crispEdges;
-}
-.axis text {
-    font-family: sans-serif;
-    font-size: 15px;
-}
-.bc-legend span {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.bc-y-axis path,
-.bc-y-axis .tick line {
-    fill: transparent;
-
-}
-
-.bc-x-axis path,
-.bc-x-axis line {
-    fill: none;
-    stroke: #eee;
-    shape-rendering: crispEdges;
-}
-
-.bc-axis text {
-    font-family: sans-serif;
-    font-size: 15px;
-    fill: #888;
-
-}
-
+    <style>
 
 </style>
 
@@ -130,10 +17,10 @@
 
 <div id="Single" class="tabcontent" style="background-color: white">
     <div class="grad2">
-        <div class="singleImageFront" style="padding-left: 70px">
+        <div class="singleImageFront" style="padding-left: 130px">
             <img id="frontImg" style="width: 400px; height: 350px;" src="{% static "images/front/0.png" %}" alt="My image"/>
         </div>
-        <div class="singleImageBack" style="padding-left: 20px">
+        <div class="singleImageBack" style="padding-left: 40px">
             <img id="backImg" style="width: 400px; height: 350px" src="{% static "images/back/0.png" %}" alt="My image"/>
         </div>
     </div>
@@ -152,7 +39,7 @@
             </div>
 
             <div class="secondPoke" style="font-family: sans-serif; font-size: 20px;">
-                <div id="radioBut" style="padding-top: 15px">
+                <div id="radioBut" style="padding-top: 15px; padding-left: 150px">
                     <label class="radio-inline" id="normal">
                         <input id="checkNormal" type="radio" name="optradio" checked>Normal
                     </label>
@@ -246,14 +133,29 @@
 
 <div id="Double" class="tabcontent" style="background-color: white">
     <div class="grad" >
-        <div class="singleImageFront" style="padding-left: 70px">
+        <div class="singleImageFront" style="padding-left: 146px">
             <img id="frontImgDouble" style="width: 400px; height: 350px;" src="{% static "images/back/0.png" %}" alt="My image"/>
         </div>
-        <div class="singleImageBack" style="padding-left: 20px">
-            <img id="backImgDouble" style="width: 400px; height: 350px" src="{% static "images/front/0.png" %}" alt="My image"/>
+        <div class="singleImageBack" style="padding-left: 56px">
+            <img id="frontImgDouble2" style="width: 400px; height: 350px" src="{% static "images/front/0.png" %}" alt="My image"/>
         </div>
     </div>
     <div class="doublePokeStatsDiv">
+        <div>
+            <div style="display: table; margin: 0 auto;">
+                <div id="radioBut4" class="doubleBarRadioImg">
+                    <label class="radio-inline">
+                        <input id="normalDouble" type="radio" name="optradio4" checked>Normal
+                    </label>
+                    <label class="radio-inline" id="shinnyDouble">
+                        <input type="radio" name="optradio4">Shiny
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <hr style="background-color: black">
+
         <div>
             <div class="firstPoke">
                 <div class="doubleComparePosition">
@@ -280,7 +182,7 @@
         <hr style="background-color: black">
 
         <div>
-            <div class="fontStyleSinglePoke singleStatsLeft">
+            <div class="fontStyleSinglePoke doubleStatsLeft">
                 <div id="singleIndex">
                     Pokedex: <span id="pokedexDouble"></span>
                 </div>
@@ -296,8 +198,17 @@
                 <div>
                     Body Style: <span id="singleBStyleDouble"></span>
                 </div>
+                <div>
+                    <div>
+                        Type:
+                    </div>
+                    <div style="padding-left: 60px" id="singleTypeDouble">
+                        <span class="badge">None</span>
+                    </div>
+                </div>
+
             </div>
-            <div class="singleStatsRight fontStyleSinglePoke">
+            <div class="doubleStatsRight fontStyleSinglePoke">
                 <div id="singleIndex">
                     Pokedex: <span id="pokedexDouble2"></span>
                 </div>
@@ -313,31 +224,6 @@
                 <div>
                     Body Style: <span id="singleBStyleDouble2"></span>
                 </div>
-            </div>
-        </div>
-
-        <hr style="background-color: black">
-
-        <div>
-            <div class="fontStyleSinglePoke singleStatsLeft">
-                <div>
-                    <div>
-                        Type:
-                    </div>
-                    <div style="padding-left: 60px" id="singleTypeDouble">
-                        <span class="badge">None</span>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        Egg Group:
-                    </div>
-                    <div style="padding-left: 60px" id="singleEggDouble">
-                        <span class="badge monsterBadge">Monster</span>
-                    </div>
-                </div>
-            </div>
-            <div class="fontStyleSinglePoke singleStatsLeft">
                 <div>
                     <div>
                         Type:
@@ -346,16 +232,11 @@
                         <span class="badge">None</span>
                     </div>
                 </div>
-                <div>
-                    <div>
-                        Egg Group:
-                    </div>
-                    <div style="padding-left: 60px" id="singleEggDouble2">
-                        <span class="badge monsterBadge">Monster</span>
-                    </div>
-                </div>
             </div>
         </div>
+
+
+
 
         <hr style="background-color: black">
 
@@ -375,14 +256,14 @@
         <!-- Svg bar graph div-->
         <div style="height: 534px" >
             <div class="testLeft">
-                <h4 style="padding-left: 200px" id="dPoke">Poke name</h4>
+                <h4 style="padding-left: 230px" id="dPoke">Poke name</h4>
                 <div id="doubleChart" >
 
                 </div>
             </div>
 
             <div class="testRight">
-                <h4 style="padding-left: 160px; padding-top: 10px" id="dPoke2">Poke name</h4>
+                <h4 style="padding-left: 180px; padding-top: 10px" id="dPoke2">Poke name</h4>
                 <div id="doubleChart2">
                 </div>
             </div>
@@ -418,7 +299,7 @@
     </div>
 
     <div class="multiStatsDiv" style="padding-top: 50px">
-        <div id="multiChart" >
+        <div id="multiChart" style="padding-left: 20px">
 
 
         </div>
