@@ -122,6 +122,9 @@ function addType(type, id){
         case 'Rock':
             elem.innerHTML += '<span class="badge rockBadge">Rock</span>';
             break;
+        case 'Ground':
+            elem.innerHTML += '<span class="badge groundBadge">Ground</span>';
+            break;
         default:
             break;
     }

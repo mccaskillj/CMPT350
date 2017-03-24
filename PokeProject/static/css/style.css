@@ -558,9 +558,19 @@ div.tab a:focus, .active {
     background-color: #a48f3a;
 }
 
+.groundBadge {
+    color: white;
+    background-color: #d9b34a;
+}
+
 .monsterBadge {
     color: white;
     background-color: burlywood;
+}
+
+.flyingBadge {
+    color: white;
+    background-color: #9d88db;
 }
 
 /*---------Badges end---------*/
