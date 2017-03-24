@@ -278,7 +278,7 @@ d3.select("#sb")
                     addType(pokemons[0]['type_2'], 'singleType');
 
                     var data1 = getValuesForReg(pokemons, unwantedFirst);
-                    var data2 = getValuesForDerived(pokemons, unwantedSecond);
+                    var data2 = getValuesForDerivedOriginal(pokemons, unwantedSecond);
 
                     var xScale = d3.scale.ordinal()
                         .rangeRoundBands([0, width], .1);
