@@ -253,7 +253,6 @@ def get_data(request):
 
     #return HttpResponse(json_string, content_type='application/json')
 
-
 def exists(request):
     name_val = request.GET.get('name', None)
 
@@ -264,4 +263,3 @@ def exists(request):
 
     json_string = json.dumps(val)
     return HttpResponse(json_string, content_type='application/json')
-

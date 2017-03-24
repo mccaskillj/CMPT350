@@ -22,7 +22,6 @@ function  fetchData() {
 
 function drawPacking(data) {
 
-    console.log(JSON.stringify(data));
     var svg = d3.select("svg"),
         margin = 20,
         diameter = +svg.attr("width"),
@@ -90,7 +89,9 @@ function drawPacking(data) {
         zoomTo([root.x, root.y, root.r * 2 + margin]);
 
         function zoom(d) {
-            var focus0 = focus; focus = d;
+
+            var focus0 = focus;
+            focus = d;
 
             var transition = d3.transition()
                 .duration(d3.event.altKey ? 7500 : 750)

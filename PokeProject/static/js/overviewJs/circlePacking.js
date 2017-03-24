@@ -35,7 +35,7 @@ function drawPacking(data) {
         .interpolate(d3.interpolateHcl);
 
 
-    d3.data(data, function (error, root) {
+    d3.json(data, function (error, root) {
         if (error) throw error;
 
         root = d3.hierarchy(root)
