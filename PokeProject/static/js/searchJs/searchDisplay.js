@@ -178,12 +178,29 @@ svg.selectAll("circle")
     .attr('stroke','black')
     .on("mouseover",function (d) {
         if (!dragging) {
-            $("#information").text('Pokemon: "' + d[4] + '" Height: "' + d[5] + '" Weight: "' + d[6] + '"');
+            //Get this bar's x/y values, then augment for the tooltip
+            console.log("entered");
+            var xPosition = parseFloat(d3.select(this).attr("cx"));
+            var yPosition = parseFloat(d3.select(this).attr("cy"));
+            //Update the tooltip position and value
+            d3.select("#tooltip")
+                .style("left", xPosition + "px")
+                .style("top", yPosition + "px")
+                .select("#value")
+                .text(d.value);
+
+            d3.select("#tooltip")
+                .select("#header")
+                .text(d.info);
+
+            //Show the tooltip
+            d3.select("#tooltip").classed("hidden", false);
         }
     })
     .on("mouseout", function () {
         if (!dragging) {
-            $("#information").text('Pokemon: "None" Height: "None" Weight: "None"');
+            //Hide the tooltip
+            d3.select("#tooltip").classed("hidden", true);
         }
     })
     .call(drag)
