@@ -43,7 +43,7 @@ class SearchView(generic.TemplateView):
 
 def SearchView(request):
     types = ["Fire", "Water", "Grass", "Bug", "Ghost", "Electric", "Fairy", "Dragon", "Poison",
-             "Rock", "Steel", "Normal", "Fighting", "Ground", "Psychic"]
+             "Rock", "Steel", "Normal", "Fighting", "Ground", "Psychic", "Ice", "Dark", "Flying"]
     colors = ['Green', 'Red', 'Blue', 'White', 'Brown', 'Yellow', 'Purple', 'Pink', 'Grey', 'Black']
     pokemons = Pokemon.objects.all()
     data = serializers.serialize("json", pokemons)
@@ -223,6 +223,10 @@ def get_filtered_pokemon(request):
 
 def get_data(request):
     pokemonDictionary = {"name": "Pokemon"}
+    colorsDict = {"Fire": "#ff5d55", "Water": "#5382ea", "Grass": "#6cb649", "Bug": "#95a22c", "Ghost": "#5d4b7e",
+                  "Electric": "#f2c735", "Fairy": "#e287e2", "Dragon": "#5b2eef", "Poison": "#933f93",
+                  "Rock": "#a48f3a", "Steel": "#a7a8be", "Normal": "#99986a", "Fighting": "#a02a26",
+                  "Ground": "#d9b34a", "Psychic": "#f54378"}
     tempGendict = []
     type = set()
     size = 1000
@@ -236,8 +240,8 @@ def get_data(request):
             refinedlist = Pokemon.objects.filter(generation=str(i), type_1=ty)
             temp = []
             for k in refinedlist:
-                temp.append({"name": k.name, "size": size})
-            tempTypeArray.append({"name": ty, "children": temp})
+                temp.append({"name": k.name, "pokeId": k.id, "size": size})
+            tempTypeArray.append({"name": ty, "children": temp, "color": colorsDict[ty]})
 
         tempGendict.append({"name": "Generation " + str(i), "children": tempTypeArray})
 
@@ -247,8 +251,7 @@ def get_data(request):
 
     json_string = json.dumps(pokemonDictionary)
 
-    #jsonTemp = json.loads(json_string)
-    #print(jsonTemp)
+    print(json_string)
     return HttpResponse(json_string, content_type='application/json')
 
     #return HttpResponse(json_string, content_type='application/json')

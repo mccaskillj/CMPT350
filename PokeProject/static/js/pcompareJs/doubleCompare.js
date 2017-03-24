@@ -3,7 +3,7 @@
  */
 
 
-var w = 340, h = 350;
+var w = 440, h = 430;
 var margin = {top: 20, right: 20, bottom: 80, left: 40};
 
 //x and y Scales
@@ -259,7 +259,7 @@ d3.select("#doubleClick2")
 
                     var id = pokemons[0]['id'];
 
-                    $("#backImgDouble").attr('src', frontPath + id + '.png');
+                    $("#frontImgDouble2").attr('src', frontPath + id + '.png');
 
                     document.getElementById('pokedexDouble2').innerHTML = pokemons[0]['id'];
                     if (pokemons[0]['is_legendary'] == "TRUE") {
