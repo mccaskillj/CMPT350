@@ -19,6 +19,8 @@ var w4 = w3 + wi;
 var w6 = w5 + wi;
 var w8 = w7 + wi;
 
+var dragging = false;
+
 var locations = [
     [w5,h3],
     [w2,h2],
@@ -130,6 +132,19 @@ function statPos() {
     return -1;
 }
 
+var drag = d3.behavior.drag()
+    .on('dragstart',function(){
+        dragging = true;
+    })
+    .on("drag", dragmove)
+    .on('dragend',function () {
+        dragging = false;
+    })
+
+function dragmove(d) {
+    d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+}
+
 var url = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png';
 
 var generation = document.getElementById("genBody").value;
@@ -162,11 +177,16 @@ svg.selectAll("circle")
     })
     .attr('stroke','black')
     .on("mouseover",function (d) {
-        $("#information").text('Pokemon: "'+ d[4] +'" Height: "'+ d[5] +'" Weight: "'+ d[6] +'"');
+        if (!dragging) {
+            $("#information").text('Pokemon: "' + d[4] + '" Height: "' + d[5] + '" Weight: "' + d[6] + '"');
+        }
     })
     .on("mouseout", function () {
-        $("#information").text('Pokemon: "None" Height: "None" Weight: "None"');
+        if (!dragging) {
+            $("#information").text('Pokemon: "None" Height: "None" Weight: "None"');
+        }
     })
+    .call(drag)
     .on("click", function (d) {
         var pos = dataset[24];
         if (pos < dataset[23].length) {
@@ -295,7 +315,6 @@ success: function(pokemons) {
     for (i = 0; i < 23; i++) {
         $('#image' + i + ' image').attr('y', offset(dataset[i][7]))
             .attr('x', offset(dataset[i][7]))
-            //.attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png')
             .attr('xlink:href', frontPath + dataset[i][3] + '.png');
     }
     svg.selectAll("circle")
