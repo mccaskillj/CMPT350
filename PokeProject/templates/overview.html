@@ -72,30 +72,17 @@ d3.json("{% static 'flare.json' %}", function(error, root) {
     .data(nodes)
     .enter().append("circle")
       .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
-      .style("fill", function(d) { return d.parent ? d.children ? d.data.color: 'url(#image' + d.data.pokeId + ')' : null; })
-      //.style("fill", function(d) { return d.parent ? d.children ? d.data.color : frontPath + d.data.pokeId +'.png' : null; })
+      //.style("fill", function(d) { return d.parent ? d.children ? d.data.color: 'url(#image' + d.data.pokeId + ')' : null; })
+      .style("fill", function(d) { return d.children ? d.data.color : null; })
       //.attr("xlink:href", function(d) { return d.parent ? d.children ? null : frontPath + d.data.pokeId +'.png' : null; })
       .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
-{#      .append("pattern")#}
-{#      .attr("id", function (d) {#}
-{#          return d.data.pokeId#}
-{#      })#}
-{#      .attr("x", 0)#}
-{#      .attr("y", 0)#}
-{#      .attr("height", 1)#}
-{#      .attr("width", 1)#}
-{#      .append("image")#}
-{#      .attr("x", 0)#}
-{#      .attr("y", 0)#}
-{#      .attr("width", 60)#}
-{#      .attr("height", 60)#}
-{#      .attr("xlink:href", function(d) { return d.parent ? d.children ? null : frontPath + d.data.pokeId +'.png' : null; });#}
 
-{#      <pattern id='image18' x='0' y='0' height='1' width='1' class="svg-image">#}
-{#          <image x='0' y='0' width='60' height='60' xlink:href=""/>#}
-{#        </pattern>#}
-      //.attr("pattern", "", "id", function(d) { return "image" + d.data.pokeId})
-
+   var image = g.selectAll("image")
+    .data(nodes)
+    .enter().append("image")
+      .attr("xlink:href", function(d) { return frontPath + d.data.pokeId + '.png'})
+      .style("fill-opacity", function(d) { return d.depth === 2 ? 1 : 0; })
+      .style("display", function(d) { return d.depth === 3 ? null : "none"; });
 
   var text = g.selectAll("text")
     .data(nodes)
@@ -103,9 +90,11 @@ d3.json("{% static 'flare.json' %}", function(error, root) {
       .attr("class", "label")
       .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
       .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
-      .text(function(d) { return d.data.name; });
+      .text(function(d) { return d.children ? d.data.name : null; });
 
-  var node = g.selectAll("circle,text");
+
+
+  var node = g.selectAll("circle,text,image");
 
   svg
       .style("background", color(-1))
@@ -130,19 +119,22 @@ d3.json("{% static 'flare.json' %}", function(error, root) {
         .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
   }
 
-  function zoomTo(v) {
-    var k = diameter / v[2]; view = v;
-    node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
-    circle.attr("r", function(d) { return d.r * k; });
-  }
+{#  function zoomTo(v) {#}
+{#    var k = diameter / v[2]; view = v;#}
+{#    node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });#}
+{#    circle.attr("r", function(d) { return d.r * k; });#}
+{#  }#}
+    function zoomTo(v) {
+		var k = diameter / v[2]; view = v;
+		node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
+		circle.attr("r", function(d) { return d.r * k; });
+		image
+			.attr("transform", function(d) { console.log(d.r); return "translate(" + (((d.x - v[0]) * (k)) - ((d.r / 2) * k)) + "," + (((d.y - v[1]) * (k)) - ((d.r / 2) * k)) + ")"; })
+			.attr("width", function(d) { return d.r * k; })
+			.attr("height", function(d) { return d.r * k; })
+	}
 });
 
 </script>
-{#    <script type="text/javascript" src="{% static "js/overviewJs/circlePacking.js" %}"></script>#}
-{#    <link rel="stylesheet" type="text/css" href="{% static "css/circlePacking.css" %}" />#}
-{#    <script type="text/javascript" src = "{% static "js/overviewJs/d3CirclePacking.js" %}"></script>#}
-{#    <svg width="960" height="960"></svg>#}
-{#    <script src="https://d3js.org/d3.v4.min.js"></script>#}
-
 
 {% endblock %}
