@@ -211,7 +211,6 @@ svg.selectAll("circle")
                     return d[2];
             });
 
-        console.log(dataset[0]);
     });
 
 
@@ -263,8 +262,6 @@ success: function(pokemons) {
 
     rScale.domain(minmax(dataset,7));
     offset.domain(minmax(dataset,7));
-    console.log(minmax(dataset,7));
-    console.log(rScale(250));
 
     for (i = 0; i < 23; i++) {
         $('#image' + i + ' image').attr('y', offset(dataset[i][7]))
@@ -285,8 +282,6 @@ failure: function(pokemons) {
     alert('Got an error dude');
 }
 });
-
-console.log(dataset);
 
 function radioUpdater(dataset,svg,rScale,offset) {
     var pos = statPos();
@@ -325,8 +320,6 @@ function updater(dataset,svg,rScale,offset) {
     var speed = document.getElementById("amountSP").value;
     var radio = document.querySelector('input[name = "optradio"]:checked').value;
 
-
-    console.log(generation, type, color, weight, height, hp, attack, defense, sp_attack, sp_defense, speed, radio);
     $.ajax({
         type: "GET",
         url: 'ajax/get_filtered_pokemon/', //the script to call to get data
@@ -402,7 +395,6 @@ function updater(dataset,svg,rScale,offset) {
 
 d3.select('#genBody').on('change', function () {
     updater(dataset,svg,rScale,offset);
-    console.log(dataset);
 });
 
 d3.select('#typeBody').on('change', function () {
@@ -446,6 +438,5 @@ d3.select('#slider-range8').on('click', function () {
 });
 
 d3.select('#StatRadio').on('change', function () {
-    console.log(statPos());
     radioUpdater(dataset,svg,rScale,offset);
 });
