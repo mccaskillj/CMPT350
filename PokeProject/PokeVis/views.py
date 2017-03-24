@@ -247,8 +247,11 @@ def get_data(request):
 
     json_string = json.dumps(pokemonDictionary)
 
+    #jsonTemp = json.loads(json_string)
+    #print(jsonTemp)
     return HttpResponse(json_string, content_type='application/json')
 
+    #return HttpResponse(json_string, content_type='application/json')
 
 def exists(request):
     name_val = request.GET.get('name', None)
@@ -259,5 +262,4 @@ def exists(request):
         val = {"val": 1}
 
     json_string = json.dumps(val)
-
     return HttpResponse(json_string, content_type='application/json')
