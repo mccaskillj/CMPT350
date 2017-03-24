@@ -1,4 +1,4 @@
-var w = 769;
+var w = 969;
 var h = 628;
 var r = 40;
 var h1 = r+20;
@@ -19,35 +19,64 @@ var w4 = w3 + wi;
 var w6 = w5 + wi;
 var w8 = w7 + wi;
 
+var locations = [
+    [w5,h3],
+    [w2,h2],
+    [w8,h4],
+    [w8,h2],
+    [w2,h4],
+    [w5,h1],
+    [w5,h5],
+    [w4,h2],
+    [w6,h4],
+    [w6,h2],
+    [w4,h4],
+    [w3,h1],
+    [w7,h5],
+    [w7,h1],
+    [w3,h5],
+    [w3,h3],
+    [w7,h3],
+    [w1,h1],
+    [w9,h5],
+    [w9,h1],
+    [w1,h5],
+    [w1,h3],
+    [w9,h3]]
+
 //[0=xvalue, 1=yvalue, 2=radius, 3=pokedex, 4=name, 5=height, 6=weight, 7=total, 8=hp, 9=attack, 10=defense,
 // 11=sp_atk, 12=sp_def, 13=speed, 14=type_1, 15=type_2]
 var dataset = [
-    [w5,h3,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w2,h2,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w8,h4,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w8,h2,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w2,h4,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w5,h1,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w5,h5,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w4,h2,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w6,h4,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w6,h2,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w4,h4,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w3,h1,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w7,h5,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w7,h1,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w3,h5,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w3,h3,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w7,h3,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w1,h1,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w9,h5,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w9,h1,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w1,h5,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w1,h3,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
-    [w9,h3,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
     [],
     0];
 
+for (var i = 0; i<23; i++){
+    dataset[i][0] = locations[i][0];
+    dataset[i][1] = locations[i][1];
+}
 
 var offset = d3.scale.linear()
     .range([-2,30]);
@@ -332,34 +361,38 @@ function updater(dataset,svg,rScale,offset) {
         var pos = 0;
         for (var i = 0 ; i < 23; i++){
            if (pos<pokemons.length) {
-            dataset[i][3] = pokemons[i].id;
-            dataset[i][4] = pokemons[i].name;
-            dataset[i][5] = pokemons[i].height;
-            dataset[i][6] = pokemons[i].weight;
-            dataset[i][7] = pokemons[i].total;
-            dataset[i][8] = pokemons[i].hp;
-            dataset[i][9] = pokemons[i].attack;
-            dataset[i][10] = pokemons[i].defense;
-            dataset[i][11] = pokemons[i].sp_attack;
-            dataset[i][12] = pokemons[i].sp_defense;
-            dataset[i][13] = pokemons[i].speed;
-            //dataset[i][14] = pokemons[i].type_1;
-            //dataset[i][15] = pokemons[i].type_2;
-        } else {
-            dataset[i][3] = 0;
-            dataset[i][4] = "";
-            dataset[i][5] = 0;
-            dataset[i][6] = 0;
-            dataset[i][7] = 0;
-            dataset[i][8] = 0;
-            dataset[i][9] = 0;
-            dataset[i][10] = 0;
-            dataset[i][11] = 0;
-            dataset[i][12] = 0;
-            dataset[i][13] = 0;
-            //dataset[i][14] = "";
-            //dataset[i][15] = "";
-        }
+               dataset[i][0] = locations[i][0];
+               dataset[i][1] = locations[i][1];
+                dataset[i][3] = pokemons[i].id;
+                dataset[i][4] = pokemons[i].name;
+                dataset[i][5] = pokemons[i].height;
+                dataset[i][6] = pokemons[i].weight;
+                dataset[i][7] = pokemons[i].total;
+                dataset[i][8] = pokemons[i].hp;
+                dataset[i][9] = pokemons[i].attack;
+                dataset[i][10] = pokemons[i].defense;
+                dataset[i][11] = pokemons[i].sp_attack;
+                dataset[i][12] = pokemons[i].sp_defense;
+                dataset[i][13] = pokemons[i].speed;
+                //dataset[i][14] = pokemons[i].type_1;
+                //dataset[i][15] = pokemons[i].type_2;
+           } else {
+               dataset[i][0] = locations[i][0];
+               dataset[i][1] = locations[i][1];
+                dataset[i][3] = 0;
+                dataset[i][4] = "";
+                dataset[i][5] = 0;
+                dataset[i][6] = 0;
+                dataset[i][7] = 0;
+                dataset[i][8] = 0;
+                dataset[i][9] = 0;
+                dataset[i][10] = 0;
+                dataset[i][11] = 0;
+                dataset[i][12] = 0;
+                dataset[i][13] = 0;
+                //dataset[i][14] = "";
+                //dataset[i][15] = "";
+            }
             pos++;
         }
         dataset[24]=pos;
