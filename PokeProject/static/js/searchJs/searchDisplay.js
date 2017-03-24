@@ -19,31 +19,32 @@ var w4 = w3 + wi;
 var w6 = w5 + wi;
 var w8 = w7 + wi;
 
-//[xvalue, yvalue, pokedex, stat, name, height, weight, radius]
+//[0=xvalue, 1=yvalue, 2=radius, 3=pokedex, 4=name, 5=height, 6=weight, 7=total, 8=hp, 9=attack, 10=defense,
+// 11=sp_atk, 12=sp_def, 13=speed, 14=type_1, 15=type_2]
 var dataset = [
-    [w5,h3,0,0,"",0,0,0],
-    [w2,h2,0,0,"",0,0,0],
-    [w8,h4,0,0,"",0,0,0],
-    [w8,h2,0,0,"",0,0,0],
-    [w2,h4,0,0,"",0,0,0],
-    [w5,h1,0,0,"",0,0,0],
-    [w5,h5,0,0,"",0,0,0],
-    [w4,h2,0,0,"",0,0,0],
-    [w6,h4,0,0,"",0,0,0],
-    [w6,h2,0,0,"",0,0,0],
-    [w4,h4,0,0,"",0,0,0],
-    [w3,h1,0,0,"",0,0,0],
-    [w7,h5,0,0,"",0,0,0],
-    [w7,h1,0,0,"",0,0,0],
-    [w3,h5,0,0,"",0,0,0],
-    [w3,h3,0,0,"",0,0,0],
-    [w7,h3,0,0,"",0,0,0],
-    [w1,h1,0,0,"",0,0,0],
-    [w9,h5,0,0,"",0,0,0],
-    [w9,h1,0,0,"",0,0,0],
-    [w1,h5,0,0,"",0,0,0],
-    [w1,h3,0,0,"",0,0,0],
-    [w9,h3,0,0,"",0,0,0],
+    [w5,h3,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w2,h2,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w8,h4,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w8,h2,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w2,h4,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w5,h1,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w5,h5,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w4,h2,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w6,h4,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w6,h2,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w4,h4,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w3,h1,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w7,h5,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w7,h1,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w3,h5,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w3,h3,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w7,h3,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w1,h1,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w9,h5,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w9,h1,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w1,h5,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w1,h3,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w9,h3,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
     [],
     0];
 
@@ -54,27 +55,50 @@ var offset = d3.scale.linear()
 var rScale =  d3.scale.linear()
     .range([25,60]);
 
-function minmax(dataset) {
+function minmax(dataset,col) {
     var cnt = 0;
-    while(dataset[cnt][3] == 0 && cnt < 23){
+    while(dataset[cnt][col] == 0 && cnt < 23){
         cnt = cnt + 1;
     }
     if (cnt == 23){
         return [0,0];
     }
-    var min = dataset[cnt][3];
-    var max = dataset[cnt][3];
+    var min = dataset[cnt][col];
+    var max = dataset[cnt][col];
     for (var i = 1; i<23; i++){
-        if (dataset[i][3] != 0) {
-            if (dataset[i][3] < min){
-                min = dataset[i][3];
+        if (dataset[i][col] != 0) {
+            if (dataset[i][col] < min){
+                min = dataset[i][col];
             }
-            if (dataset[i][3] > max){
-                max = dataset[i][3];
+            if (dataset[i][col] > max){
+                max = dataset[i][col];
             }
         }
     }
     return [min,max];
+}
+
+function statPos() {
+    var value = document.querySelector('input[name = "optradio"]:checked').value;
+    if (value == "total"){
+        return 7;
+    }
+    if (value == "hp"){
+        return 8;
+    }
+    if (value == "attack"){
+        return 9;
+    }
+    if (value == "defense"){
+        return 10;
+    }
+    if (value == "sp_attack"){
+        return 11;
+    }
+    if (value == "sp_defense"){
+        return 12;
+    }
+    return -1;
 }
 
 var url = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png';
@@ -115,41 +139,52 @@ svg.selectAll("circle")
         $("#information").text('Pokemon: "None" Height: "None" Weight: "None"');
     })
     .on("click", function (d) {
-        console.log(dataset[0]);
         var pos = dataset[24];
-        console.log(dataset[23]);
-        console.log(pos+" "+dataset[23].length);
-        console.log(pos);
         if (pos < dataset[23].length) {
-            d[2] = dataset[23][pos].id;
-            d[3] = dataset[23][pos].total; // changed this line to total, so that it works lol
+            d[3] = dataset[23][pos].id;
             d[4] = dataset[23][pos].name;
             d[5] = dataset[23][pos].height;
             d[6] = dataset[23][pos].weight;
+            d[7] = dataset[23][pos].total;
+            d[8] = dataset[23][pos].hp;
+            d[9] = dataset[23][pos].attack;
+            d[10] = dataset[23][pos].defense;
+            d[11] = dataset[23][pos].sp_attack;
+            d[12] = dataset[23][pos].sp_defense;
+            d[13] = dataset[23][pos].speed;
+            //d[14] = dataset[23][pos].type_1;
+            //d[15] = dataset[23][pos].type_2;
         } else {
-            d[2] = 0;
             d[3] = 0;
             d[4] = "";
             d[5] = 0;
             d[6] = 0;
+            d[7] = 0;
+            d[8] = 0;
+            d[9] = 0;
+            d[10] = 0;
+            d[11] = 0;
+            d[12] = 0;
+            d[13] = 0;
+            //d[14] = "";
+            //d[15] = "";
         }
         dataset[24] = dataset[24] + 1;
 
-        var mm = minmax(dataset);
+        var mm = minmax(dataset,7);
 
         rScale.domain(mm);
         offset.domain(mm);
-        console.log(mm);
 
         for (var i = 0; i<23; i++){
-            if (dataset[i][3] != 0){
+            if (dataset[i][7] != 0){
                 if (mm[0] == mm[1]){
-                    dataset[i][7] = 60;
+                    dataset[i][2] = 60;
                 } else {
-                    dataset[i][7] = rScale(dataset[i][3]);
+                    dataset[i][2] = rScale(dataset[i][7]);
                 }
             } else {
-                dataset[i][7]=0
+                dataset[i][2]=0
             }
         }
 
@@ -159,28 +194,27 @@ svg.selectAll("circle")
                 if (mm[0] == mm[1]){
                     return 30;
                 }else {
-                    return offset(dataset[i][3]);
+                    return offset(dataset[i][7]);
                 }
             })
             .attr('x', function () {
                 if (mm[0] == mm[1]){
                     return 30;
                 }else {
-                    return offset(dataset[i][3]);
+                    return offset(dataset[i][7]);
                 }
             })
-            .attr('xlink:href', frontPath + dataset[i][2] + '.png');
+            .attr('xlink:href', frontPath + dataset[i][3] + '.png');
         }
         svg.selectAll("circle")
             .attr('r', function (d) {
-                    return d[7];
+                    return d[2];
             });
 
         console.log(dataset[0]);
     });
 
 
-console.log(generation, type, color, weight, height, hp, attack, defense, sp_attack, sp_defense, speed, radio);
 $.ajax({
     type: "GET",
     url: 'ajax/get_filtered_pokemon/', //the script to call to get data
@@ -192,38 +226,58 @@ success: function(pokemons) {
     dataset[23] = pokemons;
     var pos = 0;
     for (var i = 0 ; i < 23; i++){
+        //[0=xvalue, 1=yvalue, 2=radius, 3=pokedex, 4=name, 5=height, 6=weight, 7=total, 8=hp, 9=attack, 10=defense,
+// 11=sp_atk, 12=sp_def, 13=speed, 14=type_1, 15=type_2]
         if (pos<pokemons.length) {
-            dataset[i][2] = pokemons[i].id;
-            dataset[i][3] = pokemons[i].total; // changed this line to total, so that it works lol
+            dataset[i][3] = pokemons[i].id;
             dataset[i][4] = pokemons[i].name;
             dataset[i][5] = pokemons[i].height;
             dataset[i][6] = pokemons[i].weight;
+            dataset[i][7] = pokemons[i].total;
+            dataset[i][8] = pokemons[i].hp;
+            dataset[i][9] = pokemons[i].attack;
+            dataset[i][10] = pokemons[i].defense;
+            dataset[i][11] = pokemons[i].sp_attack;
+            dataset[i][12] = pokemons[i].sp_defense;
+            dataset[i][13] = pokemons[i].speed;
+            //dataset[i][14] = pokemons[i].type_1;
+            //dataset[i][15] = pokemons[i].type_2;
         } else {
-            dataset[i][2] = 0;
             dataset[i][3] = 0;
             dataset[i][4] = "";
             dataset[i][5] = 0;
             dataset[i][6] = 0;
+            dataset[i][7] = 0;
+            dataset[i][8] = 0;
+            dataset[i][9] = 0;
+            dataset[i][10] = 0;
+            dataset[i][11] = 0;
+            dataset[i][12] = 0;
+            dataset[i][13] = 0;
+            //dataset[i][14] = "";
+            //dataset[i][15] = "";
         }
         pos++;
     }
     dataset[24] = pos;
 
-    rScale.domain(minmax(dataset));
-    offset.domain(minmax(dataset));
+    rScale.domain(minmax(dataset,7));
+    offset.domain(minmax(dataset,7));
+    console.log(minmax(dataset,7));
+    console.log(rScale(250));
 
     for (i = 0; i < 23; i++) {
-        $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
-            .attr('x', offset(dataset[i][3]))
+        $('#image' + i + ' image').attr('y', offset(dataset[i][7]))
+            .attr('x', offset(dataset[i][7]))
             //.attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png')
-            .attr('xlink:href', frontPath + dataset[i][2] + '.png');
+            .attr('xlink:href', frontPath + dataset[i][3] + '.png');
     }
     svg.selectAll("circle")
             .attr('r', function (d) {
-                if (d[3] != 0) {
-                    return rScale(d[3]);
+                if (d[7] != 0) {
+                    return rScale(d[7]);
                 } else {
-                    return d[3];
+                    return d[7];
                 }
             })
 },
@@ -233,6 +287,27 @@ failure: function(pokemons) {
 });
 
 console.log(dataset);
+
+function radioUpdater(dataset,svg,rScale,offset) {
+    var pos = statPos();
+    rScale.domain(minmax(dataset, pos));
+    offset.domain(minmax(dataset, pos));
+
+    for (i = 0; i < 23; i++) {
+
+        $('#image' + i + ' image').attr('y', offset(dataset[i][pos]))
+            .attr('x', offset(dataset[i][pos]))
+    }
+    svg.selectAll("circle")
+        .attr('r', function (d) {
+            if (d[pos] != 0) {
+                return rScale(d[pos]);
+            } else {
+                return d[pos];
+            }
+        });
+    return dataset;
+}
 
 
 function updater(dataset,svg,rScale,offset) {
@@ -264,36 +339,55 @@ function updater(dataset,svg,rScale,offset) {
         var pos = 0;
         for (var i = 0 ; i < 23; i++){
            if (pos<pokemons.length) {
-            dataset[i][2] = pokemons[i].id;
-            dataset[i][3] = pokemons[i].total; // changed this line to total, so that it works lol
+            dataset[i][3] = pokemons[i].id;
             dataset[i][4] = pokemons[i].name;
             dataset[i][5] = pokemons[i].height;
             dataset[i][6] = pokemons[i].weight;
-            } else {
-            dataset[i][2] = 0;
+            dataset[i][7] = pokemons[i].total;
+            dataset[i][8] = pokemons[i].hp;
+            dataset[i][9] = pokemons[i].attack;
+            dataset[i][10] = pokemons[i].defense;
+            dataset[i][11] = pokemons[i].sp_attack;
+            dataset[i][12] = pokemons[i].sp_defense;
+            dataset[i][13] = pokemons[i].speed;
+            //dataset[i][14] = pokemons[i].type_1;
+            //dataset[i][15] = pokemons[i].type_2;
+        } else {
             dataset[i][3] = 0;
             dataset[i][4] = "";
             dataset[i][5] = 0;
             dataset[i][6] = 0;
-            }
+            dataset[i][7] = 0;
+            dataset[i][8] = 0;
+            dataset[i][9] = 0;
+            dataset[i][10] = 0;
+            dataset[i][11] = 0;
+            dataset[i][12] = 0;
+            dataset[i][13] = 0;
+            //dataset[i][14] = "";
+            //dataset[i][15] = "";
+        }
             pos++;
         }
         dataset[24]=pos;
-        rScale.domain(minmax(dataset));
-        offset.domain(minmax(dataset));
+
+        var stat = statPos();
+
+        rScale.domain(minmax(dataset,stat));
+        offset.domain(minmax(dataset,stat));
 
         for (i = 0; i < 23; i++) {
-            $('#image' + i + ' image').attr('y', offset(dataset[i][3]))
-                .attr('x', offset(dataset[i][3]))
+            $('#image' + i + ' image').attr('y', offset(dataset[i][stat]))
+                .attr('x', offset(dataset[i][stat]))
                 //.attr('xlink:href', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + dataset[i][2] + '.png');
-                .attr('xlink:href', frontPath + dataset[i][2] + '.png');
+                .attr('xlink:href', frontPath + dataset[i][3] + '.png');
         }
         svg.selectAll("circle")
             .attr('r', function (d) {
-                if (d[3] != 0) {
-                    return rScale(d[3]);
+                if (d[stat] != 0) {
+                    return rScale(d[stat]);
                 } else {
-                    return d[3];
+                    return d[stat];
                 }
             })
 
@@ -352,5 +446,6 @@ d3.select('#slider-range8').on('click', function () {
 });
 
 d3.select('#StatRadio').on('change', function () {
-    updater(dataset,svg,rScale,offset);
+    console.log(statPos());
+    radioUpdater(dataset,svg,rScale,offset);
 });
