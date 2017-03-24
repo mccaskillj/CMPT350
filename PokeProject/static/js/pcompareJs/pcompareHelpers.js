@@ -177,6 +177,7 @@ $( function() {
     });
 } );
 
+// Single
 $('#shinny').on("click",function(){
     var id = document.getElementById('pokedex').innerHTML;
 
@@ -189,6 +190,24 @@ $('#normal').on("click",function(){
 
     $("#frontImg").attr('src', frontPath + id + '.png');
     $("#backImg").attr('src', backPath + id + '.png');
+
+});
+
+// Double
+$('#shinnyDouble').on("click",function(){
+    var id = document.getElementById('pokedexDouble').innerHTML;
+    var id2 = document.getElementById('pokedexDouble2').innerHTML;
+
+    $("#frontImgDouble").attr('src', shinyFrontPath + id + '.png');
+    $("#frontImgDouble2").attr('src', shinyFrontPath + id2 + '.png');
+});
+
+$('#normalDouble').on("click",function(){
+    var id = document.getElementById('pokedexDouble').innerHTML;
+    var id2 = document.getElementById('pokedexDouble2').innerHTML;
+
+    $("#frontImgDouble").attr('src', frontPath + id + '.png');
+    $("#frontImgDouble2").attr('src', frontPath + id2 + '.png');
 
 });
 
