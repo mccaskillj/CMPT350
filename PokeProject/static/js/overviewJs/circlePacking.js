@@ -8,7 +8,6 @@ function  fetchData() {
     $.ajax({
         type: "GET",
         url: 'ajax/get_data/', //the script to call to get data
-        data: {"name": "Charizard"},
         dataType: 'JSON',                //data format
         success: function(pokemons) {
             console.log(pokemons);
@@ -22,6 +21,7 @@ function  fetchData() {
 }
 
 function drawPacking(data) {
+    console.log(data);
     var svg = d3.select("svg");
     var margin = 20;
     var diameter = +svg.attr("width");
@@ -35,7 +35,7 @@ function drawPacking(data) {
         .interpolate(d3.interpolateHcl);
 
 
-    d3.data(data, function (error, root) {
+    d3.json(data, function (error, root) {
         if (error) throw error;
 
         root = d3.hierarchy(root)
