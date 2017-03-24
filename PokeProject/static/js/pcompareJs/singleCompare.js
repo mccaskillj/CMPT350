@@ -184,7 +184,7 @@ svg2.selectAll(".bar")
     .append("rect")
     .attr("id", "d2")
     .attr("class", "bar")
-    .attr("fill", "#90caf9")
+    .attr("fill", "#5b2eef")
     .attr("x", function(d) { return xScale(d.stat); })
     .attr("width", xScale.rangeBand())
     .attr("y", function(d) { return yScale(d.value); })
@@ -322,7 +322,7 @@ d3.select("#sb")
                             return i / data2.length * 10;   // <-- Where the magic happens
                         })
                         .duration(1000)
-                        .attr("fill", "#90caf9")
+                        .attr("fill", "#5b2eef")
                         .attr("x", function (d) {
                             return xScale(d.stat);
                         })

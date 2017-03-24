@@ -1,7 +1,8 @@
 /**
  * Created by carmichael on 2017-03-13.
  */
-
+var doublePokeDataOne = [];
+var doublePokeDataTwo = [];
 
 var w = 440, h = 430;
 var margin = {top: 20, right: 20, bottom: 80, left: 40};
@@ -108,6 +109,9 @@ d3.select("#doubleClick")
                     var unwantedFirst = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
                         'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
                         'phys_sweeper', 'sp_sweeper', 'wall', 'phys_tank', 'sp_tank'];
+                    var unwantedSecond = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
+                            'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
+                            'hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed'];
 
                     var id = pokemons[0]['id'];
 
@@ -129,7 +133,11 @@ d3.select("#doubleClick")
                     addType(pokemons[0]['type_2'], "singleTypeDouble");
 
                     var data1 = getValuesForReg(pokemons, unwantedFirst);
-                    //var data2 = getValuesForDerived(pokemons, unwantedSecond);
+                    var data2 = getValuesForDerived(pokemons, unwantedSecond);
+
+                    doublePokeDataOne = [];
+                    doublePokeDataOne.push(data1);
+                    doublePokeDataOne.push(data2);
 
                     var xScale = d3.scale.ordinal()
                         .rangeRoundBands([0, w], .1);
@@ -138,15 +146,15 @@ d3.select("#doubleClick")
                         .range([h, 0]);
 
                     yScale.domain([0, 255]);
-                    xScale.domain(data1.map(function(d) { return d.stat; }));
+                    xScale.domain(doublePokeDataOne[0].map(function(d) { return d.stat; }));
 
                     //Update all rects
 
                     doublesvg.selectAll("#double")
-                        .data(data1)
+                        .data(doublePokeDataOne[0])
                         .transition()
                         .delay(function (d, i) {
-                            return i / data1.length * 10;   // <-- Where the magic happens
+                            return i / doublePokeDataOne[0].length * 10;   // <-- Where the magic happens
                         })
                         .duration(1000)
                         .attr("fill", "#90caf9")
@@ -162,7 +170,8 @@ d3.select("#doubleClick")
                         });
 
                         document.getElementById("checkNormal").checked = true;
-                    document.getElementById("checkBarDouble").checked = true;
+                        document.getElementById("checkBarDouble").checked = true;
+                        document.getElementById("checkNormalD").checked = true;
 
                 },
                 failure: function (pokemons) {
@@ -256,6 +265,9 @@ d3.select("#doubleClick2")
                     var unwantedFirst = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
                         'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
                         'phys_sweeper', 'sp_sweeper', 'wall', 'phys_tank', 'sp_tank'];
+                    var unwantedSecond = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
+                            'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
+                            'hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed'];
 
                     var id = pokemons[0]['id'];
 
@@ -280,6 +292,12 @@ d3.select("#doubleClick2")
 
 
                     var data1 = getValuesForReg(pokemons, unwantedFirst);
+                    var data2 = getValuesForDerived(pokemons, unwantedSecond);
+
+                    doublePokeDataTwo = [];
+                    doublePokeDataTwo.push(data1);
+                    doublePokeDataTwo.push(data2);
+
 
                     var xScale = d3.scale.ordinal()
                         .rangeRoundBands([0, w], .1);
@@ -288,15 +306,15 @@ d3.select("#doubleClick2")
                         .range([h, 0]);
 
                     yScale.domain([0, 255]);
-                    xScale.domain(data1.map(function(d) { return d.stat; }));
+                    xScale.domain(doublePokeDataTwo[0].map(function(d) { return d.stat; }));
 
                     //Update all rects
 
                     doublesvg2.selectAll("#double2")
-                        .data(data1)
+                        .data(doublePokeDataTwo[0])
                         .transition()
                         .delay(function (d, i) {
-                            return i / data1.length * 10;   // <-- Where the magic happens
+                            return i / doublePokeDataTwo[0].length * 10;   // <-- Where the magic happens
                         })
                         .duration(1000)
                         .attr("fill", "#90caf9")
@@ -313,6 +331,7 @@ d3.select("#doubleClick2")
 
                     document.getElementById("checkNormal").checked = true;
                     document.getElementById("checkBarDouble").checked = true;
+                    document.getElementById("checkNormalD").checked = true;
                 },
                 failure: function (pokemons) {
                     alert('Got an error dude');
@@ -322,3 +341,206 @@ d3.select("#doubleClick2")
             alert("Pokemon doesnt exist");
         }
     });
+
+$('#normalStatus').on("click",function(){
+    xAxis = d3.svg.axis()
+    .scale(xScale)
+    .orient("bottom");
+
+    yAxis = d3.svg.axis()
+    .scale(yScale)
+    .orient("left")
+    .ticks(10, "%");
+
+    xScale = d3.scale.ordinal()
+        .rangeRoundBands([0, w], .1);
+
+    yScale = d3.scale.linear()
+        .range([h, 0]);
+
+    yScale.domain([0, 255]);
+    xScale.domain(doublePokeDataOne[0].map(function(d) { return d.stat; }));
+
+    //Update all rects
+
+    doublesvg.selectAll("#double")
+        .data(doublePokeDataOne[0])
+        .transition()
+        .delay(function (d, i) {
+            return i / doublePokeDataOne[0].length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .attr("fill", "#90caf9")
+        .attr("x", function (d) {
+            return xScale(d.stat);
+        })
+        .attr("width", xScale.rangeBand())
+        .attr("y", function (d) {
+            return yScale(d.value);
+        })
+        .attr("height", function (d) {
+            return h - yScale(d.value);
+        });
+    doublesvg.selectAll("g.y.axis")
+        .transition()
+        .delay(function (d, i) {
+            return i / doublePokeDataOne[0].length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .call(yAxis);
+
+    doublesvg.selectAll("g.x.axis")
+        .transition()
+        .delay(function (d, i) {
+            return i / doublePokeDataOne[0].length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .call(xAxis);
+
+    // Pokemon 2
+    xScale = d3.scale.ordinal()
+        .rangeRoundBands([0, w], .1);
+
+    yScale = d3.scale.linear()
+        .range([h, 0]);
+
+    yScale.domain([0, 255]);
+    xScale.domain(doublePokeDataTwo[0].map(function(d) { return d.stat; }));
+
+    //Update all rects
+
+    doublesvg2.selectAll("#double2")
+        .data(doublePokeDataTwo[0])
+        .transition()
+        .delay(function (d, i) {
+            return i / doublePokeDataTwo[0].length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .attr("fill", "#90caf9")
+        .attr("x", function (d) {
+            return xScale(d.stat);
+        })
+        .attr("width", xScale.rangeBand())
+        .attr("y", function (d) {
+            return yScale(d.value);
+        })
+        .attr("height", function (d) {
+            return h - yScale(d.value);
+        });
+    doublesvg2.selectAll("g.y.axis")
+        .transition()
+        .delay(function (d, i) {
+            return i / doublePokeDataTwo[0].length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .call(yAxis);
+
+    doublesvg2.selectAll("g.x.axis")
+        .transition()
+        .delay(function (d, i) {
+            return i / doublePokeDataTwo[0].length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .call(xAxis);
+
+
+});
+
+$('#dreivedStatus').on("click",function(){
+    xAxis = d3.svg.axis()
+    .scale(xScale)
+    .orient("bottom");
+
+    yAxis = d3.svg.axis()
+    .scale(yScale)
+    .orient("left")
+    .ticks(10, "%");
+
+    xScale = d3.scale.ordinal()
+        .rangeRoundBands([0, w], .1);
+
+    yScale = d3.scale.linear()
+        .range([h, 0]);
+
+    yScale.domain([0, 500]);
+    xScale.domain(doublePokeDataOne[1].map(function(d) { return d.stat; }));
+
+    //Update all rects
+
+    doublesvg.selectAll("#double")
+        .data(doublePokeDataOne[1])
+        .transition()
+        .delay(function (d, i) {
+            return i / doublePokeDataOne[1].length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .attr("fill", "#5b2eef")
+        .attr("x", function (d) {
+            return xScale(d.stat);
+        })
+        .attr("width", xScale.rangeBand())
+        .attr("y", function (d) {
+            return yScale(d.value);
+        })
+        .attr("height", function (d) {
+            return h - yScale(d.value);
+        });
+    doublesvg.selectAll("g.y.axis")
+        .transition()
+        .delay(function (d, i) {
+            return i / doublePokeDataOne[1].length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .call(yAxis);
+
+    doublesvg.selectAll("g.x.axis")
+        .transition()
+        .delay(function (d, i) {
+            return i / doublePokeDataOne[1].length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .call(xAxis);
+
+
+    // Pokemon 2
+
+    yScale.domain([0, 500]);
+    xScale.domain(doublePokeDataTwo[1].map(function(d) { return d.stat; }));
+
+    //Update all rects
+
+    doublesvg2.selectAll("#double2")
+        .data(doublePokeDataTwo[1])
+        .transition()
+        .delay(function (d, i) {
+            return i / doublePokeDataTwo[1].length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .attr("fill", "#5b2eef")
+        .attr("x", function (d) {
+            return xScale(d.stat);
+        })
+        .attr("width", xScale.rangeBand())
+        .attr("y", function (d) {
+            return yScale(d.value);
+        })
+        .attr("height", function (d) {
+            return h - yScale(d.value);
+        });
+
+    doublesvg2.selectAll("g.y.axis")
+        .transition()
+        .delay(function (d, i) {
+            return i / doublePokeDataTwo[1].length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .call(yAxis);
+
+    doublesvg2.selectAll("g.x.axis")
+        .transition()
+        .delay(function (d, i) {
+            return i / doublePokeDataTwo[1].length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .call(xAxis);
+});

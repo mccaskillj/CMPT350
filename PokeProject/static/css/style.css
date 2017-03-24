@@ -125,6 +125,14 @@ h1 {
     height: 250px;
 }
 
+.doubleRadio1 {
+    width: 50%;
+    float: left;
+}
+
+.doubleRadio2 {
+    margin-left: 50%;
+}
 
 /*-----Multi Pokemon compare pages-----*/
 
