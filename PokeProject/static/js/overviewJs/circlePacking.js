@@ -8,7 +8,6 @@ function  fetchData() {
     $.ajax({
         type: "GET",
         url: 'ajax/get_data/', //the script to call to get data
-        data: {"name": "Charizard"},
         dataType: 'JSON',                //data format
         success: function(pokemons) {
             console.log(pokemons);
@@ -22,6 +21,7 @@ function  fetchData() {
 }
 
 function drawPacking(data) {
+    console.log(data);
     var svg = d3.select("svg");
     var margin = 20;
     var diameter = +svg.attr("width");
