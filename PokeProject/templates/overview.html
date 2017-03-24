@@ -21,9 +21,9 @@
   stroke-width: 1.5px;
 }
 
-.node--leaf {
-  fill: white;
-}
+{#.node--leaf{#}
+{##}
+{#}#}
 
 .label {
   font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -72,8 +72,30 @@ d3.json("{% static 'flare.json' %}", function(error, root) {
     .data(nodes)
     .enter().append("circle")
       .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
-      .style("fill", function(d) { return d.children ? color(d.depth) : null; })
+      .style("fill", function(d) { return d.parent ? d.children ? d.data.color: 'url(#image' + d.data.pokeId + ')' : null; })
+      //.style("fill", function(d) { return d.parent ? d.children ? d.data.color : frontPath + d.data.pokeId +'.png' : null; })
+      //.attr("xlink:href", function(d) { return d.parent ? d.children ? null : frontPath + d.data.pokeId +'.png' : null; })
       .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
+{#      .append("pattern")#}
+{#      .attr("id", function (d) {#}
+{#          return d.data.pokeId#}
+{#      })#}
+{#      .attr("x", 0)#}
+{#      .attr("y", 0)#}
+{#      .attr("height", 1)#}
+{#      .attr("width", 1)#}
+{#      .append("image")#}
+{#      .attr("x", 0)#}
+{#      .attr("y", 0)#}
+{#      .attr("width", 60)#}
+{#      .attr("height", 60)#}
+{#      .attr("xlink:href", function(d) { return d.parent ? d.children ? null : frontPath + d.data.pokeId +'.png' : null; });#}
+
+{#      <pattern id='image18' x='0' y='0' height='1' width='1' class="svg-image">#}
+{#          <image x='0' y='0' width='60' height='60' xlink:href=""/>#}
+{#        </pattern>#}
+      //.attr("pattern", "", "id", function(d) { return "image" + d.data.pokeId})
+
 
   var text = g.selectAll("text")
     .data(nodes)
