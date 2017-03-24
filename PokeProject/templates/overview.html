@@ -4,41 +4,47 @@
 
 {% block content %}
 
-    <style>
+{#    <style>#}
+{##}
+{#    .node {#}
+{#      cursor: pointer;#}
+{#    }#}
+{##}
+{#    .node:hover {#}
+{#      stroke: #000;#}
+{#      stroke-width: 1.5px;#}
+{#    }#}
+{##}
+{#    .node--leaf {#}
+{#      fill: white;#}
+{#    }#}
+{##}
+{#    .label {#}
+{#      font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;#}
+{#      text-anchor: middle;#}
+{#      text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;#}
+{#    }#}
+{##}
+{#    .label,#}
+{#    .node--root,#}
+{#    .node--leaf {#}
+{#      pointer-events: none;#}
+{#    }#}
+{##}
+{#    </style>#}
+{##}
+{##}
+{#    <div id="cirlcesd3" style="background-color: white; width: 1024px; height: 718px">#}
+{#        <svg width="960" height="718"></svg>#}
+{##}
+{#    </div>#}
+{##}
+{#    <script type="text/javascript" src="{% static "js/overviewJs/circlePacking.js" %}"></script>#}
+    <link rel="stylesheet" type="text/css" href="{% static "css/circlePacking.css" %}" />
+    <script type="text/javascript" src = "{% static "js/overviewJs/d3CirclePacking.js" %}"></script>
+    <svg width="960" height="960"></svg>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
 
-    .node {
-      cursor: pointer;
-    }
 
-    .node:hover {
-      stroke: #000;
-      stroke-width: 1.5px;
-    }
-
-    .node--leaf {
-      fill: white;
-    }
-
-    .label {
-      font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
-      text-anchor: middle;
-      text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
-    }
-
-    .label,
-    .node--root,
-    .node--leaf {
-      pointer-events: none;
-    }
-
-    </style>
-
-
-    <div id="cirlcesd3" style="background-color: white; width: 1024px; height: 718px">
-        <svg width="960" height="718"></svg>
-
-    </div>
-
-    <script type="text/javascript" src="{% static "js/overviewJs/circlePacking.js" %}"></script>
 
 {% endblock %}
