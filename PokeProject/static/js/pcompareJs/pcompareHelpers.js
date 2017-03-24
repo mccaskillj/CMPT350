@@ -65,6 +65,11 @@ function getValuesForDerived(pokemons){
                 value: pokemons[0]['sp_sweeper'],
                 info: 'Special Sweeper = Sp. Attack + Speed'
             });
+    dict.push({
+                stat: '',
+                value: 0,
+                info: ''
+            });
 
     return dict;
 }

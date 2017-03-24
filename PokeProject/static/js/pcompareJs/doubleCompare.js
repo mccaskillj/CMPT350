@@ -395,7 +395,10 @@ $('#normalStatus').on("click",function(){
             return i / doublePokeDataOne[0].length * 10;   // <-- Where the magic happens
         })
         .duration(1000)
-        .call(xAxis);
+        .call(xAxis)
+        .selectAll("text")
+        .attr("transform", "rotate(-30)")
+        .style("text-anchor", "end");
 
     // Pokemon 2
     xScale = d3.scale.ordinal()
@@ -441,7 +444,10 @@ $('#normalStatus').on("click",function(){
             return i / doublePokeDataTwo[0].length * 10;   // <-- Where the magic happens
         })
         .duration(1000)
-        .call(xAxis);
+        .call(xAxis)
+        .selectAll("text")
+        .attr("transform", "rotate(-30)")
+        .style("text-anchor", "end");
 
 
 });
@@ -499,7 +505,10 @@ $('#dreivedStatus').on("click",function(){
             return i / doublePokeDataOne[1].length * 10;   // <-- Where the magic happens
         })
         .duration(1000)
-        .call(xAxis);
+        .call(xAxis)
+        .selectAll("text")
+        .attr("transform", "rotate(-30)")
+        .style("text-anchor", "end");
 
 
     // Pokemon 2
@@ -542,5 +551,8 @@ $('#dreivedStatus').on("click",function(){
             return i / doublePokeDataTwo[1].length * 10;   // <-- Where the magic happens
         })
         .duration(1000)
-        .call(xAxis);
+        .call(xAxis)
+        .selectAll("text")
+        .attr("transform", "rotate(-30)")
+        .style("text-anchor", "end");
 });
