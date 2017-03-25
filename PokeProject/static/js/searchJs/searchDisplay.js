@@ -140,8 +140,107 @@ var drag = d3.behavior.drag()
     .on("drag", dragmove)
     .on('dragend',function () {
         dragging = false;
-        var xPosition = parseFloat(d3.select(this).attr("cx"))+275+parseFloat(d3.select(this).attr("r"));
-        var yPosition = parseFloat(d3.select(this).attr("cy"))-15;
+        var x = parseFloat(d3.select(this).attr("cx"));
+        var y = parseFloat(d3.select(this).attr("cy"));
+        var xPosition = x+275+parseFloat(d3.select(this).attr("r"));
+        var yPosition = y-15;
+
+        if (x>w || x<0 || y > h || y < 0){
+            d3.select(this)
+                .attr("cx",function (d) {
+                    var pos = dataset[24];
+                    if (pos < dataset[23].length) {
+                        d[3] = dataset[23][pos].id;
+                        d[4] = dataset[23][pos].name;
+                        d[5] = dataset[23][pos].height;
+                        d[6] = dataset[23][pos].weight;
+                        d[7] = dataset[23][pos].total;
+                        d[8] = dataset[23][pos].hp;
+                        d[9] = dataset[23][pos].attack;
+                        d[10] = dataset[23][pos].defense;
+                        d[11] = dataset[23][pos].sp_attack;
+                        d[12] = dataset[23][pos].sp_defense;
+                        d[13] = dataset[23][pos].speed;
+                        //d[14] = dataset[23][pos].type_1;
+                        //d[15] = dataset[23][pos].type_2;
+                    } else {
+                        d[3] = 0;
+                        d[4] = "";
+                        d[5] = 0;
+                        d[6] = 0;
+                        d[7] = 0;
+                        d[8] = 0;
+                        d[9] = 0;
+                        d[10] = 0;
+                        d[11] = 0;
+                        d[12] = 0;
+                        d[13] = 0;
+                        //d[14] = "";
+                        //d[15] = "";
+                    }
+                    dataset[24] = dataset[24] + 1;
+                    return d[0];
+                })
+                .attr("cy", function (d, i) {
+                    return d[1];
+                });
+
+            var xVal = parseFloat(d3.select(this).attr("cx"));
+            var yVal = parseFloat(d3.select(this).attr("cy"));
+            var dataPos;
+            for (var i = 0; i < 23; i++){
+                if (xVal == dataset[i][0] && yVal == dataset[i][1]){
+                    dataPos = i;
+                }
+            }
+
+            var stat = statPos();
+
+            var mm = minmax(dataset,stat);
+
+            rScale.domain(mm);
+            offset.domain(mm);
+
+            for (var i = 0; i<23; i++){
+                if (dataset[i][stat] != 0){
+                    if (mm[0] == mm[1]){
+                        dataset[i][2] = 60;
+                    } else {
+                        dataset[i][2] = rScale(dataset[i][stat]);
+                    }
+                } else {
+                    dataset[i][2]=0
+                }
+            }
+            for (var i = 0; i<23; i++) {
+                $('#image' + i + ' image')
+                    .attr('y', function () {
+                        if (mm[0] == mm[1]) {
+                            return 30;
+                        } else {
+                            return offset(dataset[i][stat]);
+                        }
+                    })
+                    .attr('x', function () {
+                        if (mm[0] == mm[1]) {
+                            return 30;
+                        } else {
+                            return offset(dataset[i][stat]);
+                        }
+                    });
+                if (i==dataPos) {
+                    $('#image' + i + ' image')
+                        .attr('xlink:href', frontPath + dataset[i][3] + '.png');
+                }
+            }
+            svg.selectAll("circle")
+                .attr('r', function (d) {
+                    return d[2];
+            });
+
+            return;
+        }
+
         //Update the tooltip position and value
         d3.select("#tooltipS")
             .style("left", xPosition + "px")
@@ -187,7 +286,6 @@ svg.selectAll("circle")
     .on("mouseover",function (d) {
         if (!dragging) {
             //Get this bar's x/y values, then augment for the tooltip
-            console.log("entered");
             var xPosition = parseFloat(d3.select(this).attr("cx"))+275+parseFloat(d3.select(this).attr("r"));
             var yPosition = parseFloat(d3.select(this).attr("cy"))-15;
             //Update the tooltip position and value
@@ -273,17 +371,19 @@ svg.selectAll("circle")
         }
         dataset[24] = dataset[24] + 1;
 
-        var mm = minmax(dataset,7);
+        var stat = statPos();
+
+        var mm = minmax(dataset,stat);
 
         rScale.domain(mm);
         offset.domain(mm);
 
         for (var i = 0; i<23; i++){
-            if (dataset[i][7] != 0){
+            if (dataset[i][stat] != 0){
                 if (mm[0] == mm[1]){
                     dataset[i][2] = 60;
                 } else {
-                    dataset[i][2] = rScale(dataset[i][7]);
+                    dataset[i][2] = rScale(dataset[i][stat]);
                 }
             } else {
                 dataset[i][2]=0
@@ -296,14 +396,14 @@ svg.selectAll("circle")
                 if (mm[0] == mm[1]){
                     return 30;
                 }else {
-                    return offset(dataset[i][7]);
+                    return offset(dataset[i][stat]);
                 }
             })
             .attr('x', function () {
                 if (mm[0] == mm[1]){
                     return 30;
                 }else {
-                    return offset(dataset[i][7]);
+                    return offset(dataset[i][stat]);
                 }
             })
             .attr('xlink:href', frontPath + dataset[i][3] + '.png');
