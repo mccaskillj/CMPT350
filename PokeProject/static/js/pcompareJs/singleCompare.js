@@ -129,8 +129,6 @@ svg.selectAll(".bar")
                     .select("#value")
                     .text(d.value);
 
-                console.log("hi");
-
                 d3.select("#tooltip2")
                     .select("#header")
                     .text(d.info);

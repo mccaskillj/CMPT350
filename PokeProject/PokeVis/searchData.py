@@ -16,12 +16,12 @@ class SearchData:
     type_2 = ""
 
     def __init__(self, index="", weight="", height="", name="", total="", hp="", attack="", defense="",
-                 sp_attack="", sp_defense="", speed="", type_1="", type2=""):
+                 sp_attack="", sp_defense="", speed="", type_1="", type_2=""):
         self.id = index
         self.weight = weight
         self.height = height
         self.name = name
-        self.total = total
+        self.total = int(total)
         self.hp = hp
         self.attack = attack
         self.defense = defense
@@ -29,7 +29,7 @@ class SearchData:
         self.sp_defense = sp_defense
         self.speed = speed
         self.type_1 = type_1
-        self.type_2 = type2
+        self.type_2 = type_2
 
     def __str__(self, *args, **kwargs):
         return super().__str__(*args, **kwargs)
