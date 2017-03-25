@@ -212,7 +212,7 @@ var xAxis = d3.svg.axis()
         .scale(xScaleM)
         .orient('bottom');
 
-var colors2 = ["90caf9", "#92d36e", "#ff5d55", "#fefb64", "#f54378", "#5d4b7e"];
+var colors2 = ["#90caf9", "#92d36e", "#ff5d55", "#fefb64", "#f54378", "#5d4b7e"];
 
 var groups = svgM.selectAll('g')
         .data(dataset)
@@ -269,7 +269,7 @@ legend.append("rect")
       .attr("x", widthM - 18)
       .attr("width", 18)
       .attr("height", 18)
-      .style("fill", function(d, i) {return colors2.slice().reverse()[i];});
+      .style("fill", function(d, i) {return colors2.slice()[i];});
 
 legend.append("text")
       .attr("x", widthM + 5)
@@ -278,12 +278,12 @@ legend.append("text")
       .style("text-anchor", "start")
       .text(function(d, i) {
         switch (i) {
-          case 0: return "Speed";
-          case 1: return "Sp. Defense";
-          case 2: return "Sp. Attack";
-          case 3: return "Defense";
-          case 4: return "Attack";
-          case 5: return "Hp";
+          case 5: return "Speed";
+          case 4: return "Sp. Defense";
+          case 3: return "Sp. Attack";
+          case 2: return "Defense";
+          case 1: return "Attack";
+          case 0: return "Hp";
         }
       });
 
