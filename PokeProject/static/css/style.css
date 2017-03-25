@@ -87,6 +87,11 @@ h1 {
     padding-left: 160px;
 }
 
+.temp {
+    padding-left: 40px;
+    padding-top: 50px;
+}
+
 /*-----Double Pokemon compare pages-----*/
 .grad {
     background: red; /* For browsers that do not support gradients */
