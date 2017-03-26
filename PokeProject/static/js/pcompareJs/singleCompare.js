@@ -51,6 +51,8 @@ var inital2 = [{
             }
 ];
 
+var singlePokeData = [];
+
 function checkPoke(pokename){
     var poke = 0;
 
@@ -60,17 +62,13 @@ function checkPoke(pokename){
          data: {"name": pokename},
          dataType: 'JSON',                //data format
          success: function(pokemons) {
-            console.log("pokes: ");
-             console.log(pokemons);
              poke = pokemons['val'];
-            console.log(poke);
 
          },
          failure: function(pokemons) {
              alert('Got an error dude');
          }
      });
-    console.log(poke);
     return poke;
 }
 
@@ -129,8 +127,6 @@ svg.selectAll(".bar")
                     .select("#value")
                     .text(d.value);
 
-                console.log("hi");
-
                 d3.select("#tooltip2")
                     .select("#header")
                     .text(d.info);
@@ -173,6 +169,7 @@ xScale.domain(inital2.map(function(d) { return d.stat; }));
 
 var svg2 = d3.select("#singleChart2")
     .append("svg")
+    .attr("id", "single2")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -184,7 +181,7 @@ svg2.selectAll(".bar")
     .append("rect")
     .attr("id", "d2")
     .attr("class", "bar")
-    .attr("fill", "#90caf9")
+    .attr("fill", "#5b2eef")
     .attr("x", function(d) { return xScale(d.stat); })
     .attr("width", xScale.rangeBand())
     .attr("y", function(d) { return yScale(d.value); })
@@ -241,7 +238,6 @@ d3.select("#sb")
     .on("click", function() {
 
         var selectPoke = document.getElementById("tags").value;
-        console.log(selectPoke);
         if (checkPoke(selectPoke) == 0) {
             $.ajax({
                 type: "GET",
@@ -278,7 +274,11 @@ d3.select("#sb")
                     addType(pokemons[0]['type_2'], 'singleType');
 
                     var data1 = getValuesForReg(pokemons, unwantedFirst);
-                    var data2 = getValuesForDerived(pokemons, unwantedSecond);
+                    var data2 = getValuesForDerivedOriginal(pokemons, unwantedSecond);
+
+                    singlePokeData = [];
+                    singlePokeData.push(data1);
+                    singlePokeData.push(data2);
 
                     var xScale = d3.scale.ordinal()
                         .rangeRoundBands([0, width], .1);
@@ -322,7 +322,7 @@ d3.select("#sb")
                             return i / data2.length * 10;   // <-- Where the magic happens
                         })
                         .duration(1000)
-                        .attr("fill", "#90caf9")
+                        .attr("fill", "#5b2eef")
                         .attr("x", function (d) {
                             return xScale(d.stat);
                         })
@@ -346,3 +346,130 @@ d3.select("#sb")
             alert("Pokemon doesnt exist");
         }
     });
+
+// Double
+$('#checkBar').on("click",function(){
+    $( "#singlee" ).removeClass('hidden');
+    $("#single2").removeClass('hidden');
+
+    d3.selectAll("#mypie").remove();
+
+});
+
+$('#pieRadio').on("click",function(){
+    $("#singlee").addClass('hidden');
+    $("#single2").addClass('hidden');
+
+    drawPie(singlePokeData[0], '#singleChart');
+    drawPie(singlePokeData[1], '#singleChart2');
+});
+
+
+function drawPie(data, ID) {
+    var margin = {top: 20, right: 20, bottom: 20, left: 20};
+    var widthP = 450 - margin.left - margin.right;
+    var heightP = widthP+100 - margin.top - margin.bottom;
+
+    var piechartS = d3.select(ID)
+        .append('svg')
+        .attr('id', "mypie")
+        .attr('class', 'temp')
+        .attr("width", widthP + margin.left + margin.right+50)
+        .attr("height", heightP + margin.top + margin.bottom+50)
+        .append("g")
+        .attr("transform", "translate(" + ((widthP / 2) + margin.left) + "," + ((heightP / 2) + margin.top) + ")");
+
+
+    var radius = Math.min(widthP, heightP) / 2;
+
+    var color = d3.scale.ordinal()
+        .range(["#90caf9", "#92d36e", "#ff5d55", "#fefb64", "#f54378", "#5d4b7e"]);
+
+    var arc = d3.svg.arc()
+        .outerRadius(radius)
+        .innerRadius(radius - 80);
+
+    var pie = d3.layout.pie()
+        .sort(null)
+        .startAngle(1.1 * Math.PI)
+        .endAngle(3.1 * Math.PI)
+        .value(function (d) {
+            return d.value;
+        });
+
+
+    var g = piechartS.selectAll(".arc")
+        .data(pie(data))
+        .enter().append("g")
+        .attr("class", "arc")
+        .on("mouseover", function (d, i) {
+            //Get this bar's x/y values, then augment for the tooltip
+            var xPosition = parseFloat(d3.select(this).attr("x")) + 1000;
+            var yPosition = parseFloat(d3.select(this).attr("y")) + 133;
+            //Update the tooltip position and value
+            d3.select("#tooltip2")
+                .style("left", xPosition + "px")
+                .style("top", yPosition + "px")
+                .select("#value")
+                .text(d.value);
+
+            d3.select("#tooltip2")
+                .select("#header")
+                .text(data[i].info);
+
+            //Show the tooltip
+            d3.select("#tooltip2").classed("hidden", false);
+        })
+        .on("mouseout", function () {
+
+            //Hide the tooltip
+            d3.select("#tooltip2").classed("hidden", true);
+
+        });
+
+    g.append("path")
+        .attr("fill", function (d, i) {
+            return color(i);
+        })
+        .transition()
+        .ease("exp")
+        .duration(1000)
+        .attrTween("d", tweenPie);
+
+    function tweenPie(b) {
+        var i = d3.interpolate({startAngle: 1.1 * Math.PI, endAngle: 1.1 * Math.PI}, b);
+        return function (t) {
+            return arc(i(t));
+        };
+    }
+
+    var legendRectSize = 18;
+    var legendSpacing = 4;
+
+// Draw legend
+    var legend = piechartS.selectAll('.legend')
+        .data(color.domain())
+        .enter()
+        .append('g')
+        .attr('class', 'legend')
+        .attr('transform', function (d, i) {
+            var height = legendRectSize + legendSpacing;
+            var offset = height * color.domain().length / 2;
+            var horz = -2 * legendRectSize;
+            var vert = i * height - offset;
+            return 'translate(' + horz + ',' + vert + ')';
+        });
+
+    legend.append('rect')
+        .attr('width', legendRectSize)
+        .attr('height', legendRectSize)
+        .style('fill', color)
+        .style('stroke', color);
+
+    legend.append('text')
+        .attr('x', legendRectSize + legendSpacing)
+        .attr('y', legendRectSize - legendSpacing)
+        .text(function (d, i) {
+            return data[i].stat;
+        });
+}

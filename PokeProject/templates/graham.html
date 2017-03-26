@@ -5,40 +5,15 @@
   <meta charset="UTF-8" />
   <title>d3.js learning</title>
   <script type="text/javascript" src="{% static "js/d3.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/pcompareJs/testing.js" %}"></script>
+
   <style type="text/css">
-  svg {
-    font: 10px sans-serif;
-    shape-rendering: crispEdges;
-  }
-
-  .axis path,
-  .axis line {
-    fill: none;
-    stroke: #000;
-  }
-
-  path.domain {
-    stroke: none;
-  }
-
-  .y .tick line {
-    stroke: #ddd;
-  }
-
-      .axis path, .axis line {
-    fill: none;
-    stroke: black;
-    shape-rendering: crispEdges;
-}
-.axis text {
-    font-family: sans-serif;
-    font-size: 11px;
-}
-#tooltip {
+        path {
+            stroke: #ffffff;
+            stroke-width: 3px;
+        }
+        #tooltip5 {
     position: absolute;
-    text-align: center;
-    width: 40px;
+    width: 100px;
     height: auto;
     padding: 10px;
     background-color: white;
@@ -50,10 +25,12 @@
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
     pointer-events: none;
 }
-#tooltip.hidden {
+
+#tooltip5.hidden {
     display: none;
 }
-#tooltip p {
+
+#tooltip5 p {
     margin: 0;
     font-family: sans-serif;
     font-size: 16px;
@@ -65,197 +42,162 @@
 </head>
 <body>
 
-<div id="tooltip" class="hidden">
-    <label id="header"></label>
-    <p><span id="value">100</span>
-    </p>
+<div id="tooltip5" class="hidden">
+        <p><strong id="header">Important Label Heading</strong></p>
+        <p><span id="value">100</span></p>
 </div>
 
 <script type="text/javascript">
+    var dict = [];
 
-// Setup svg using Bostock's margin convention
+    dict.push({
+                stat: 'Hp',
+                value: 55,
+                info: 'Hp',
+                color: ''
+            });
+    dict.push({
+                stat: 'Attack',
+                value: 44,
+                info: 'Attack',
+                color: ''
+            });
+    dict.push({
+                stat: 'Sp. Attack',
+                value: 64,
+                info: 'Sp. Attack',
+                color: ''
+            });
+    dict.push({
+                stat: 'Defense',
+                value: 34,
+                info: 'Defense',
+                color: ''
+            });
+    dict.push({
+                stat: 'Sp. Defense',
+                value: 45,
+                info: 'Sp. Defense',
+                color: ''
+            });
+    dict.push({
+                stat: 'Speed',
+                value: 31,
+                info: 'Speed',
+                color: ''
+            });
 
-var margin = {top: 40, right: 90, bottom: 40, left: 90};
+drawPie();
 
-var width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+function drawPie() {
+    var margin = {top: 20, right: 20, bottom: 20, left: 20};
+    width = 400 - margin.left - margin.right;
+    height = width - margin.top - margin.bottom;
 
-var svg = d3.select("body")
-  .append("svg")
-  .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-/* Data in strings like it would be if imported from a csv */
-
-var data = [
-  { name: "Charmander", Hp: "4", Attack: "10", Defense: "15", "Sp. Attack": "9", "Sp. Defense": "6", Speed: "4" },
-  { name: "Weedle",     Hp: "7", Attack: "12", Defense: "18", "Sp. Attack": "9", "Sp. Defense": "4", Speed: "8" },
-  { name: "Wigglytuff", Hp: "3", Attack: "05", Defense: "20", "Sp. Attack": "8", "Sp. Defense": "2", Speed: "2" },
-  { name: "Meowth",     Hp: "1", Attack: "01", Defense: "15", "Sp. Attack": "5", "Sp. Defense": "4", Speed: "9" },
-  { name: "Growlithe",  Hp: "8", Attack: "02", Defense: "10", "Sp. Attack": "4", "Sp. Defense": "2", Speed: "5" },
-  { name: "Graveler",   Hp: "9", Attack: "03", Defense: "12", "Sp. Attack": "6", "Sp. Defense": "3", Speed: "6" },
-  { name: "Tranquill",  Hp: "5", Attack: "04", Defense: "15", "Sp. Attack": "8", "Sp. Defense": "1", Speed: "3" },
-  { name: "Golduck",    Hp: "7", Attack: "06", Defense: "11", "Sp. Attack": "9", "Sp. Defense": "4", Speed: "7" },
-  { name: "Krabby",     Hp: "4", Attack: "10", Defense: "13", "Sp. Attack": "9", "Sp. Defense": "5", Speed: "3" },
-  { name: "Pidgeot",    Hp: "10",Attack: "16", Defense: "19", "Sp. Attack": "6", "Sp. Defense": "9", Speed: "5" },
-  { name: "Pikachu",    Hp: "2", Attack: "19", Defense: "17", "Sp. Attack": "5", "Sp. Defense": "7", Speed: "4" },
-    { name: "Paras",    Hp: "6", Attack: "22", Defense: "18", "Sp. Attack": "6", "Sp. Defense": "3", Speed: "3" },
-    { name: "Blastoise",    Hp: "8", Attack: "14", Defense: "16", "Sp. Attack": "2", "Sp. Defense": "5", Speed: "6" },
-    { name: "Sandshrew",    Hp: "4", Attack: "11", Defense: "13", "Sp. Attack": "9", "Sp. Defense": "2", Speed: "8" }
-];
-
-// Transpose the data into layers
-var dataset = d3.layout.stack()(["Hp", "Attack", "Defense", "Sp. Attack", "Sp. Defense", "Speed"].map(function(fruit) {
-  return data.map(function(d) {
-    return {x: d.name,
-            y: +d[fruit]};
-  });
-}));
-
-
-// Set x, y and colors
-var x = d3.scale.ordinal()
-  .domain(dataset[0].map(function(d) { return d.x; }))
-  .rangeRoundBands([10, height-10], 0.02);
-
-var y = d3.scale.linear()
-  .domain([0, d3.max(dataset, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
-  .range([width, 0]);
-
-var colors = ["90caf9", "#92d36e", "#ff5d55", "#fefb64", "#f54378", "#5d4b7e"];
+    var piechartS = d3.select("body")
+        .append('svg')
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + ((width / 2) + margin.left) + "," + ((height / 2) + margin.top) + ")");
 
 
-// Define and draw axes
-var yAxis = d3.svg.axis()
-  .scale(y)
-  .orient("bottom")
-  .ticks(5)
-  .tickSize(-height, 0, 0);
+    var radius = Math.min(width, height) / 2;
 
-var xAxis = d3.svg.axis()
-  .scale(x)
-  .orient("left");
+    var color = d3.scale.ordinal()
+        .range(["#90caf9", "#92d36e", "#ff5d55", "#fefb64", "#f54378", "#5d4b7e"]);
 
-svg.append("g")
-  .attr("class", "y axis")
-  .call(xAxis);
+    var arc = d3.svg.arc()
+        .outerRadius(radius)
+        .innerRadius(radius - 80);
 
-svg.append("g")
-  .attr("class", "x axis")
-  .attr("transform", "translate(0," + height + ")")
-  .call(yAxis);
+    var pie = d3.layout.pie()
+        .sort(null)
+        .startAngle(1.1 * Math.PI)
+        .endAngle(3.1 * Math.PI)
+        .value(function (d) {
+            return d.value;
+        });
 
 
-// Create groups for each series, rects for each segment
-var groups = svg.selectAll("g.cost")
-              .data(dataset)
-              .enter().append("g")
-              .attr("class", "cost")
-              .style("fill", function(d, i) { return colors[i]; });
+    var g = piechartS.selectAll(".arc")
+        .data(pie(dict))
+        .enter().append("g")
+        .attr("class", "arc")
+        .on("mouseover", function (d, i) {
+            //Get this bar's x/y values, then augment for the tooltip
+            var xPosition = parseFloat(d3.select(this).attr("x")) + 40;
+            var yPosition = parseFloat(d3.select(this).attr("y")) + 133;
+            //Update the tooltip position and value
+            d3.select("#tooltip5")
+                .style("left", xPosition + "px")
+                .style("top", yPosition + "px")
+                .select("#value")
+                .text(d.value);
 
-var rect = groups.selectAll("rect")
-                .data(function(d) {
-                    return d;
-                })
-                .enter()
-                .append("rect")
-                .attr("y", function(d) {
-                    return x(d.x);
-                })
-                .attr("x", function(d) {
-                    return y(d.y+d.y0);
-                })
-                .attr("width", function(d) {
-                    return y(d.y0) - y(d.y0 + d.y);
-                })
-                .attr("height", x.rangeBand())
-                .on("mouseover", function(d) {
-                    //Get this bar's x/y values, then augment for the tooltip
-                    var xPosition = parseFloat(d3.select(this).attr("x")) + x.rangeBand() / 2 + 50;
-                    var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + height / 2;
-                    //Update the tooltip position and value
-                    d3.select("#tooltip")
-                        .style("left", xPosition + "px")
-                        .style("top", yPosition + "px")
-                        .select("#value")
-                        .text(d.y);
+            d3.select("#tooltip5")
+                .select("#header")
+                .text(dict[i].info);
 
-                    d3.select("#tooltip")
-                        .select("#header")
-                        .text(d.info);
+            //Show the tooltip
+            d3.select("#tooltip5").classed("hidden", false);
+        })
+        .on("mouseout", function () {
 
-                    //Show the tooltip
-                    d3.select("#tooltip").classed("hidden", false);
-                })
-                .on("mouseout", function() {
+            //Hide the tooltip
+            d3.select("#tooltip5").classed("hidden", true);
 
-                    //Hide the tooltip
-                    d3.select("#tooltip").classed("hidden", true);
+        });
 
-                });
+    g.append("path")
+        .attr("fill", function (d, i) {
+            return color(i);
+        })
+        .transition()
+        .ease("exp")
+        .duration(2000)
+        .attrTween("d", tweenPie);
 
+    function tweenPie(b) {
+        var i = d3.interpolate({startAngle: 1.1 * Math.PI, endAngle: 1.1 * Math.PI}, b);
+        return function (t) {
+            return arc(i(t));
+        };
+    }
+
+    var legendRectSize = 18;
+    var legendSpacing = 4;
 
 // Draw legend
-var legend = svg.selectAll(".legend")
-                  .data(colors)
-                  .enter().append("g")
-                  .attr("class", "legend")
-                  .attr("transform", function(d, i) { return "translate(30," + i * 19 + ")"; });
+    var legend = piechartS.selectAll('.legend')
+        .data(color.domain())
+        .enter()
+        .append('g')
+        .attr('class', 'legend')
+        .attr('transform', function (d, i) {
+            var height = legendRectSize + legendSpacing;
+            var offset = height * color.domain().length / 2;
+            var horz = -2 * legendRectSize;
+            var vert = i * height - offset;
+            return 'translate(' + horz + ',' + vert + ')';
+        });
 
-legend.append("rect")
-      .attr("x", width - 18)
-      .attr("width", 18)
-      .attr("height", 18)
-      .style("fill", function(d, i) {return colors.slice().reverse()[i];});
+    legend.append('rect')
+        .attr('width', legendRectSize)
+        .attr('height', legendRectSize)
+        .style('fill', color)
+        .style('stroke', color);
 
-legend.append("text")
-      .attr("x", width + 5)
-      .attr("y", 9)
-      .attr("dy", ".35em")
-      .style("text-anchor", "start")
-      .text(function(d, i) {
-        switch (i) {
-          case 0: return "Speed";
-          case 1: return "Sp. Defense";
-          case 2: return "Sp. Attack";
-          case 3: return "Defense";
-          case 4: return "Attack";
-          case 5: return "Hp";
-        }
-      });
+    legend.append('text')
+        .attr('x', legendRectSize + legendSpacing)
+        .attr('y', legendRectSize - legendSpacing)
+        .text(function (d, i) {
+            return dict[i].info;
+        });
+}
+
 
 </script>
-
-
-<div id="vis"></div>
-
-
-<script>
-
-    var svg = d3.select("#vis").append("svg").attr("width", 1000).attr("height", 700),
-        slider1 = new simpleSlider(),
-        slider2 = new simpleSlider(),
-        circle = svg.append("circle").attr("cx", 50).attr("cy", 100).attr("r", 30);
-
-
-    slider1.width(600).x(30).y(200).value(1.0).event(function(){
-        circle.attr("r", 30 * slider1.value());
-    });
-
-    slider2.width(600).x(30).y(230).value(0.5).event(function(){
-        circle.attr("cx", 50 + (170 * slider2.value()));
-    });
-
-    svg.call(slider1);
-    svg.call(slider2);
-
-</script>
-
-<script type="text/javascript" src="{% static "js/d3.js" %}"></script>
-
 
 </body>
 </html>
