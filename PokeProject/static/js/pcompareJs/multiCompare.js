@@ -185,7 +185,7 @@ d3.select("#jj")
 
                 var result = $.grep(data, function(e){ return e.name == pokemons[0].name; });
 
-                if (result.length == 0 && amount.length < 12) {
+                if (result.length == 0 && amount.length < 12 && pokemons[0]['exist'] == 0) {
                     elem.innerHTML += '<span class="label label-success">' + pokeName + '<a name="' + pokeName + '" ' +
                         'class="remove" onclick="remove(this)"> <span class="glyphicon glyphicon-remove-circle" ' +
                         'style="color: white"></span></a></span> ';
