@@ -349,6 +349,9 @@ svg.selectAll("circle")
         //Show the tooltip
         d3.select("#popupS").classed("hidden", false);
 
+        d3.select("#pokename")
+            .text("#"+d[3] + " " + d[4])
+
         datasetP[0] = d[8];
         datasetP[1] = d[9];
         datasetP[2] = d[10];
