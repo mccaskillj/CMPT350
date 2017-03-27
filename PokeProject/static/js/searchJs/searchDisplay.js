@@ -236,7 +236,10 @@ var drag = d3.behavior.drag()
             svg.selectAll("circle")
                 .attr('r', function (d) {
                     return d[2];
-            });
+                })
+                .attr("stroke", function (d) {
+                    return typeColor(d[14]);
+                });
 
             return;
         }
@@ -283,6 +286,7 @@ svg.selectAll("circle")
         return 'url(#image'+i+')';
     })
     .attr('stroke','black')
+    .attr('stroke-width', 3)
     .on("mouseover",function (d) {
         if (!dragging) {
             //Get this bar's x/y values, then augment for the tooltip
@@ -470,6 +474,9 @@ success: function(pokemons) {
                     return d[7];
                 }
             })
+            .attr("stroke", function (d) {
+                return typeColor(d[14]);
+            });
 },
 failure: function(pokemons) {
     alert('Got an error dude');
@@ -585,6 +592,9 @@ function updater(dataset,svg,rScale,offset) {
             })
             .attr('cy', function (d) {
                 return d[1];
+            })
+            .attr("stroke", function (d) {
+                return typeColor(d[14]);
             });
 
 
@@ -760,3 +770,59 @@ svgCircle.append("circle")
             return 'url(#popupImage)';
         })
         .attr("stroke", "black");
+
+function typeColor(type) {
+    if (type == "Grass")
+        return "#6cb649";
+
+    if (type == "Fire")
+        return "#ff5d55";
+
+    if (type == "Water")
+        return "#5382ea";
+
+    if (type == "Fighting")
+        return "#a02a26";
+
+    if (type == "Steel")
+        return "#a7a8be";
+
+    if (type == "Electric")
+        return "#f2c735";
+
+    if (type == "Ice")
+        return "#84cfcf";
+
+    if (type == "Normal")
+        return "#99986a";
+
+    if (type == "Bug")
+        return "#95a22c";
+
+    if (type == "Dragon")
+        return "#5b2eef";
+
+    if (type == "Psychic")
+        return "#f54378";
+
+    if (type == "Ghost")
+        return "#5d4b7e";
+
+    if (type == "Poison")
+        return "#933f93";
+
+    if (type == "Fairy")
+        return "#e287e2";
+
+    if (type == "Dark")
+        return "#5d483d";
+
+    if (type == "Rock")
+        return "#a48f3a";
+
+    if (type == "Ground")
+        return "#d9b34a";
+
+    if (type == "Flying")
+        return "#9d88db";
+}
