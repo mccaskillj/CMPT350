@@ -674,3 +674,34 @@ arcs.append("text")
     .text(function(d) {
         return d.value;
     });
+
+var svgLeg = d3.select("#legend")
+                .append("svg")
+                .attr("width", 100)
+                .attr("height", 200)
+                .attr("x",200);
+
+svgLeg.selectAll("rect")
+    .data([0,1,2,3,4,5])
+    .enter()
+    .append("rect")
+    .attr("height", 15)
+    .attr("width", 15)
+    .attr("fill", function (d) {
+        return colorP(d);
+    })
+    .attr("y", function (d) {
+        return d * 20;
+    });
+
+svgLeg.selectAll("text")
+    .data(["HP","Attack","Defense","Sp. Attack","Sp. Defense","Speed"])
+    .enter()
+    .append("text")
+    .attr("y", function (d,i) {
+        return i * 20 +13;
+    })
+    .attr("x", 20)
+    .text(function (d) {
+        return d;
+    });
