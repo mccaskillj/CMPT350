@@ -63,8 +63,6 @@ function checkPoke(pokename){
          dataType: 'JSON',                //data format
          success: function(pokemons) {
              poke = pokemons['val'];
-             console.log("Poke:" + poke);
-
              return 0;
          },
          failure: function(pokemons) {
@@ -295,8 +293,6 @@ d3.select("#sb")
                     }));
 
                     //Update all rects
-                    // var svg5 = d3.select("#singlee");
-                    // console.log(svg5);
                     svg.selectAll("#dOne")
                         .data(data1)
                         .transition()

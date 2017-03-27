@@ -125,7 +125,6 @@ def get_single_pokemon(request):
             temp_array.append(poke)
 
         json_string = json.dumps([ob.__dict__ for ob in temp_array])
-        print(json_string)
 
         return HttpResponse(json_string, content_type='application/json')
 
@@ -154,22 +153,18 @@ def get_filtered_pokemon(request):
     sp_defense_val = request.GET.get('sp_defense', None)
     speed_val = request.GET.get('speed', None)
     radio = request.GET.get('radio', None)
-    print(gen_val)
 
     pokemons = Pokemon.objects.all()
 
     if gen_val != "All Generations":
         temp = gen_val.split(" ")
         new = pokemons.filter(generation=temp[1])
-        print("Gen: ", new.count())
     else:
         new = pokemons
     if type_val != "All Types":
         new = new.filter(Q(type_1=type_val) | Q(type_2=type_val))
-        print("type: ",new.count())
     if color_val != "All Colors":
         new = new.filter(color=color_val)
-        print("color: ",new.count())
 
     # Weight
     temp = weight_val.split(" - ")
@@ -202,8 +197,6 @@ def get_filtered_pokemon(request):
     # Speed
     temp = speed_val.split(" - ")
     new = new.filter(Q(speed__gte=int(temp[0])) & Q(speed__lte=temp[1]))
-
-    print("hp: ", new.count())
 
     # Passing back data: what ever radio button is selected -> stat value. name, pokedex, height, weight
 
@@ -262,10 +255,7 @@ def get_data(request):
 
     json_string = json.dumps(pokemonDictionary)
 
-    print(json_string)
     return HttpResponse(json_string, content_type='application/json')
-
-    #return HttpResponse(json_string, content_type='application/json')
 
 
 def exists(request):
