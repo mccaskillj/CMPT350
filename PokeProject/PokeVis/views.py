@@ -112,18 +112,29 @@ def get_pokemon(request):
 def get_single_pokemon(request):
     temp_array = []
     name_val = request.GET.get('name', None)
-    pokemons = Pokemon.objects.filter(name=name_val)
 
-    for item in pokemons:
-        poke = Poke(item.number, item.total, item.hp, item.attack, item.defense, item.special_attack,
-                    item.special_defense, item.speed, item.weight_kg, item.height_m, item.color, item.name,
-                    item.egg_group_1, item.egg_group_2, item.generation, item.catch_rate, item.is_legendary,
-                    item.body_style, item.type_1, item.type_2)
+    if Pokemon.objects.filter(name=name_val).exists():
+
+        pokemons = Pokemon.objects.filter(name=name_val)
+
+        for item in pokemons:
+            poke = Poke(item.number, item.total, item.hp, item.attack, item.defense, item.special_attack,
+                        item.special_defense, item.speed, item.weight_kg, item.height_m, item.color, item.name,
+                        item.egg_group_1, item.egg_group_2, item.generation, item.catch_rate, item.is_legendary,
+                        item.body_style, item.type_1, item.type_2, 0)
+            temp_array.append(poke)
+
+        json_string = json.dumps([ob.__dict__ for ob in temp_array])
+        print(json_string)
+
+        return HttpResponse(json_string, content_type='application/json')
+
+    else:
+        poke = Poke()
         temp_array.append(poke)
 
-    json_string = json.dumps([ob.__dict__ for ob in temp_array])
-
-    return HttpResponse(json_string, content_type='application/json')
+        json_string = json.dumps([ob.__dict__ for ob in temp_array])
+        return HttpResponse(json_string, content_type='application/json')
 
 
 def get_filtered_pokemon(request):
@@ -255,6 +266,7 @@ def get_data(request):
     return HttpResponse(json_string, content_type='application/json')
 
     #return HttpResponse(json_string, content_type='application/json')
+
 
 def exists(request):
     name_val = request.GET.get('name', None)
