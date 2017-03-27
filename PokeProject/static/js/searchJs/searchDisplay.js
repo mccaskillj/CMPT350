@@ -161,8 +161,8 @@ var drag = d3.behavior.drag()
                         d[11] = dataset[23][pos].sp_attack;
                         d[12] = dataset[23][pos].sp_defense;
                         d[13] = dataset[23][pos].speed;
-                        //d[14] = dataset[23][pos].type_1;
-                        //d[15] = dataset[23][pos].type_2;
+                        d[14] = dataset[23][pos].type_1;
+                        d[15] = dataset[23][pos].type_2;
                     } else {
                         d[3] = 0;
                         d[4] = "";
@@ -175,8 +175,8 @@ var drag = d3.behavior.drag()
                         d[11] = 0;
                         d[12] = 0;
                         d[13] = 0;
-                        //d[14] = "";
-                        //d[15] = "";
+                        d[14] = "";
+                        d[15] = "";
                     }
                     dataset[24] = dataset[24] + 1;
                     return d[0];
@@ -327,6 +327,16 @@ svg.selectAll("circle")
                 .select("#speed")
                 .text(d[13]);
 
+            d3.select("#tooltipS")
+                .select("#type")
+                .text(function () {
+                    if (d[15] != ""){
+                        return d[14]+"/"+d[15];
+                    } else {
+                        return d[14];
+                    }
+                });
+
             //Show the tooltip
             d3.select("#tooltipS").classed("hidden", false);
         }
@@ -405,6 +415,7 @@ $.ajax({
     "radio": radio},
     dataType: 'json',                //data format
 success: function(pokemons) {
+    console.log(pokemons);
     dataset[23] = pokemons;
     var pos = 0;
     for (var i = 0 ; i < 23; i++){
@@ -422,8 +433,8 @@ success: function(pokemons) {
             dataset[i][11] = pokemons[i].sp_attack;
             dataset[i][12] = pokemons[i].sp_defense;
             dataset[i][13] = pokemons[i].speed;
-            //dataset[i][14] = pokemons[i].type_1;
-            //dataset[i][15] = pokemons[i].type_2;
+            dataset[i][14] = pokemons[i].type_1;
+            dataset[i][15] = pokemons[i].type_2;
         } else {
             dataset[i][3] = 0;
             dataset[i][4] = "";
@@ -436,8 +447,8 @@ success: function(pokemons) {
             dataset[i][11] = 0;
             dataset[i][12] = 0;
             dataset[i][13] = 0;
-            //dataset[i][14] = "";
-            //dataset[i][15] = "";
+            dataset[i][14] = "";
+            dataset[i][15] = "";
         }
         pos++;
     }
@@ -527,8 +538,8 @@ function updater(dataset,svg,rScale,offset) {
                 dataset[i][11] = pokemons[i].sp_attack;
                 dataset[i][12] = pokemons[i].sp_defense;
                 dataset[i][13] = pokemons[i].speed;
-                //dataset[i][14] = pokemons[i].type_1;
-                //dataset[i][15] = pokemons[i].type_2;
+                dataset[i][14] = pokemons[i].type_1;
+                dataset[i][15] = pokemons[i].type_2;
            } else {
                dataset[i][0] = locations[i][0];
                dataset[i][1] = locations[i][1];
@@ -543,8 +554,8 @@ function updater(dataset,svg,rScale,offset) {
                 dataset[i][11] = 0;
                 dataset[i][12] = 0;
                 dataset[i][13] = 0;
-                //dataset[i][14] = "";
-                //dataset[i][15] = "";
+                dataset[i][14] = "";
+                dataset[i][15] = "";
             }
             pos++;
         }
@@ -569,6 +580,12 @@ function updater(dataset,svg,rScale,offset) {
                     return d[stat];
                 }
             })
+            .attr('cx',function (d) {
+                return d[0];
+            })
+            .attr('cy', function (d) {
+                return d[1];
+            });
 
 
     },
@@ -629,6 +646,26 @@ d3.select('#StatRadio').on('change', function () {
 
 d3.select('#popupS').on('click',function () {
     d3.select("#popupS").classed("hidden", true);
+});
+
+d3.select('#mydiv').on('mouseover', function () {
+    d3.select("#popupS").classed("hidden",true);
+});
+
+d3.select('#one').on('mouseover', function () {
+    d3.select("#popupS").classed("hidden",true);
+});
+
+d3.select('#two').on('mouseover', function () {
+    d3.select("#popupS").classed("hidden",true);
+});
+
+d3.select('#baseWindow').on('mouseover', function () {
+    d3.select("#popupS").classed("hidden",true);
+});
+
+d3.select('#navbar').on('mouseover', function () {
+    d3.select("#popupS").classed("hidden",true);
 });
 
 //Width and height
