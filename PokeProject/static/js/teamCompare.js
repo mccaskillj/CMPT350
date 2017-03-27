@@ -45,7 +45,10 @@ $(document).ready(function() {
 
 d3.select("#addbuttonleft1").on("click", function() {
     var selectPoke = document.getElementById("pokeleft1input").value;
-    if (checkPoke(selectPoke) == 0) {
+    console.log("Selected Poke: ", selectPoke);
+    var validPoke = checkPoke(selectPoke);
+    console.log("Selected pokemon is valid",validPoke);
+    if (validPoke == 1) {
             $.ajax({
                 type: "GET",
                 url: 'ajax/get_single_pokemon/', //the script to call to get data
@@ -66,6 +69,9 @@ d3.select("#addbuttonleft1").on("click", function() {
                 }
             })
     }
+    else{
+        alert("Invalid Pokemon");
+    }
 
 });
 
@@ -80,11 +86,14 @@ function checkPoke(pokename){
          dataType: 'JSON',                //data format
          success: function(pokemons) {
              poke = pokemons['val'];
+             console.log("Poke:", poke);
+             return poke;
 
          },
          failure: function(pokemons) {
              alert('Got an error dude');
+             return 1;
          }
      });
-    return poke;
+
 }
