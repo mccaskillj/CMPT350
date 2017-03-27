@@ -97,10 +97,10 @@
         <div>
             <div id="radioBut2" class="singleBarRadio">
                 <label class="radio-inline">
-                    <input id="checkBar" type="radio" name="optradio2" checked>Bar Chart
+                    <input id="checkBar" type="radio" name="optradio2" value="bar" checked>Bar Chart
                 </label>
-                <label class="radio-inline">
-                    <input type="radio" name="optradio2">Pie Chart
+                <label class="radio-inline" >
+                    <input type="radio" name="optradio2" value="pie" id="pieRadio">Pie Chart
                 </label>
             </div>
         </div>
@@ -241,12 +241,20 @@
         <hr style="background-color: black">
 
         <div>
-            <div id="radioBut2" class="singleBarRadio">
+            <div id="radioBut2" class="singleBarRadio doubleRadio1">
                 <label class="radio-inline">
                     <input id="checkBarDouble" type="radio" name="optradio3" checked>Bar Chart
                 </label>
                 <label class="radio-inline">
                     <input type="radio" name="optradio3">Pie Chart
+                </label>
+            </div>
+            <div id="radioBut5" class="singleBarRadio doubleRadio2" onclick="">
+                <label class="radio-inline" id="normalStatus">
+                    <input id="checkNormalD" type="radio" name="optradio5" value="normal" checked>Normal Status
+                </label>
+                <label class="radio-inline" id="dreivedStatus">
+                    <input type="radio" name="optradio5" value="derived">Derived Status
                 </label>
             </div>
         </div>
@@ -257,14 +265,14 @@
         <div style="height: 534px" >
             <div class="testLeft">
                 <h4 style="padding-left: 230px" id="dPoke">Poke name</h4>
-                <div id="doubleChart" >
+                <div id="doubleChart" style="padding-left: 40px">
 
                 </div>
             </div>
 
             <div class="testRight">
-                <h4 style="padding-left: 180px; padding-top: 10px" id="dPoke2">Poke name</h4>
-                <div id="doubleChart2">
+                <h4 style="padding-left: 230px; padding-top: 10px" id="dPoke2">Poke name</h4>
+                <div id="doubleChart2" style="padding-left: 40px">
                 </div>
             </div>
 
@@ -284,7 +292,7 @@
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search Pokemon" id="addPoke">
                 <span class="input-group-btn" style="width:0;">
-                    <button class="btn btn-default" type="button" onclick="addB()" id="jj">Add Pokemon</button>
+                    <button class="btn btn-default" type="button" onclick="" id="jj">Add Pokemon</button>
                 </span>
 
             </div>
@@ -315,6 +323,8 @@
         <!--<p><strong id="header">Important Label Heading</strong></p>-->
         <p><span id="value">100</span></p>
 </div>
+
+
 
 <!--new JS files-->
 <script type="text/javascript" src="{% static "js/d3.js" %}"></script>

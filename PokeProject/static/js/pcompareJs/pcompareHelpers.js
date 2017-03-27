@@ -65,6 +65,43 @@ function getValuesForDerived(pokemons){
                 value: pokemons[0]['sp_sweeper'],
                 info: 'Special Sweeper = Sp. Attack + Speed'
             });
+    dict.push({
+                stat: '',
+                value: 0,
+                info: ''
+            });
+
+    return dict;
+}
+
+function getValuesForDerivedOriginal(pokemons){
+    var dict = [];
+
+    dict.push({
+                stat: 'Wall',
+                value: pokemons[0]['wall'],
+                info: 'Wall = HP + Defense + Sp. Defense'
+            });
+    dict.push({
+                stat: 'Phys. Tank',
+                value: pokemons[0]['phys_tank'],
+                info: 'Physical Tank = Attack + Defense'
+            });
+    dict.push({
+                stat: 'Sp. Tank',
+                value: pokemons[0]['sp_tank'],
+                info: 'Special Tank = Sp. Attack + Sp. Defense'
+            });
+    dict.push({
+                stat: 'Phys. Sweeper',
+                value: pokemons[0]['phys_sweeper'],
+                info: 'Physical Sweeper = Attack + Speed'
+            });
+    dict.push({
+                stat: 'Sp. Sweeper',
+                value: pokemons[0]['sp_sweeper'],
+                info: 'Special Sweeper = Sp. Attack + Speed'
+            });
 
     return dict;
 }

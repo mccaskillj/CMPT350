@@ -30,9 +30,11 @@ class Poke:
     phys_tank = 0       # Physical_Tank = Attack + Defense
     sp_tank = 0         # Special_Tank = Sp.Attack + Sp.Defense
 
-    def __init__(self, index="", total="", hp="", attack="", defense="", sp_attack="", sp_defense="", speed="",
+    exist = 0
+
+    def __init__(self, index="", total=0, hp=0, attack=0, defense=0, sp_attack=0, sp_defense=0, speed=0,
                  weight="", height="", color="", name="", egg_group_1="", egg_group_2="", generation="",
-                 catch_rate="", is_legendary="", body_style="", type_1="", type_2=""):
+                 catch_rate="", is_legendary="", body_style="", type_1="", type_2="", exist=1):
         self.id = index
         self.total = total
         self.hp = hp
@@ -60,6 +62,7 @@ class Poke:
         self.phys_tank = attack + defense
         self.sp_tank = sp_attack + sp_defense
         self.url = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + str(index) + 'png'
+        self.exist = exist
 
     def __str__(self, *args, **kwargs):
         return super().__str__(*args, **kwargs)

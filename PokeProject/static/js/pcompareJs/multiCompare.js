@@ -1,134 +1,12 @@
 /**
  * Created by carmichael on 2017-03-13.
  */
-function addPokeOneMU() {
-    var selectPoke = document.getElementById("poke1").value;
-        console.log(selectPoke);
-
-        if (selectPoke != ""){
-            $.ajax({
-            type: "GET",
-            url: 'ajax/get_single_pokemon/', //the script to call to get data
-            data: {"name": selectPoke},
-            dataType: 'JSON',                //data format
-            success: function(pokemons) {
-                var unwantedFirst = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
-                                'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
-                                'phys_sweeper', 'sp_sweeper', 'wall', 'phys_tank', 'sp_tank'];
-                var unwantedSecond = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
-                                'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
-                                'hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed'];
-                var id = pokemons[0]['id'];
-
-
-
-
-            },
-            failure: function(pokemons) {
-                alert('Got an error dude');
-            }
-            });
-        }
-}
-
-function addB(){
-    var pokeName = document.getElementById("addPoke").value;
-    var elem = document.getElementById('pokeBadges');
-    var amount = document.getElementsByClassName('label-success');
-
-    if (amount.length < 12) {
-        elem.innerHTML += '<span class="label label-success">' + pokeName + '<a name="' + pokeName + '" class="remove" onclick="remove(this)"> <span class="glyphicon glyphicon-remove-circle" style="color: white"></span></a></span> ';
-
-        $.ajax({
-            type: "GET",
-            url: 'ajax/get_single_pokemon/', //the script to call to get data
-            data: {"name": pokeName},
-            dataType: 'JSON',                //data format
-            success: function(pokemons) {
-                console.log(pokemons);
-
-
-                var regData = getValuesForReg(pokemons);
-                var derivedData = getValuesForDerived(pokemons);
-
-                console.log(regData);
-                console.log(derivedData);
-
-                var dataset = [];
-
-                dict.push({
-                    data: { name: "Charmander",
-                            hp: 0,
-                            attack: 1,
-                            sp_attack: 2,
-                            defense: 3,
-                            sp_defense: 4,
-                            speed: 5
-                    }
-                });
-
-                // dataset = [{
-                //             data: [{
-                //                 month: 'Aug',
-                //                 count: 123
-                //             }, {
-                //                 month: 'Sep',
-                //                 count: 234
-                //             }, {
-                //                 month: 'Oct',
-                //                 count: 345
-                //             }],
-                //             name: 'Series #1'
-                //         }, {
-                //             data: [{
-                //                 month: 'Aug',
-                //                 count: 235
-                //             }, {
-                //                 month: 'Sep',
-                //                 count: 267
-                //             }, {
-                //                 month: 'Oct',
-                //                 count: 573
-                //             }],
-                //             name: 'Series #2'
-                //         }
-
-
-            },
-            failure: function(pokemons) {
-                alert('Got an error dude');
-            }
-            });
-    }
-}
-
-function remove(elm){
-    var el = elm.parentNode;
-    var name = elm.name;
-    console.log(name);
-    elm.remove();
-    el.remove();
-}
 
 //-----------------------------------------------------/
 
 // Multi
-var data = [
-  { name: "Charmander", Hp: "4", Attack: "10", Defense: "15", "Sp. Attack": "9", "Sp. Defense": "6", Speed: "4" },
-  { name: "Weedle",     Hp: "7", Attack: "12", Defense: "18", "Sp. Attack": "9", "Sp. Defense": "4", Speed: "8" },
-  { name: "Wigglytuff", Hp: "3", Attack: "05", Defense: "20", "Sp. Attack": "8", "Sp. Defense": "2", Speed: "2" },
-  { name: "Meowth",     Hp: "1", Attack: "01", Defense: "15", "Sp. Attack": "5", "Sp. Defense": "4", Speed: "9" },
-  { name: "Growlithe",  Hp: "8", Attack: "02", Defense: "10", "Sp. Attack": "4", "Sp. Defense": "2", Speed: "5" },
-  { name: "Graveler",   Hp: "9", Attack: "03", Defense: "12", "Sp. Attack": "6", "Sp. Defense": "3", Speed: "6" },
-  { name: "Tranquill",  Hp: "5", Attack: "04", Defense: "15", "Sp. Attack": "8", "Sp. Defense": "1", Speed: "3" },
-  { name: "Golduck",    Hp: "7", Attack: "06", Defense: "11", "Sp. Attack": "9", "Sp. Defense": "4", Speed: "7" },
-  { name: "Krabby",     Hp: "4", Attack: "10", Defense: "13", "Sp. Attack": "9", "Sp. Defense": "5", Speed: "3" },
-  { name: "Pidgeot",    Hp: "10",Attack: "16", Defense: "19", "Sp. Attack": "6", "Sp. Defense": "9", Speed: "5" },
-  { name: "Pikachu",    Hp: "2", Attack: "19", Defense: "17", "Sp. Attack": "5", "Sp. Defense": "7", Speed: "4" },
-    { name: "Paras",    Hp: "6", Attack: "22", Defense: "18", "Sp. Attack": "6", "Sp. Defense": "3", Speed: "3" },
-    { name: "Blastoise",    Hp: "8", Attack: "14", Defense: "16", "Sp. Attack": "2", "Sp. Defense": "5", Speed: "6" },
-    { name: "Sandshrew",    Hp: "4", Attack: "11", Defense: "13", "Sp. Attack": "9", "Sp. Defense": "2", Speed: "8" }
-];
+
+var data = [];
 
 var items = ["Hp", "Attack", "Defense", "Sp. Attack", "Sp. Defense", "Speed"];
 
@@ -212,12 +90,13 @@ var xAxis = d3.svg.axis()
         .scale(xScaleM)
         .orient('bottom');
 
-var colors2 = ["90caf9", "#92d36e", "#ff5d55", "#fefb64", "#f54378", "#5d4b7e"];
+var colors2 = ["#90caf9", "#92d36e", "#ff5d55", "#fefb64", "#f54378", "#5d4b7e"];
 
 var groups = svgM.selectAll('g')
         .data(dataset)
         .enter()
         .append('g')
+        .attr('class', 'gggg')
         .style('fill', function (d, i) {
         return colors2[i];
     });
@@ -226,6 +105,7 @@ groups.selectAll('rect')
         .data(function (d) {return d;})
         .enter()
         .append('rect')
+        .attr('class', 'mybars')
         .attr('x', function (d) {
             return xScaleM(d.x0);
         })
@@ -269,7 +149,7 @@ legend.append("rect")
       .attr("x", widthM - 18)
       .attr("width", 18)
       .attr("height", 18)
-      .style("fill", function(d, i) {return colors2.slice().reverse()[i];});
+      .style("fill", function(d, i) {return colors2.slice()[i];});
 
 legend.append("text")
       .attr("x", widthM + 5)
@@ -278,76 +158,286 @@ legend.append("text")
       .style("text-anchor", "start")
       .text(function(d, i) {
         switch (i) {
-          case 0: return "Speed";
-          case 1: return "Sp. Defense";
-          case 2: return "Sp. Attack";
-          case 3: return "Defense";
-          case 4: return "Attack";
-          case 5: return "Hp";
+          case 5: return "Speed";
+          case 4: return "Sp. Defense";
+          case 3: return "Sp. Attack";
+          case 2: return "Defense";
+          case 1: return "Attack";
+          case 0: return "Hp";
         }
       });
 
 d3.select("#jj")
     .on("click", function() {
+        var pokeName = document.getElementById("addPoke").value;
+        var elem = document.getElementById('pokeBadges');
+        var amount = document.getElementsByClassName('label-success');
 
-        console.log("hi");
-        data.push({ name: "Swoobat",    Hp: "7", Attack: "3", Defense: "9", "Sp. Attack": "4", "Sp. Defense": "7", Speed: "3" });			 			 		//Add new number to array
+        $.ajax({
+            type: "GET",
+            url: 'ajax/get_single_pokemon/', //the script to call to get data
+            data: {"name": pokeName},
+            dataType: 'JSON',                //data format
+            success: function(pokemons) {
+                console.log(pokemons);
+                var condition = 1;
 
-        // Transpose the data into layers
-        var dataset = d3.layout.stack()(items.map(function(fruit) {
-          return data.map(function(d, i) {
-            return {x: d.name,
-                    y: +d[fruit],
-                    z: items[0]};
-          });
-        }));
 
-        d3.layout.stack()(dataset);
+                var result = $.grep(data, function(e){ return e.name == pokemons[0].name; });
 
-        console.log(dataset);
-        xMax = d3.max(dataset, function (group) {
-                var groupMax = d3.max(group, function (d) {
-                    return d.x + d.x0;
-                });
-                return groupMax;
-            });
+                if (result.length == 0 && amount.length < 12 && pokemons[0]['exist'] == 0) {
+                    elem.innerHTML += '<span class="label label-success">' + pokeName + '<a name="' + pokeName + '" ' +
+                        'class="remove" onclick="remove(this)"> <span class="glyphicon glyphicon-remove-circle" ' +
+                        'style="color: white"></span></a></span> ';
 
-        groups = svgM.selectAll('g')
+
+                    data.push({
+                        name: pokemons[0].name,
+                        Hp: String(pokemons[0].hp),
+                        Attack: String(pokemons[0].attack),
+                        Defense: String(pokemons[0].defense),
+                        "Sp. Attack": String(pokemons[0].sp_attack),
+                        "Sp. Defense": String(pokemons[0].sp_defense),
+                        Speed: (pokemons[0].speed)
+                    });
+
+                    // Transpose the data into layers
+                    var dataset = d3.layout.stack()(items.map(function (fruit) {
+                        return data.map(function (d, i) {
+                            return {
+                                x: d.name,
+                                y: +d[fruit],
+                                z: items[0]
+                            };
+                        });
+                    }));
+
+                    d3.layout.stack()(dataset);
+
+                    dataset = dataset.map(function (group) {
+                        return group.map(function (d) {
+                            // Invert the x and y values, and y0 becomes x0
+                            return {
+                                x: d.y,
+                                y: d.x,
+                                x0: d.y0
+                            };
+                        });
+                    });
+
+                    units = dataset[0].map(function (d) {
+                        return d.y;
+                    });
+
+                    yScaleM = d3.scale.ordinal()
+                        .domain(units)
+                        .rangeRoundBands([0, heightM], .1);
+
+                    yAxis = d3.svg.axis()
+                        .scale(yScaleM)
+                        .orient('left');
+
+
+                    xMax = d3.max(dataset, function (group) {
+                        var groupMax = d3.max(group, function (d) {
+                            return d.x + d.x0;
+                        });
+                        return groupMax;
+                    });
+
+                    xScaleM = d3.scale.linear()
+                        .domain([0, xMax])
+                        .range([0, widthM]);
+
+                    xAxis = d3.svg.axis()
+                        .scale(xScaleM)
+                        .orient('bottom');
+
+
+                    svgM.selectAll(".gggg").remove();
+
+                    var groupss = svgM.selectAll('#ggggg')
                         .data(dataset)
                         .enter()
                         .append('g')
+                        .attr('class', 'gggg')
                         .style('fill', function (d, i) {
-                        return colors2[i];
-                    });
+                            return colors2[i];
+                        });
 
-        groups.selectAll('rect')
-                .data(function (d) {return d;})
-                .enter()
-                .append('rect')
-                .attr('x', function (d) {
-                    return xScale(d.x0);
-                })
-                .attr('y', function (d, i) {return yScaleM(d.y);})
-                .attr('height', function (d) {return yScaleM.rangeBand();})
-                .attr('width', function (d) {return xScaleM(d.x);})
-                .on('mouseover', function (d, i) {
-                    var xPos = parseFloat(d3.select(this).attr('x')) / 2 + widthM / 4 + 50;
-                    var yPos = parseFloat(d3.select(this).attr('y')) + heightM / 8 + 220;
-                    d3.select('#tooltip')
-                        .style('left', xPos + 'px')
-                        .style('top', yPos + 'px')
-                        .select('#value')
-                        .text(d.x);
+                    groupss.selectAll('#mybars')
+                        .data(function (d) {
+                            return d;
+                        })
+                        .enter()
+                        .append('rect')
+                        .transition()
+                        .delay(function (d, i) {
+                            return i / dataset.length * 10;   // <-- Where the magic happens
+                        })
+                        .duration(1000)
+                        .attr('x', function (d) {
+                            return xScaleM(d.x0);
+                        })
+                        .attr('y', function (d, i) {
+                            return yScaleM(d.y);
+                        })
+                        .attr('height', function (d) {
+                            return yScaleM.rangeBand();
+                        })
+                        .attr('width', function (d) {
+                            return xScaleM(d.x);
+                        })
+                    ;
 
-                    d3.select('#tooltip').classed('hidden', false);
-                })
-                .on('mouseout', function () {
-                    d3.select('#tooltip').classed('hidden', true);
-                });
+                    svgM.selectAll("g.y.axis")
+                        .transition()
+                        .delay(function (d, i) {
+                            return i / dataset.length * 10;   // <-- Where the magic happens
+                        })
+                        .duration(1000)
+                        .style("font-size", "15px")
+                        .style("color", "black")
+                        .call(yAxis);
 
-
-
-        console.log("bye");
-
+                    svgM.selectAll("g.x.axis")
+                        .transition()
+                        .delay(function (d, i) {
+                            return i / dataset.length * 10;   // <-- Where the magic happens
+                        })
+                        .duration(1000)
+                        .attr('transform', 'translate(0,' + heightM + ')')
+                        .call(xAxis);
+                }
+        },
+        failure: function(pokemons) {
+            alert('Got an error dude');
+        }
+        });
 
     });
+
+function remove(elm){
+    var el = elm.parentNode;
+    var name = elm.name;
+    console.log(name);
+
+    $.grep(data, function(e, i){
+        if (e.name == name) {
+            console.log(data[i]);
+            data.splice( i, 1 );
+        }
+        });
+
+    // Transpose the data into layers
+    var dataset = d3.layout.stack()(items.map(function (fruit) {
+        return data.map(function (d, i) {
+            return {
+                x: d.name,
+                y: +d[fruit],
+                z: items[0]
+            };
+        });
+    }));
+
+    d3.layout.stack()(dataset);
+
+    dataset = dataset.map(function (group) {
+        return group.map(function (d) {
+            // Invert the x and y values, and y0 becomes x0
+            return {
+                x: d.y,
+                y: d.x,
+                x0: d.y0
+            };
+        });
+    });
+
+    units = dataset[0].map(function (d) {
+        return d.y;
+    });
+
+    yScaleM = d3.scale.ordinal()
+        .domain(units)
+        .rangeRoundBands([0, heightM], .1);
+
+    yAxis = d3.svg.axis()
+        .scale(yScaleM)
+        .orient('left');
+
+
+    xMax = d3.max(dataset, function (group) {
+        var groupMax = d3.max(group, function (d) {
+            return d.x + d.x0;
+        });
+        return groupMax;
+    });
+
+    xScaleM = d3.scale.linear()
+        .domain([0, xMax])
+        .range([0, widthM]);
+
+    xAxis = d3.svg.axis()
+        .scale(xScaleM)
+        .orient('bottom');
+
+
+    svgM.selectAll(".gggg").remove();
+
+    var groupss = svgM.selectAll('#ggggg')
+        .data(dataset)
+        .enter()
+        .append('g')
+        .attr('class', 'gggg')
+        .style('fill', function (d, i) {
+            return colors2[i];
+        });
+
+    groupss.selectAll('#mybars')
+        .data(function (d) {
+            return d;
+        })
+        .enter()
+        .append('rect')
+        .transition()
+        .delay(function (d, i) {
+            return i / dataset.length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .attr('x', function (d) {
+            return xScaleM(d.x0);
+        })
+        .attr('y', function (d, i) {
+            return yScaleM(d.y);
+        })
+        .attr('height', function (d) {
+            return yScaleM.rangeBand();
+        })
+        .attr('width', function (d) {
+            return xScaleM(d.x);
+        })
+    ;
+
+    svgM.selectAll("g.y.axis")
+        .transition()
+        .delay(function (d, i) {
+            return i / dataset.length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .style("font-size", "15px")
+        .style("color", "black")
+        .call(yAxis);
+
+    svgM.selectAll("g.x.axis")
+        .transition()
+        .delay(function (d, i) {
+            return i / dataset.length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .attr('transform', 'translate(0,' + heightM + ')')
+        .call(xAxis);
+
+
+    elm.remove();
+    el.remove();
+}
