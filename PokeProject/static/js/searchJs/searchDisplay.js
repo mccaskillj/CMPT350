@@ -339,7 +339,7 @@ svg.selectAll("circle")
     })
     .call(drag)
     .on("click", function (d) {
-        var xPosition = parseFloat(d3.select(this).attr("cx"))+70;
+        var xPosition = parseFloat(d3.select(this).attr("cx"))+25;
         var yPosition = parseFloat(d3.select(this).attr("cy"))-70;
         //Update the tooltip position and value
         d3.select("#popupS")
@@ -392,6 +392,8 @@ svg.selectAll("circle")
             .text(function(d) {
                 return d.value;
             });
+
+        $("#popupImage image").attr('xlink:href', frontPath + d[3] + '.png');
     });
 
 
@@ -681,8 +683,7 @@ arcs.append("text")
 var svgLeg = d3.select("#legend")
                 .append("svg")
                 .attr("width", 100)
-                .attr("height", 200)
-                .attr("x",200);
+                .attr("height", 200);
 
 svgLeg.selectAll("rect")
     .data([0,1,2,3,4,5])
@@ -708,3 +709,17 @@ svgLeg.selectAll("text")
     .text(function (d) {
         return d;
     });
+
+var svgCircle = d3.select("#circleimage")
+        .append("svg")
+        .attr("width", 100)
+        .attr("height", 100);
+
+svgCircle.append("circle")
+        .attr("r", wP/4)
+        .attr("cx", 50)
+        .attr("cy", 50)
+        .style('fill', function (d,i) {
+            return 'url(#popupImage)';
+        })
+        .attr("stroke", "black");
