@@ -3,8 +3,6 @@
     background-color: black;
     width: 40%;
     height: 700px;
-    padding-left:100px;
-    padding-top: 40px;
 }
 
 .column-enemyteam{
@@ -12,7 +10,6 @@
     background-color: black;
     width: 40%;
     height: 700px;
-    padding-top: 40px;
 }
 
 .container-fluid{
@@ -20,4 +17,47 @@
     height: 1000px;
     padding-top: 30px;
     background-color: white;
+}
+
+.pokeleft{
+    width: 95%;
+    height: 15%;
+    background-color: white;
+    margin: 10px auto;
+}
+
+.pokeright {
+    width: 95%;
+    height: 15%;
+    background-color: white;
+    margin: 10px auto;
+}
+
+.pokeleft1search{
+    margin: 0 auto;
+    position: relative;
+    top: 30%;
+    z-index: 10;
+}
+
+#closepokeleft1{
+    position: relative;
+    float: right;
+    visibility: hidden;
+    margin-right: 2px;
+    margin-top: 2px;
+}
+
+.poke1leftImage{
+    visibility: hidden;
+    position: absolute;
+    display: block;
+    width: 150px;
+    height: 102px;
+}
+
+#frontImg{
+    width: inherit;
+    height: inherit;
+
 }

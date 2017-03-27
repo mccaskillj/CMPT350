@@ -5,13 +5,60 @@
         <link rel="stylesheet" type="text/css" href="{% static "css/tcomparision.css" %}" />
         <div class="container-fluid">
             <div class="column-yourteam">
+                <div class="pokeleft1 pokeleft">
+                    <div class="poke1leftImage" id="poke1leftImage">
+                        <img id="frontImgleft1" src="{% static "images/front/0.png" %}" alt="My image"/>
+                    </div>
+                    <button class="btn btn-default btn-xs" type="button" id="closepokeleft1"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <div class="input-group pokeleft1search" id="pokeleft1search">
+                        <input type="text" class="form-control" placeholder="Search Pokemon" id="pokeleft1input">
+                        <span class="input-group-btn" style="width:0;">
+                            <button class="btn btn-default" type="button"  id="addbuttonleft1">Add</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="pokeleft2 pokeleft">
 
+                </div>
+                <div class="pokeleft3 pokeleft">
+
+                </div>
+                <div class="pokeleft4 pokeleft">
+
+                </div>
+                <div class="pokeleft5 pokeleft">
+
+                </div>
+                <div class="pokeleft6 pokeleft">
+
+                </div>
             </div>
 
             <div class="column-enemyteam">
+                <div class="pokeright1 pokeright">
 
+                </div>
+                <div class="pokeright2 pokeright">
+
+                </div>
+                <div class="pokeright3 pokeright">
+
+                </div>
+                <div class="pokeright4 pokeright">
+
+                </div>
+                <div class="pokeright5 pokeright">
+
+                </div>
+                <div class="pokeright6 pokeright">
+
+                </div>
             </div>
         </div>
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="{% static "js/d3.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/teamCompare.js" %}"></script>
 
 {% endblock %}
 
