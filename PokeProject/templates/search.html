@@ -4,14 +4,7 @@
 
 {% block content %}
 
-    <style>
-    .pokeimage{
-        background-color: white;
-        color: white;
-    }
-    </style>
-
-<div class='one'>
+<div class='one' id="one">
     <!-- Generation select drop down-->
     <div class="SelectDropdowns">
         <div>
@@ -134,7 +127,7 @@
 
 </div>
 
-<div class='two'>
+<div class='two' id="two">
     <div class='bubbleSize'>
         <label class='paddingBubble'>Bubble Size By:</label>
         <form action='' class='paddingBubbleRadio' id="StatRadio">
@@ -230,6 +223,9 @@
           <pattern id='image22' x='0' y='0' height='1' width='1' class="svg-image">
           <image class="pokeimage" x='0' y='0' width='60' height='60' xlink:href=""/>
         </pattern>
+          <pattern id='popupImage' x='0' y='0' height='1' width='1' class="svg-image">
+          <image class="pokeimage" x='20' y='20' width='60' height='60' xlink:href=""/>
+        </pattern>
       </defs>
 </svg>
     </div>
@@ -248,6 +244,13 @@
         <p><span style="font-weight: bold">Sp. Defense: </span><span id="sp_defense">special defense</span></p>
         <p><span style="font-weight: bold">Speed: </span><span id="speed">speed</span></p>
         <p><span style="font-weight: bold">Type: </span><span id="type">placeholder</span></p>
+    </div>
+
+    <div style="z-index: 90000" id="popupS" class="hidden">
+        <p id="pokename" style="font-weight: bolder;font-size: 20pt"> </p>
+        <div style="position: absolute; top: 50%; height: 200px; margin-top: -100px; left: 50%; width: 400px; margin-left: -100px" id="test"></div>
+        <div style="position: absolute; height:200px; width:100px; top: 50%; margin-top: -59px; margin-left: 120px; left: 50%" id="legend"></div>
+        <div style="position: absolute; height: 100px; width: 100px; top: 50%; margin-top: -50px;margin-left: -50px; left: 50%; z-index: 90000" id="circleimage"></div>
     </div>
 
 <script>

@@ -220,6 +220,8 @@ def get_filtered_pokemon(request):
 
         temp_array.append(poke)
 
+
+
     json_string = json.dumps([ob.__dict__ for ob in temp_array])
 
     return HttpResponse(json_string, content_type='application/json')

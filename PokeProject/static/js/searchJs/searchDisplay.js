@@ -161,8 +161,8 @@ var drag = d3.behavior.drag()
                         d[11] = dataset[23][pos].sp_attack;
                         d[12] = dataset[23][pos].sp_defense;
                         d[13] = dataset[23][pos].speed;
-                        //d[14] = dataset[23][pos].type_1;
-                        //d[15] = dataset[23][pos].type_2;
+                        d[14] = dataset[23][pos].type_1;
+                        d[15] = dataset[23][pos].type_2;
                     } else {
                         d[3] = 0;
                         d[4] = "";
@@ -175,8 +175,8 @@ var drag = d3.behavior.drag()
                         d[11] = 0;
                         d[12] = 0;
                         d[13] = 0;
-                        //d[14] = "";
-                        //d[15] = "";
+                        d[14] = "";
+                        d[15] = "";
                     }
                     dataset[24] = dataset[24] + 1;
                     return d[0];
@@ -236,7 +236,10 @@ var drag = d3.behavior.drag()
             svg.selectAll("circle")
                 .attr('r', function (d) {
                     return d[2];
-            });
+                })
+                .attr("stroke", function (d) {
+                    return typeColor(d[14]);
+                });
 
             return;
         }
@@ -283,6 +286,7 @@ svg.selectAll("circle")
         return 'url(#image'+i+')';
     })
     .attr('stroke','black')
+    .attr('stroke-width', 3)
     .on("mouseover",function (d) {
         if (!dragging) {
             //Get this bar's x/y values, then augment for the tooltip
@@ -327,6 +331,16 @@ svg.selectAll("circle")
                 .select("#speed")
                 .text(d[13]);
 
+            d3.select("#tooltipS")
+                .select("#type")
+                .text(function () {
+                    if (d[15] != ""){
+                        return d[14]+"/"+d[15];
+                    } else {
+                        return d[14];
+                    }
+                });
+
             //Show the tooltip
             d3.select("#tooltipS").classed("hidden", false);
         }
@@ -339,120 +353,61 @@ svg.selectAll("circle")
     })
     .call(drag)
     .on("click", function (d) {
-        var pos = dataset[24];
-        if (pos < dataset[23].length) {
-            d[3] = dataset[23][pos].id;
-            d[4] = dataset[23][pos].name;
-            d[5] = dataset[23][pos].height;
-            d[6] = dataset[23][pos].weight;
-            d[7] = dataset[23][pos].total;
-            d[8] = dataset[23][pos].hp;
-            d[9] = dataset[23][pos].attack;
-            d[10] = dataset[23][pos].defense;
-            d[11] = dataset[23][pos].sp_attack;
-            d[12] = dataset[23][pos].sp_defense;
-            d[13] = dataset[23][pos].speed;
-            //d[14] = dataset[23][pos].type_1;
-            //d[15] = dataset[23][pos].type_2;
-        } else {
-            d[3] = 0;
-            d[4] = "";
-            d[5] = 0;
-            d[6] = 0;
-            d[7] = 0;
-            d[8] = 0;
-            d[9] = 0;
-            d[10] = 0;
-            d[11] = 0;
-            d[12] = 0;
-            d[13] = 0;
-            //d[14] = "";
-            //d[15] = "";
-        }
-        dataset[24] = dataset[24] + 1;
-
-        var stat = statPos();
-
-        var mm = minmax(dataset,stat);
-
-        rScale.domain(mm);
-        offset.domain(mm);
-
-        for (var i = 0; i<23; i++){
-            if (dataset[i][stat] != 0){
-                if (mm[0] == mm[1]){
-                    dataset[i][2] = 60;
-                } else {
-                    dataset[i][2] = rScale(dataset[i][stat]);
-                }
-            } else {
-                dataset[i][2]=0
-            }
-        }
-
-        for (i = 0; i < 23; i++) {
-            $('#image' + i + ' image')
-                .attr('y', function () {
-                if (mm[0] == mm[1]){
-                    return 30;
-                }else {
-                    return offset(dataset[i][stat]);
-                }
-            })
-            .attr('x', function () {
-                if (mm[0] == mm[1]){
-                    return 30;
-                }else {
-                    return offset(dataset[i][stat]);
-                }
-            })
-            .attr('xlink:href', frontPath + dataset[i][3] + '.png');
-        }
-        svg.selectAll("circle")
-            .attr('r', function (d) {
-                    return d[2];
-            });
-
-        var xPosition = parseFloat(d3.select(this).attr("cx"))+275+parseFloat(d3.select(this).attr("r"));
-        var yPosition = parseFloat(d3.select(this).attr("cy"))-15;
+        var xPosition = parseFloat(d3.select(this).attr("cx"))+25;
+        var yPosition = parseFloat(d3.select(this).attr("cy"))-70;
         //Update the tooltip position and value
-        d3.select("#tooltipS")
+        d3.select("#popupS")
             .style("left", xPosition + "px")
             .style("top", yPosition + "px")
-            .select("#name")
-            .text("#"+ d[3] + " " +d[4]);
 
-        d3.select("#tooltipS")
-            .select("#height")
-            .text(d[5]);
+        //Show the tooltip
+        d3.select("#popupS").classed("hidden", false);
 
-        d3.select("#tooltipS")
-            .select("#weight")
-            .text(d[6]);
+        d3.select("#pokename")
+            .text("#"+d[3] + " " + d[4])
 
-        d3.select("#tooltipS")
-            .select("#hp")
-            .text(d[8]);
+        datasetP[0] = d[8];
+        datasetP[1] = d[9];
+        datasetP[2] = d[10];
+        datasetP[3] = d[11];
+        datasetP[4] = d[12];
+        datasetP[5] = d[13];
 
-        d3.select("#tooltipS")
-            .select("#attack")
-            .text(d[9]);
+        d3.select('#pokePie').remove();
 
-        d3.select("#tooltipS")
-            .select("#defense")
-            .text(d[10]);
+        //Create SVG element
+        svgP = d3.select("#test")
+                    .append("svg")
+                    .attr("width", wP)
+                    .attr("height", hP)
+                    .attr("id", "pokePie");
 
-        d3.select("#tooltipS")
-            .select("#sp_attack")
-            .text(d[11]);
+        //Set up groups
+        arcs = svgP.selectAll("g.arc")
+                      .data(pie(datasetP))
+                      .enter()
+                      .append("g")
+                      .attr("class", "arc")
+                      .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
 
-        d3.select("#tooltipS")
-            .select("#sp_defense")
-            .text(d[12]);
+        //Draw arc paths
+        arcs.append("path")
+            .attr("fill", function(d, i) {
+                return colorP(i);
+            })
+            .attr("d", arc);
 
-        d3.select("#tooltipS")
-            .select("#speed")
-            .text(d[13]);
+        //Labels
+        arcs.append("text")
+            .attr("transform", function(d) {
+                return "translate(" + arc.centroid(d) + ")";
+            })
+            .attr("text-anchor", "middle")
+            .text(function(d) {
+                return d.value;
+            });
+
+        $("#popupImage image").attr('xlink:href', frontPath + d[3] + '.png');
     });
 
 
@@ -464,6 +419,7 @@ $.ajax({
     "radio": radio},
     dataType: 'json',                //data format
 success: function(pokemons) {
+    console.log(pokemons);
     dataset[23] = pokemons;
     var pos = 0;
     for (var i = 0 ; i < 23; i++){
@@ -481,8 +437,8 @@ success: function(pokemons) {
             dataset[i][11] = pokemons[i].sp_attack;
             dataset[i][12] = pokemons[i].sp_defense;
             dataset[i][13] = pokemons[i].speed;
-            //dataset[i][14] = pokemons[i].type_1;
-            //dataset[i][15] = pokemons[i].type_2;
+            dataset[i][14] = pokemons[i].type_1;
+            dataset[i][15] = pokemons[i].type_2;
         } else {
             dataset[i][3] = 0;
             dataset[i][4] = "";
@@ -495,8 +451,8 @@ success: function(pokemons) {
             dataset[i][11] = 0;
             dataset[i][12] = 0;
             dataset[i][13] = 0;
-            //dataset[i][14] = "";
-            //dataset[i][15] = "";
+            dataset[i][14] = "";
+            dataset[i][15] = "";
         }
         pos++;
     }
@@ -518,6 +474,9 @@ success: function(pokemons) {
                     return d[7];
                 }
             })
+            .attr("stroke", function (d) {
+                return typeColor(d[14]);
+            });
 },
 failure: function(pokemons) {
     alert('Got an error dude');
@@ -586,8 +545,8 @@ function updater(dataset,svg,rScale,offset) {
                 dataset[i][11] = pokemons[i].sp_attack;
                 dataset[i][12] = pokemons[i].sp_defense;
                 dataset[i][13] = pokemons[i].speed;
-                //dataset[i][14] = pokemons[i].type_1;
-                //dataset[i][15] = pokemons[i].type_2;
+                dataset[i][14] = pokemons[i].type_1;
+                dataset[i][15] = pokemons[i].type_2;
            } else {
                dataset[i][0] = locations[i][0];
                dataset[i][1] = locations[i][1];
@@ -602,8 +561,8 @@ function updater(dataset,svg,rScale,offset) {
                 dataset[i][11] = 0;
                 dataset[i][12] = 0;
                 dataset[i][13] = 0;
-                //dataset[i][14] = "";
-                //dataset[i][15] = "";
+                dataset[i][14] = "";
+                dataset[i][15] = "";
             }
             pos++;
         }
@@ -628,6 +587,15 @@ function updater(dataset,svg,rScale,offset) {
                     return d[stat];
                 }
             })
+            .attr('cx',function (d) {
+                return d[0];
+            })
+            .attr('cy', function (d) {
+                return d[1];
+            })
+            .attr("stroke", function (d) {
+                return typeColor(d[14]);
+            });
 
 
     },
@@ -685,3 +653,176 @@ d3.select('#slider-range8').on('click', function () {
 d3.select('#StatRadio').on('change', function () {
     radioUpdater(dataset,svg,rScale,offset);
 });
+
+d3.select('#popupS').on('click',function () {
+    d3.select("#popupS").classed("hidden", true);
+});
+
+d3.select('#mydiv').on('mouseover', function () {
+    d3.select("#popupS").classed("hidden",true);
+});
+
+d3.select('#one').on('mouseover', function () {
+    d3.select("#popupS").classed("hidden",true);
+});
+
+d3.select('#two').on('mouseover', function () {
+    d3.select("#popupS").classed("hidden",true);
+});
+
+d3.select('#baseWindow').on('mouseover', function () {
+    d3.select("#popupS").classed("hidden",true);
+});
+
+d3.select('#navbar').on('mouseover', function () {
+    d3.select("#popupS").classed("hidden",true);
+});
+
+//Width and height
+var wP = 200;
+var hP = 200;
+
+var datasetP = [ 5, 10, 20, 45, 6, 25 ];
+
+var outerRadius = wP / 2;
+var innerRadius = wP / 4;
+var arc = d3.svg.arc()
+                .innerRadius(innerRadius)
+                .outerRadius(outerRadius);
+
+var pie = d3.layout.pie();
+
+//Easy colors accessible via a 10-step ordinal scale
+var colorP = d3.scale.category10();
+
+//Create SVG element
+var svgP = d3.select("#test")
+            .append("svg")
+            .attr("width", wP)
+            .attr("height", hP)
+            .attr("id", "pokePie");
+
+//Set up groups
+var arcs = svgP.selectAll("g.arc")
+              .data(pie(datasetP))
+              .enter()
+              .append("g")
+              .attr("class", "arc")
+              .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
+
+//Draw arc paths
+arcs.append("path")
+    .attr("fill", function(d, i) {
+        return colorP(i);
+    })
+    .attr("d", arc);
+
+//Labels
+arcs.append("text")
+    .attr("transform", function(d) {
+        return "translate(" + arc.centroid(d) + ")";
+    })
+    .attr("text-anchor", "middle")
+    .text(function(d) {
+        return d.value;
+    });
+
+var svgLeg = d3.select("#legend")
+                .append("svg")
+                .attr("width", 100)
+                .attr("height", 200);
+
+svgLeg.selectAll("rect")
+    .data([0,1,2,3,4,5])
+    .enter()
+    .append("rect")
+    .attr("height", 15)
+    .attr("width", 15)
+    .attr("fill", function (d) {
+        return colorP(d);
+    })
+    .attr("y", function (d) {
+        return d * 20;
+    });
+
+svgLeg.selectAll("text")
+    .data(["HP","Attack","Defense","Sp. Attack","Sp. Defense","Speed"])
+    .enter()
+    .append("text")
+    .attr("y", function (d,i) {
+        return i * 20 +13;
+    })
+    .attr("x", 20)
+    .text(function (d) {
+        return d;
+    });
+
+var svgCircle = d3.select("#circleimage")
+        .append("svg")
+        .attr("width", 100)
+        .attr("height", 100);
+
+svgCircle.append("circle")
+        .attr("r", wP/4)
+        .attr("cx", 50)
+        .attr("cy", 50)
+        .style('fill', function (d,i) {
+            return 'url(#popupImage)';
+        })
+        .attr("stroke", "black");
+
+function typeColor(type) {
+    if (type == "Grass")
+        return "#6cb649";
+
+    if (type == "Fire")
+        return "#ff5d55";
+
+    if (type == "Water")
+        return "#5382ea";
+
+    if (type == "Fighting")
+        return "#a02a26";
+
+    if (type == "Steel")
+        return "#a7a8be";
+
+    if (type == "Electric")
+        return "#f2c735";
+
+    if (type == "Ice")
+        return "#84cfcf";
+
+    if (type == "Normal")
+        return "#99986a";
+
+    if (type == "Bug")
+        return "#95a22c";
+
+    if (type == "Dragon")
+        return "#5b2eef";
+
+    if (type == "Psychic")
+        return "#f54378";
+
+    if (type == "Ghost")
+        return "#5d4b7e";
+
+    if (type == "Poison")
+        return "#933f93";
+
+    if (type == "Fairy")
+        return "#e287e2";
+
+    if (type == "Dark")
+        return "#5d483d";
+
+    if (type == "Rock")
+        return "#a48f3a";
+
+    if (type == "Ground")
+        return "#d9b34a";
+
+    if (type == "Flying")
+        return "#9d88db";
+}
