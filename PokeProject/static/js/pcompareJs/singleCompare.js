@@ -63,13 +63,13 @@ function checkPoke(pokename){
          dataType: 'JSON',                //data format
          success: function(pokemons) {
              poke = pokemons['val'];
-
+             return 0;
          },
          failure: function(pokemons) {
              alert('Got an error dude');
+             return 1;
          }
      });
-    return poke;
 }
 
 var width = 450, height = 550;
@@ -238,24 +238,25 @@ d3.select("#sb")
     .on("click", function() {
 
         var selectPoke = document.getElementById("tags").value;
-        if (checkPoke(selectPoke) == 0) {
-            $.ajax({
-                type: "GET",
-                url: 'ajax/get_single_pokemon/', //the script to call to get data
-                data: {"name": selectPoke},
-                dataType: 'JSON',                //data format
-                success: function (pokemons) {
+
+        $.ajax({
+            type: "GET",
+            url: 'ajax/get_single_pokemon/', //the script to call to get data
+            data: {"name": selectPoke},
+            dataType: 'JSON',                //data format
+            success: function (pokemons) {
+                if (pokemons[0]['exist'] == 0) {
                     var unwantedFirst = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
                         'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
                         'phys_sweeper', 'sp_sweeper', 'wall', 'phys_tank', 'sp_tank'];
                     var unwantedSecond = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
-                            'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
-                            'hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed'];
+                        'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
+                        'hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed'];
 
                     var id = pokemons[0]['id'];
 
-                $("#frontImg").attr('src', frontPath + id + '.png');
-                $("#backImg").attr('src', backPath + id + '.png');
+                    $("#frontImg").attr('src', frontPath + id + '.png');
+                    $("#backImg").attr('src', backPath + id + '.png');
 
                     document.getElementById('pokedex').innerHTML = pokemons[0]['id'];
                     if (pokemons[0]['is_legendary'] == "TRUE") {
@@ -287,11 +288,11 @@ d3.select("#sb")
                         .range([height, 0]);
 
                     yScale.domain([0, 255]);
-                    xScale.domain(data1.map(function(d) { return d.stat; }));
+                    xScale.domain(data1.map(function (d) {
+                        return d.stat;
+                    }));
 
                     //Update all rects
-                    // var svg5 = d3.select("#singlee");
-                    // console.log(svg5);
                     svg.selectAll("#dOne")
                         .data(data1)
                         .transition()
@@ -312,7 +313,9 @@ d3.select("#sb")
                         });
 
                     yScale.domain([0, 510]);
-                    xScale.domain(data2.map(function(d) { return d.stat; }));
+                    xScale.domain(data2.map(function (d) {
+                        return d.stat;
+                    }));
 
                     //Update all rects
                     svg2.selectAll("#d2")
@@ -336,15 +339,15 @@ d3.select("#sb")
 
                     document.getElementById("checkNormal").checked = true;
                     document.getElementById("checkBar").checked = true;
-
-                },
-                failure: function (pokemons) {
-                    alert('Got an error dude');
                 }
-            });
-        } else {
-            alert("Pokemon doesnt exist");
-        }
+                else{
+                    alert("Pokemon Does not exist")
+                }
+            },
+            failure: function (pokemons) {
+                alert('Got an error dude');
+            }
+        });
     });
 
 // Double

@@ -98,20 +98,20 @@ d3.select("#doubleClick")
     .on("click", function() {
 
         var selectPoke = document.getElementById("poke1").value;
-        console.log(selectPoke);
-        if (checkPoke(selectPoke) == 0) {
-            $.ajax({
-                type: "GET",
-                url: 'ajax/get_single_pokemon/', //the script to call to get data
-                data: {"name": selectPoke},
-                dataType: 'JSON',                //data format
-                success: function (pokemons) {
+
+        $.ajax({
+            type: "GET",
+            url: 'ajax/get_single_pokemon/', //the script to call to get data
+            data: {"name": selectPoke},
+            dataType: 'JSON',                //data format
+            success: function (pokemons) {
+                if (pokemons[0]['exist'] == 0) {
                     var unwantedFirst = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
                         'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
                         'phys_sweeper', 'sp_sweeper', 'wall', 'phys_tank', 'sp_tank'];
                     var unwantedSecond = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
-                            'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
-                            'hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed'];
+                        'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
+                        'hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed'];
 
                     var id = pokemons[0]['id'];
 
@@ -146,41 +146,43 @@ d3.select("#doubleClick")
                         .range([h, 0]);
 
                     yScale.domain([0, 255]);
-                    xScale.domain(doublePokeDataOne[0].map(function(d) { return d.stat; }));
+                    xScale.domain(doublePokeDataOne[0].map(function (d) {
+                        return d.stat;
+                    }));
 
                     //Update all rects
 
                     doublesvg.selectAll("#double")
-                        .data(doublePokeDataOne[0])
-                        .transition()
-                        .delay(function (d, i) {
-                            return i / doublePokeDataOne[0].length * 10;   // <-- Where the magic happens
-                        })
-                        .duration(1000)
-                        .attr("fill", "#90caf9")
-                        .attr("x", function (d) {
-                            return xScale(d.stat);
-                        })
-                        .attr("width", xScale.rangeBand())
-                        .attr("y", function (d) {
-                            return yScale(d.value);
-                        })
-                        .attr("height", function (d) {
-                            return h - yScale(d.value);
-                        });
+                            .data(doublePokeDataOne[0])
+                            .transition()
+                            .delay(function (d, i) {
+                                return i / doublePokeDataOne[0].length * 10;   // <-- Where the magic happens
+                            })
+                            .duration(1000)
+                            .attr("fill", "#90caf9")
+                            .attr("x", function (d) {
+                                return xScale(d.stat);
+                            })
+                            .attr("width", xScale.rangeBand())
+                            .attr("y", function (d) {
+                                return yScale(d.value);
+                            })
+                            .attr("height", function (d) {
+                                return h - yScale(d.value);
+                            });
 
-                        document.getElementById("checkNormal").checked = true;
-                        document.getElementById("checkBarDouble").checked = true;
-                        document.getElementById("checkNormalD").checked = true;
-
-                },
-                failure: function (pokemons) {
-                    alert('Got an error dude');
+                    document.getElementById("checkNormal").checked = true;
+                    document.getElementById("checkBarDouble").checked = true;
+                    document.getElementById("checkNormalD").checked = true;
                 }
-            });
-        } else {
-            alert("Pokemon doesnt exist");
-        }
+                else{
+                    alert("Pokemon Does not exist")
+                }
+            },
+            failure: function (pokemons) {
+                alert('Got an error dude');
+            }
+        });
     });
 
 //create svg container
@@ -254,92 +256,95 @@ d3.select("#doubleClick2")
     .on("click", function() {
 
         var selectPoke = document.getElementById("poke2").value;
-        console.log(selectPoke);
-        if (checkPoke(selectPoke) == 0) {
+
             $.ajax({
                 type: "GET",
                 url: 'ajax/get_single_pokemon/', //the script to call to get data
                 data: {"name": selectPoke},
                 dataType: 'JSON',                //data format
                 success: function (pokemons) {
-                    var unwantedFirst = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
-                        'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
-                        'phys_sweeper', 'sp_sweeper', 'wall', 'phys_tank', 'sp_tank'];
-                    var unwantedSecond = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
+                    if (pokemons[0]['exist'] == 0) {
+                        var unwantedFirst = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
+                            'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
+                            'phys_sweeper', 'sp_sweeper', 'wall', 'phys_tank', 'sp_tank'];
+                        var unwantedSecond = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
                             'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
                             'hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed'];
 
-                    var id = pokemons[0]['id'];
+                        var id = pokemons[0]['id'];
 
-                    $("#frontImgDouble2").attr('src', frontPath + id + '.png');
+                        $("#frontImgDouble2").attr('src', frontPath + id + '.png');
 
-                    document.getElementById('pokedexDouble2').innerHTML = pokemons[0]['id'];
-                    if (pokemons[0]['is_legendary'] == "TRUE") {
-                        document.getElementById('singleLegendDouble2').innerHTML = 'Yes';
-                    } else {
-                        document.getElementById('singleLegendDouble2').innerHTML = 'No';
+                        document.getElementById('pokedexDouble2').innerHTML = pokemons[0]['id'];
+                        if (pokemons[0]['is_legendary'] == "TRUE") {
+                            document.getElementById('singleLegendDouble2').innerHTML = 'Yes';
+                        } else {
+                            document.getElementById('singleLegendDouble2').innerHTML = 'No';
+                        }
+
+                        document.getElementById('singleCatchDouble2').innerHTML = pokemons[0]['catch_rate'] + '%';
+                        document.getElementById('singleBStyleDouble2').innerHTML = pokemons[0]['body_style'];
+                        document.getElementById('singleGenDouble2').innerHTML = pokemons[0]['generation'];
+
+                        document.getElementById('dPoke2').innerHTML = selectPoke;
+
+                        $("#singleTypeDouble2  span").remove();
+                        addType(pokemons[0]['type_1'], "singleTypeDouble2");
+                        addType(pokemons[0]['type_2'], "singleTypeDouble2");
+
+
+                        var data1 = getValuesForReg(pokemons, unwantedFirst);
+                        var data2 = getValuesForDerived(pokemons, unwantedSecond);
+
+                        doublePokeDataTwo = [];
+                        doublePokeDataTwo.push(data1);
+                        doublePokeDataTwo.push(data2);
+
+
+                        var xScale = d3.scale.ordinal()
+                            .rangeRoundBands([0, w], .1);
+
+                        var yScale = d3.scale.linear()
+                            .range([h, 0]);
+
+                        yScale.domain([0, 255]);
+                        xScale.domain(doublePokeDataTwo[0].map(function (d) {
+                            return d.stat;
+                        }));
+
+                        //Update all rects
+
+                        doublesvg2.selectAll("#double2")
+                            .data(doublePokeDataTwo[0])
+                            .transition()
+                            .delay(function (d, i) {
+                                return i / doublePokeDataTwo[0].length * 10;   // <-- Where the magic happens
+                            })
+                            .duration(1000)
+                            .attr("fill", "#90caf9")
+                            .attr("x", function (d) {
+                                return xScale(d.stat);
+                            })
+                            .attr("width", xScale.rangeBand())
+                            .attr("y", function (d) {
+                                return yScale(d.value);
+                            })
+                            .attr("height", function (d) {
+                                return h - yScale(d.value);
+                            });
+
+                        document.getElementById("checkNormal").checked = true;
+                        document.getElementById("checkBarDouble").checked = true;
+                        document.getElementById("checkNormalD").checked = true;
                     }
-
-                    document.getElementById('singleCatchDouble2').innerHTML = pokemons[0]['catch_rate'] + '%';
-                    document.getElementById('singleBStyleDouble2').innerHTML = pokemons[0]['body_style'];
-                    document.getElementById('singleGenDouble2').innerHTML = pokemons[0]['generation'];
-
-                    document.getElementById('dPoke2').innerHTML = selectPoke;
-
-                    $("#singleTypeDouble2  span").remove();
-                    addType(pokemons[0]['type_1'], "singleTypeDouble2");
-                    addType(pokemons[0]['type_2'], "singleTypeDouble2");
-
-
-                    var data1 = getValuesForReg(pokemons, unwantedFirst);
-                    var data2 = getValuesForDerived(pokemons, unwantedSecond);
-
-                    doublePokeDataTwo = [];
-                    doublePokeDataTwo.push(data1);
-                    doublePokeDataTwo.push(data2);
-
-
-                    var xScale = d3.scale.ordinal()
-                        .rangeRoundBands([0, w], .1);
-
-                    var yScale = d3.scale.linear()
-                        .range([h, 0]);
-
-                    yScale.domain([0, 255]);
-                    xScale.domain(doublePokeDataTwo[0].map(function(d) { return d.stat; }));
-
-                    //Update all rects
-
-                    doublesvg2.selectAll("#double2")
-                        .data(doublePokeDataTwo[0])
-                        .transition()
-                        .delay(function (d, i) {
-                            return i / doublePokeDataTwo[0].length * 10;   // <-- Where the magic happens
-                        })
-                        .duration(1000)
-                        .attr("fill", "#90caf9")
-                        .attr("x", function (d) {
-                            return xScale(d.stat);
-                        })
-                        .attr("width", xScale.rangeBand())
-                        .attr("y", function (d) {
-                            return yScale(d.value);
-                        })
-                        .attr("height", function (d) {
-                            return h - yScale(d.value);
-                        });
-
-                    document.getElementById("checkNormal").checked = true;
-                    document.getElementById("checkBarDouble").checked = true;
-                    document.getElementById("checkNormalD").checked = true;
+                    else {
+                        alert("Pokemon Does not exist")
+                    }
                 },
                 failure: function (pokemons) {
                     alert('Got an error dude');
                 }
             });
-        } else {
-            alert("Pokemon doesnt exist");
-        }
     });
 
 $('#normalStatus').on("click",function(){
