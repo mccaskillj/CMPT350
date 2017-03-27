@@ -339,120 +339,56 @@ svg.selectAll("circle")
     })
     .call(drag)
     .on("click", function (d) {
-        var pos = dataset[24];
-        if (pos < dataset[23].length) {
-            d[3] = dataset[23][pos].id;
-            d[4] = dataset[23][pos].name;
-            d[5] = dataset[23][pos].height;
-            d[6] = dataset[23][pos].weight;
-            d[7] = dataset[23][pos].total;
-            d[8] = dataset[23][pos].hp;
-            d[9] = dataset[23][pos].attack;
-            d[10] = dataset[23][pos].defense;
-            d[11] = dataset[23][pos].sp_attack;
-            d[12] = dataset[23][pos].sp_defense;
-            d[13] = dataset[23][pos].speed;
-            //d[14] = dataset[23][pos].type_1;
-            //d[15] = dataset[23][pos].type_2;
-        } else {
-            d[3] = 0;
-            d[4] = "";
-            d[5] = 0;
-            d[6] = 0;
-            d[7] = 0;
-            d[8] = 0;
-            d[9] = 0;
-            d[10] = 0;
-            d[11] = 0;
-            d[12] = 0;
-            d[13] = 0;
-            //d[14] = "";
-            //d[15] = "";
-        }
-        dataset[24] = dataset[24] + 1;
-
-        var stat = statPos();
-
-        var mm = minmax(dataset,stat);
-
-        rScale.domain(mm);
-        offset.domain(mm);
-
-        for (var i = 0; i<23; i++){
-            if (dataset[i][stat] != 0){
-                if (mm[0] == mm[1]){
-                    dataset[i][2] = 60;
-                } else {
-                    dataset[i][2] = rScale(dataset[i][stat]);
-                }
-            } else {
-                dataset[i][2]=0
-            }
-        }
-
-        for (i = 0; i < 23; i++) {
-            $('#image' + i + ' image')
-                .attr('y', function () {
-                if (mm[0] == mm[1]){
-                    return 30;
-                }else {
-                    return offset(dataset[i][stat]);
-                }
-            })
-            .attr('x', function () {
-                if (mm[0] == mm[1]){
-                    return 30;
-                }else {
-                    return offset(dataset[i][stat]);
-                }
-            })
-            .attr('xlink:href', frontPath + dataset[i][3] + '.png');
-        }
-        svg.selectAll("circle")
-            .attr('r', function (d) {
-                    return d[2];
-            });
-
-        var xPosition = parseFloat(d3.select(this).attr("cx"))+275+parseFloat(d3.select(this).attr("r"));
-        var yPosition = parseFloat(d3.select(this).attr("cy"))-15;
+        var xPosition = parseFloat(d3.select(this).attr("cx"))+70;
+        var yPosition = parseFloat(d3.select(this).attr("cy"))-70;
         //Update the tooltip position and value
-        d3.select("#tooltipS")
+        d3.select("#popupS")
             .style("left", xPosition + "px")
             .style("top", yPosition + "px")
-            .select("#name")
-            .text("#"+ d[3] + " " +d[4]);
 
-        d3.select("#tooltipS")
-            .select("#height")
-            .text(d[5]);
+        //Show the tooltip
+        d3.select("#popupS").classed("hidden", false);
 
-        d3.select("#tooltipS")
-            .select("#weight")
-            .text(d[6]);
+        datasetP[0] = d[8];
+        datasetP[1] = d[9];
+        datasetP[2] = d[10];
+        datasetP[3] = d[11];
+        datasetP[4] = d[12];
+        datasetP[5] = d[13];
 
-        d3.select("#tooltipS")
-            .select("#hp")
-            .text(d[8]);
+        d3.select('#pokePie').remove();
 
-        d3.select("#tooltipS")
-            .select("#attack")
-            .text(d[9]);
+        //Create SVG element
+        svgP = d3.select("#test")
+                    .append("svg")
+                    .attr("width", wP)
+                    .attr("height", hP)
+                    .attr("id", "pokePie");
 
-        d3.select("#tooltipS")
-            .select("#defense")
-            .text(d[10]);
+        //Set up groups
+        arcs = svgP.selectAll("g.arc")
+                      .data(pie(datasetP))
+                      .enter()
+                      .append("g")
+                      .attr("class", "arc")
+                      .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
 
-        d3.select("#tooltipS")
-            .select("#sp_attack")
-            .text(d[11]);
+        //Draw arc paths
+        arcs.append("path")
+            .attr("fill", function(d, i) {
+                return colorP(i);
+            })
+            .attr("d", arc);
 
-        d3.select("#tooltipS")
-            .select("#sp_defense")
-            .text(d[12]);
-
-        d3.select("#tooltipS")
-            .select("#speed")
-            .text(d[13]);
+        //Labels
+        arcs.append("text")
+            .attr("transform", function(d) {
+                return "translate(" + arc.centroid(d) + ")";
+            })
+            .attr("text-anchor", "middle")
+            .text(function(d) {
+                return d.value;
+            });
     });
 
 
@@ -685,3 +621,56 @@ d3.select('#slider-range8').on('click', function () {
 d3.select('#StatRadio').on('change', function () {
     radioUpdater(dataset,svg,rScale,offset);
 });
+
+d3.select('#popupS').on('click',function () {
+    d3.select("#popupS").classed("hidden", true);
+});
+
+//Width and height
+var wP = 200;
+var hP = 200;
+
+var datasetP = [ 5, 10, 20, 45, 6, 25 ];
+
+var outerRadius = wP / 2;
+var innerRadius = wP / 4;
+var arc = d3.svg.arc()
+                .innerRadius(innerRadius)
+                .outerRadius(outerRadius);
+
+var pie = d3.layout.pie();
+
+//Easy colors accessible via a 10-step ordinal scale
+var colorP = d3.scale.category10();
+
+//Create SVG element
+var svgP = d3.select("#test")
+            .append("svg")
+            .attr("width", wP)
+            .attr("height", hP)
+            .attr("id", "pokePie");
+
+//Set up groups
+var arcs = svgP.selectAll("g.arc")
+              .data(pie(datasetP))
+              .enter()
+              .append("g")
+              .attr("class", "arc")
+              .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
+
+//Draw arc paths
+arcs.append("path")
+    .attr("fill", function(d, i) {
+        return colorP(i);
+    })
+    .attr("d", arc);
+
+//Labels
+arcs.append("text")
+    .attr("transform", function(d) {
+        return "translate(" + arc.centroid(d) + ")";
+    })
+    .attr("text-anchor", "middle")
+    .text(function(d) {
+        return d.value;
+    });

@@ -405,6 +405,32 @@ div.tab a:focus, .active {
     white-space: nowrap;
 }
 
+#popupS {
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    padding: 10px;
+    background-color: white;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+#popupS.hidden {
+    display: none;
+}
+
+#popupS p {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    white-space: nowrap;
+}
+
 /*---------Pokemon compare Style end---------*/
 
 /*---------Search Style---------*/
