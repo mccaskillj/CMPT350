@@ -129,6 +129,9 @@ function statPos() {
     if (value == "sp_defense"){
         return 12;
     }
+    if (value == "speed"){
+        return 13;
+    }
     return -1;
 }
 
@@ -249,7 +252,7 @@ var drag = d3.behavior.drag()
             .style("left", xPosition + "px")
             .style("top", yPosition + "px");
         d3.select("#tooltipS").classed("hidden", false);
-    })
+    });
 
 function dragmove(d) {
     d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
@@ -408,6 +411,12 @@ svg.selectAll("circle")
             });
 
         $("#popupImage image").attr('xlink:href', frontPath + d[3] + '.png');
+
+        $("#typeBoxes  span").remove();
+        $("#typeBoxes br").remove();
+
+        addType(d[14], 'typeBoxes');
+        addType(d[15], 'typeBoxes');
     });
 
 
@@ -825,4 +834,68 @@ function typeColor(type) {
 
     if (type == "Flying")
         return "#9d88db";
+}
+
+function addType(type, id){
+
+    var elem = document.getElementById(id);
+    elem.innerHTML += '<br>';
+    switch(type) {
+        case 'Fire':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge fireBadge">Fire</span>';
+            break;
+        case 'Water':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge waterBadge">Water</span>';
+            break;
+        case 'Grass':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge grassBadge">Grass</span>';
+            break;
+        case 'Fighting':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge fightingBadge">Fighting</span>';
+            break;
+        case 'Steel':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge steelBadge">Steel</span>';
+            break;
+        case 'Electric':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge electricBadge">Electric</span>';
+            break;
+        case 'Ice':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge iceBadge">Ice</span>';
+            break;
+        case 'Normal':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge normalBadge">Normal</span>';
+            break;
+        case 'Bug':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge bugBadge">Bug</span>';
+            break;
+        case 'Dragon':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge dragonBadge">Dragon</span>';
+            break;
+        case 'Psychic':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge psychicBadge">Psychic</span>';
+            break;
+        case 'Ghost':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge ghostBadge">Ghost</span>';
+            break;
+        case 'Poison':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge poisonBadge">Poison</span>';
+            break;
+        case 'Fairy':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge fairyBadge">Fairy</span>';
+            break;
+        case 'Dark':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge darkBadge">Dark</span>';
+            break;
+        case 'Rock':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge rockBadge">Rock</span>';
+            break;
+        case 'Ground':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge groundBadge">Ground</span>';
+            break;
+        case 'Flying':
+            elem.innerHTML += '<span style="width: auto; height: 20px;font-size: 12pt" class="badge flyingBadge">Flying</span>';
+            break;
+        default:
+            break;
+    }
 }
