@@ -1,29 +1,23 @@
-var dataset = [];
+var dataset = [[0,"",0],
+    [0,"",0],
+    [0,"",0],
+    [0,"",0],
+    [0,"",0],
+    [0,"",0]];
 
 var w = 1224;
 var h = 1000;
 var x = 0;
+var datapos = 0;
 
 var svg = d3.select('#maindiv').append('svg').attr('height', h).attr('width', w);
 
-d3.select("#addbuttonleft").on("click",function () {
-    var pokeName = document.getElementById("pokeinput").value;
-        $.ajax({
-            type: "GET",
-            url: 'ajax/get_single_pokemon/', //the script to call to get data
-            data: {"name": pokeName},
-            dataType: 'JSON',                //data format
-            success: function (pokemons) {
-                dataset.push({
-                    id: pokemons[0].id,
-                    name: pokemons[0].name,
-                    Hp: pokemons[0].hp
-                });
-                var boxes = svg.selectAll("rect").data(dataset);
+var boxes = svg.selectAll("rect").data(dataset);
                 boxes.enter()
                     .append("rect")
                     .attr("x", 10)
                     .attr("y", function (d,i) {
+                        console.log('Here');
                         return ((110*i))
                     })
                     .attr("width", 450)
@@ -33,76 +27,121 @@ d3.select("#addbuttonleft").on("click",function () {
                     .attr("shape-rendering","crispEdges")
                     .attr("opacity", 0);
 
-                boxes.transition()
-                    .duration(500)
-                    .attr("opacity",1);
+var boxlabels = svg.selectAll("text")
+    .data(dataset);
+    //console.log(dataset[0].name);
+    boxlabels.enter()
+        .append("text")
+        // .text(function (d) {
+        //     //console.log("Pokemans:", d.name);
+        //     return d.name;
+        // })
+        .attr("text-anchor","left")
+        .attr("x",20)
+        .attr("y",function(d,i){
+            return ((110*i)+30)
+        })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "24px")
+        .attr("opacity",0)
+        .attr("fill", "black");
+
+d3.select("#addbuttonleft").on("click",function () {
+    var pokeName = document.getElementById("pokeinput").value;
+        $.ajax({
+            type: "GET",
+            url: 'ajax/get_single_pokemon/', //the script to call to get data
+            data: {"name": pokeName},
+            dataType: 'JSON',                //data format
+            success: function (pokemons) {
+                // dataset.push({
+                //     d: pokemons[0].id,
+                //     name: pokemons[0].name,
+                //     Hp: pokemons[0].hp
+                // });
+                dataset[datapos][0] = pokemons[0].id;
+                dataset[datapos][1] = pokemons[0].name;
+                dataset[datapos][2] = pokemons[0].hp;
+                datapos++;
+
                 //console.log("dataset::::::",dataset);
-                var boxlabels = svg.selectAll("text")
-                    .data(dataset);
-                //console.log(dataset[0].name);
-                boxlabels.enter()
-                    .append("text")
-                    .text(function (d) {
-                        //console.log("Pokemans:", d.name);
-                        return d.name;
-                    })
-                    .attr("text-anchor","left")
-                    .attr("x",20)
-                    .attr("y",function(d,i){
-                        return ((110*i)+30)
-                    })
-                    .attr("font-family", "sans-serif")
-			        .attr("font-size", "24px")
-                    .attr("opacity",0)
-			        .attr("fill", "black");
-                boxlabels.transition()
-                    .duration(500)
-                    .attr("opacity",1);
-                var rectback = svg.selectAll('rect.background')
-                    .data(dataset);
-                rectback.enter()
-                    .append("rect")
-                    .classed("background",true)
-                    .attr("x",170)
-                    .attr("y",function(d,i){
-                        return ((110*i)+55)
-                    })
-                    .attr('height', 30)
-                    .attr("width", 255)
-                    .attr("fill","white")
-                    .attr("shape-rendering","crispEdges")
-                    .attr("stroke","black")
-                    .attr("opacity",0);
-                rectback.transition()
-                    .duration(500)
-                    .attr("opacity",1);
-
-
-                var rectfront = svg.selectAll('rect.bar')
-                    .data(dataset);
-                rectfront.enter()
-                    .append("rect")
-                    .classed("bar",true)
-                    .attr("x",170)
-                    .attr("y",function(d,i){
-                        return ((110*i)+55)
-                    })
-                    .attr('height', 30)
-                    .attr("width", 0)
-                    .attr("fill","red")
-                    .attr("shape-rendering","crispEdges")
-                    .attr("stroke","black")
-                    .attr("opacity",0);
-                rectfront.transition()
-                    .duration(500)
-                    .attr("width", function (d) {
-                        return (d.Hp);
-                    })
-                    .attr("opacity",1);
+                // var boxlabels = svg.selectAll("text")
+                //     .data(dataset);
+                // //console.log(dataset[0].name);
+                // boxlabels.enter()
+                //     .append("text")
+                //     .text(function (d) {
+                //         //console.log("Pokemans:", d.name);
+                //         return d.name;
+                //     })
+                //     .attr("text-anchor","left")
+                //     .attr("x",20)
+                //     .attr("y",function(d,i){
+                //         return ((110*i)+30)
+                //     })
+                //     .attr("font-family", "sans-serif")
+			     //    .attr("font-size", "24px")
+                //     .attr("opacity",0)
+			     //    .attr("fill", "black");
+                // boxlabels.transition()
+                //     .duration(500)
+                //     .attr("opacity",1);
+                // var rectback = svg.selectAll('rect.background')
+                //     .data(dataset);
+                // rectback.enter()
+                //     .append("rect")
+                //     .classed("background",true)
+                //     .attr("x",170)
+                //     .attr("y",function(d,i){
+                //         return ((110*i)+55)
+                //     })
+                //     .attr('height', 30)
+                //     .attr("width", 255)
+                //     .attr("fill","white")
+                //     .attr("shape-rendering","crispEdges")
+                //     .attr("stroke","black")
+                //     .attr("opacity",0);
+                // rectback.transition()
+                //     .duration(500)
+                //     .attr("opacity",1);
+                //
+                //
+                // var rectfront = svg.selectAll('rect.bar')
+                //     .data(dataset);
+                // rectfront.enter()
+                //     .append("rect")
+                //     .classed("bar",true)
+                //     .attr("x",170)
+                //     .attr("y",function(d,i){
+                //         return ((110*i)+55)
+                //     })
+                //     .attr('height', 30)
+                //     .attr("width", 0)
+                //     .attr("fill","red")
+                //     .attr("shape-rendering","crispEdges")
+                //     .attr("stroke","black")
+                //     .attr("opacity",0);
+                // rectfront.transition()
+                //     .duration(500)
+                //     .attr("width", function (d) {
+                //         return (d.Hp);
+                //     })
+                //     .attr("opacity",1);
                 //$("#imageleft1 image").attr('xlink:href', frontPath + dataset[0].id + '.png');
             }
 
         });
+        boxes.attr("opacity",function (d) {
+            if (d[0] != 0){
+                return 1;
+            }else{
+                return 0;
+            }
+        });
+        boxlabels.text(function (d) {
+            console.log("Pokemans:", d[1]);
+            return d[1];
+        })
 });
 
 
