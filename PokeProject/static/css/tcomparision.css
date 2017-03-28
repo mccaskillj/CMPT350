@@ -33,10 +33,9 @@
     margin: 10px auto;
 }
 
-.pokeleft1search{
-    margin: 0 auto;
+.pokesearch{
+    margin: 20px auto;
     position: relative;
-    top: 30%;
     z-index: 10;
 }
 
@@ -60,4 +59,8 @@
     width: inherit;
     height: inherit;
 
+}
+
+.clear{
+    stop-opacity: 0;
 }
