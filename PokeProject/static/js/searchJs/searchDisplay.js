@@ -75,6 +75,27 @@ var dataset = [
     [],
     0];
 
+var teamP = (w/2 - 360)/4;
+
+var teams = [
+    [teamP+60,110,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [2*teamP+180,110,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [3*teamP+300,110,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [teamP+60,250,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [2*teamP+180,250,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [3*teamP+300,250,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w/2+teamP+60,110,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w/2+2*teamP+180,110,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w/2+3*teamP+300,110,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w/2+teamP+60,250,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w/2+2*teamP+180,250,0,0,"",0,0,0,0,0,0,0,0,0,"",""],
+    [w/2+3*teamP+300,250,0,0,"",0,0,0,0,0,0,0,0,0,"",""]
+    ];
+
+var teamPos = [0,6];
+
+var dest;
+
 for (var i = 0; i<23; i++){
     dataset[i][0] = locations[i][0];
     dataset[i][1] = locations[i][1];
@@ -274,6 +295,7 @@ var speed = "0 - 160";
 var radio = document.querySelector('input[name = "optradio"]:checked').value;
 
 var svg = d3.select('#mydiv').append('svg').attr('height', h).attr('width', w);
+var svg2 = d3.select('#mydiv').append('svg').attr('height', 330).attr('width', w);
 
 svg.selectAll("circle")
     .data(dataset)
@@ -290,7 +312,8 @@ svg.selectAll("circle")
     })
     .attr('stroke','black')
     .attr('stroke-width', 3)
-    .on("mouseover",function (d) {
+    .on("mouseover",function (d,i) {
+        dest = i;
         if (!dragging) {
             //Get this bar's x/y values, then augment for the tooltip
             var xPosition = parseFloat(d3.select(this).attr("cx"))+275+parseFloat(d3.select(this).attr("r"));
@@ -419,6 +442,49 @@ svg.selectAll("circle")
         addType(d[15], 'typeBoxes');
     });
 
+svg2.selectAll("rect")
+    .data([0,1])
+    .enter()
+    .append("rect")
+    .attr('x',function (d) {
+        return d * (w/2);
+    })
+    .attr('y', 0)
+    .attr('height', 330)
+    .attr('width', w/2)
+    .style('stroke-width',6)
+    .style('stroke', 'black')
+    .style('fill', 'white');
+
+svg2.selectAll("circle")
+    .data(teams)
+    .enter()
+    .append("circle")
+    .attr('cx', function (d) {
+        return d[0];
+    })
+    .attr('cy', function (d) {
+        return d[1];
+    })
+    .attr('r',60)
+    .style('stroke', 'black')
+    .style('fill', function (d,i) {
+        return 'url(#team'+i+')';
+    });
+
+svg2.selectAll("text")
+    .data(["Team 1","Team 2"])
+    .enter()
+    .append("text")
+    .attr('x', function (d,i) {
+        return i*w/2 + w/4 - 50;
+    })
+    .attr('y',30)
+    .text(function (d) {
+        return d;
+    })
+    .style("font-size","20pt")
+    .style("font-weight", "bold");
 
 $.ajax({
     type: "GET",
@@ -685,6 +751,38 @@ d3.select('#baseWindow').on('mouseover', function () {
 
 d3.select('#navbar').on('mouseover', function () {
     d3.select("#popupS").classed("hidden",true);
+});
+
+d3.select('#buttonTeam1').on('click', function () {
+    if (teamPos[0]<6){
+        for(var i = 2;i<16;i++){
+            teams[teamPos[0]][i] = dataset[dest][i];
+        }
+        for (var j = 0;j<6;j++){
+            if (teams[j][3] != 0) {
+                $("#team" + j + " image").attr('xlink:href', frontPath + teams[j][3] + '.png');
+            } else {
+                $("#team" + j + " image").attr('xlink:href','');
+            }
+        }
+        teamPos[0]=teamPos[0] + 1;
+    }
+});
+
+d3.select('#buttonTeam2').on('click', function () {
+    if (teamPos[1]<12){
+        for(var i = 2;i<16;i++){
+            teams[teamPos[1]][i] = dataset[dest][i];
+        }
+        for (var j = 6;j<12;j++){
+            if (teams[j][3] != 0) {
+                $("#team" + j + " image").attr('xlink:href', frontPath + teams[j][3] + '.png');
+            } else {
+                $("#team" + j + " image").attr('xlink:href','');
+            }
+        }
+        teamPos[1]=teamPos[1] + 1;
+    }
 });
 
 //Width and height
