@@ -86,6 +86,33 @@ var rectfront = svg.selectAll('rect.bar')
     .attr("stroke","black")
     .attr("opacity",0);
 
+var circles = svg.selectAll('circle').
+    data(dataset)
+    .enter()
+    .append("circle")
+    .attr("cx",70)
+    .attr("cy",function(d,i){
+        return ((110*i)+70)
+    })
+    .attr("r",40)
+    .style("fill",function (d,i) {
+        console.log(i);
+        return 'url(#imageleft' +i+')';
+    })
+    .attr("stroke-width",0)
+    //.attr("stroke","black")
+    .attr("opacity",1);
+
+//$('#imageleft0' + ' image').attr("xlink:href", frontPath + '4' + '.png').attr("opacity",0);
+
+// for (var i = 0; i<6; i++){
+//     var num = 67 + i;
+//     $('#imageleft' + i + ' image').attr("xlink:href", frontPath + num + '.png').attr("opacity",1);
+// }
+
+
+//frontPath + num + '.png'
+
 //
 //###################################################################
 //###################################################################
@@ -157,15 +184,23 @@ rectfrontright.enter()
     .attr("stroke","black")
     .attr("opacity",0);
 
-// var pokeimage = svg.selectAll("image")
-//     .data(dataset)
-//     .attr("x",130)
-//     .attr("y",function(d,i){
-//         return ((110*i)+55)
-//     })
-//     .attr('width', 20)
-//     .attr('height', 24)
-//     .attr("opacity",0);
+var circlesright = svg.selectAll('circle.right').
+    data(dataset)
+    .enter()
+    .append("circle")
+    .attr("cx",784)
+    .attr("cy",function(d,i){
+        return ((110*i)+70)
+    })
+    .attr("r",40)
+    .style("fill",function (d,i) {
+        console.log(i);
+        return 'url(#imageright' +i+')';
+    })
+    .attr("stroke-width",0)
+    //.attr("stroke","black")
+    .attr("opacity",1);
+
 
 d3.select("#addbuttonleft").on("click",function () {
     var pokeName = document.getElementById("pokeinput").value;
@@ -177,11 +212,7 @@ d3.select("#addbuttonleft").on("click",function () {
             data: {"name": pokeName},
             dataType: 'JSON',                //data format
             success: function (pokemons) {
-                // dataset.push({
-                //     d: pokemons[0].id,
-                //     name: pokemons[0].name,
-                //     Hp: pokemons[0].hp
-                // });
+
                 dataset[datapos][0] = pokemons[0].id;
                 dataset[datapos][1] = pokemons[0].name;
                 dataset[datapos][2] = pokemons[0].hp;
@@ -193,7 +224,7 @@ d3.select("#addbuttonleft").on("click",function () {
                 dataset[datapos][8] = pokemons[0].type_1;
                 dataset[datapos][9] = pokemons[0].type_2;
                 datapos++;
-                //console.log(dataset);
+                console.log(datapos);
                 boxes.transition()
                     .duration(500)
                     .attr("opacity", function (d) {
@@ -232,30 +263,20 @@ d3.select("#addbuttonleft").on("click",function () {
                     .attr("width", function (d) {
                         return (d[2]);
                     })
-                    .attr("opacity", 1);
-                console.log("before");
-                // pokeimage
-                //     .attr("xlink:href",function (d) {
-                //         console.log(frontPath + d[0] + '.png');
-                //         return frontPath + d[0] + '.png'
-                //     })
-                //     .attr("opacity", 1);
-                console.log(dataset[datapos][0]);
-                $("#imageleft1 image")
-                    .attr("x",130)
-                    .attr("y",100)
-                    .attr("width",10)
-                    .attr("height",20)
-                    .attr('xlink:href', function () {
-                        console.log(frontPath + '45' + '.png');
-                        return frontPath + '45' + '.png'
+                    .attr("opacity", function (d) {
+                        if (d[0] != 0) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
                     });
-                    // .attr('xlink:href', frontPath + dataset[datapos][0] + '.png');
+
+                $('#imageleft' + (datapos-1) + ' image').attr("xlink:href", frontPath + dataset[datapos-1][0] + '.png');
             }
 
         });
     }else{
-        alert("You have reach the maximum limit to your pokemon")
+        alert("You have reach the maximum limit to your pokemon");
 
     }
 
@@ -328,6 +349,8 @@ d3.select("#addbuttonright").on("click",function () {
                         return (d[2]);
                     })
                     .attr("opacity", 1);
+
+                $('#imageright' + (dataposright-1) + ' image').attr("xlink:href", frontPath + datasetright[dataposright-1][0] + '.png');
             }
         });
     }else{

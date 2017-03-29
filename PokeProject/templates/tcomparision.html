@@ -2,25 +2,58 @@
 {% load static %}
 
 {% block content %}
-        <link rel="stylesheet" type="text/css" href="{% static "css/tcomparision.css" %}" />
-        <div class="container-fluid" id="maindiv">
-            <div class="input-group pokesearch" id="pokesearch">
+    <link rel="stylesheet" type="text/css" href="{% static "css/tcomparision.css" %}" />
+    <div class="container-fluid" id="maindiv">
+        <div class="input-group pokesearch" id="pokesearch">
                 <span class="input-group-btn" style="width:0;">
                     <button class="btn btn-default" type="button"  id="addbuttonleft">Add to my team</button>
                 </span>
-                <input type="text" class="form-control" placeholder="Search Pokemon" id="pokeinput">
-                <span class="input-group-btn" style="width:0;">
+            <input type="text" class="form-control" placeholder="Search Pokemon" id="pokeinput">
+            <span class="input-group-btn" style="width:0;">
                     <button class="btn btn-default" type="button"  id="addbuttonright">Add to enemy team</button>
                 </span>
-            </div>
-            <svg id='mySvg' width='0' height='0' xmlns:xlink='http://www.w3.org/1999/xlink'>
-                <defs id='mdef'>
-                <pattern id='imageleft1' x='0' y='0' height='1' width='1' class="svg-image" >
-                    <image class="pokeimage" x='0' y='0' width='60' height='60' xlink:href=""/>
-                </pattern>
-                </defs>
-            </svg>
         </div>
+        <svg id='mySvg' width='0' height='0' xmlns:xlink='http://www.w3.org/1999/xlink'>
+            <defs id='mdef'>
+                <pattern id='imageleft0' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageleft1' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageleft2' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageleft3' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageleft4' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageleft5' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageright0' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageright1' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageright2' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageright3' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageright4' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageright5' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+            </defs>
+        </svg>
+    </div>
             <!--<div class="column-yourteam">
                 <div class="pokeleft1 pokeleft">
                     <div class="poke1leftImage" id="poke1leftImage">
