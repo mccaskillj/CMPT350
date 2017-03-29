@@ -150,8 +150,8 @@ function addType(type, id){
         case 'Poison':
             elem.innerHTML += '<span class="badge poisonBadge">Poison</span>';
             break;
-        case 'Fariy':
-            elem.innerHTML += '<span class="badge fariyBadge">Fairy</span>';
+        case 'Fairy':
+            elem.innerHTML += '<span class="badge fairyBadge">Fairy</span>';
             break;
         case 'Dark':
             elem.innerHTML += '<span class="badge darkBadge">Dark</span>';
@@ -161,6 +161,9 @@ function addType(type, id){
             break;
         case 'Ground':
             elem.innerHTML += '<span class="badge groundBadge">Ground</span>';
+            break;
+        case 'Flying':
+            elem.innerHTML += '<span class="badge flyingBadge">Flying</span>';
             break;
         default:
             break;

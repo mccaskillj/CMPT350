@@ -150,6 +150,9 @@
             <label class='radio-inline'>
                 <input type='radio' name='optradio' value="sp_defense">Sp. Defense
             </label>
+            <label class='radio-inline'>
+                <input type='radio' name='optradio' value="speed">Speed
+            </label>
             <div style="float: right; padding-right: 40px">
                 <button class="btn btn-default btn-xs" type="button"  id="compareT" >Compare Team</button>
             </div>
@@ -231,6 +234,43 @@
           <pattern id='popupImage' x='0' y='0' height='1' width='1' class="svg-image">
           <image class="pokeimage" x='20' y='20' width='60' height='60' xlink:href=""/>
         </pattern>
+          <pattern id='team0' x='0' y='0' height='1' width='1' class="svg-image">
+          <image class="pokeimage" x='30' y='30' width='60' height='60' xlink:href=""/>
+        </pattern>
+          <pattern id='team1' x='0' y='0' height='1' width='1' class="svg-image">
+          <image class="pokeimage" x='30' y='30' width='60' height='60' xlink:href=""/>
+        </pattern>
+          <pattern id='team2' x='0' y='0' height='1' width='1' class="svg-image">
+          <image class="pokeimage" x='30' y='30' width='60' height='60' xlink:href=""/>
+        </pattern>
+          <pattern id='team3' x='0' y='0' height='1' width='1' class="svg-image">
+          <image class="pokeimage" x='30' y='30' width='60' height='60' xlink:href=""/>
+        </pattern>
+          <pattern id='team4' x='0' y='0' height='1' width='1' class="svg-image">
+          <image class="pokeimage" x='30' y='30' width='60' height='60' xlink:href=""/>
+        </pattern>
+          <pattern id='team5' x='0' y='0' height='1' width='1' class="svg-image">
+          <image class="pokeimage" x='30' y='30' width='60' height='60' xlink:href=""/>
+        </pattern>
+          <pattern id='team6' x='0' y='0' height='1' width='1' class="svg-image">
+          <image class="pokeimage" x='30' y='30' width='60' height='60' xlink:href=""/>
+        </pattern>
+          <pattern id='team7' x='0' y='0' height='1' width='1' class="svg-image">
+          <image class="pokeimage" x='30' y='30' width='60' height='60' xlink:href=""/>
+        </pattern>
+          <pattern id='team8' x='0' y='0' height='1' width='1' class="svg-image">
+          <image class="pokeimage" x='30' y='30' width='60' height='60' xlink:href=""/>
+        </pattern>
+          <pattern id='team9' x='0' y='0' height='1' width='1' class="svg-image">
+          <image class="pokeimage" x='30' y='30' width='60' height='60' xlink:href=""/>
+        </pattern>
+          <pattern id='team10' x='0' y='0' height='1' width='1' class="svg-image">
+          <image class="pokeimage" x='30' y='30' width='60' height='60' xlink:href=""/>
+        </pattern>
+          <pattern id='team11' x='0' y='0' height='1' width='1' class="svg-image">
+          <image class="pokeimage" x='30' y='30' width='60' height='60' xlink:href=""/>
+        </pattern>
+
       </defs>
 </svg>
     </div>
@@ -253,9 +293,18 @@
 
     <div style="z-index: 90000" id="popupS" class="hidden">
         <p id="pokename" style="font-weight: bolder;font-size: 20pt"> </p>
-        <div style="position: absolute; top: 50%; height: 200px; margin-top: -100px; left: 50%; width: 400px; margin-left: -100px" id="test"></div>
-        <div style="position: absolute; height:200px; width:100px; top: 50%; margin-top: -59px; margin-left: 120px; left: 50%" id="legend"></div>
-        <div style="position: absolute; height: 100px; width: 100px; top: 50%; margin-top: -50px;margin-left: -50px; left: 50%; z-index: 90000" id="circleimage"></div>
+        <div id="typeBoxes">
+            <span class="badge" style="width: 60px; height: 20px;font-size: 12pt">Stuff1</span>
+            <span class="badge" style="width: 60px; height: 20px;font-size: 12pt">Stuff2</span>
+        </div>
+        <div style="position: absolute; top: 50%; height: 200px; margin-top: -110px; left: 50%; width: 400px; margin-left: -100px" id="test"></div>
+        <div style="position: absolute; height:200px; width:100px; top: 50%; margin-top: -69px; margin-left: 120px; left: 50%" id="legend"></div>
+        <div style="position: absolute; height: 100px; width: 100px; top: 50%; margin-top: -60px;margin-left: -50px; left: 50%; z-index: 90000" id="circleimage"></div>
+        <div id="button div" style="position: absolute;margin-left: 25px;margin-top: 110px;top: 50%;left: 0%;height: 50px;width: 500px">
+            <label style="font-size: 15pt">Add to Team: </label>
+            <button id="buttonTeam1" class="btn btn-default" type="button"  id="sb" style="margin-left: 15px; margin-right: 15px">Team 1</button>
+            <button id="buttonTeam2" class="btn btn-default" type="button"  id="sb">Team 2</button>
+        </div>
     </div>
 
 <script>
