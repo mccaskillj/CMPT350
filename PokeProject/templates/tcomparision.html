@@ -1,15 +1,112 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
 {% block content %}
-
-    <div id="start" style="background-color: white; width: 1024px; height: 718px">
-        <div id="teamComp">
-
+    <link rel="stylesheet" type="text/css" href="{% static "css/tcomparision.css" %}" />
+    <div class="container-fluid" id="maindiv">
+        <div class="input-group pokesearch" id="pokesearch">
+                <span class="input-group-btn" style="width:0;">
+                    <button class="btn btn-default" type="button"  id="addbuttonleft">Add to my team</button>
+                </span>
+            <input type="text" class="form-control" placeholder="Search Pokemon" id="pokeinput">
+            <span class="input-group-btn" style="width:0;">
+                    <button class="btn btn-default" type="button"  id="addbuttonright">Add to enemy team</button>
+                </span>
         </div>
+        <svg id='mySvg' width='0' height='0' xmlns:xlink='http://www.w3.org/1999/xlink'>
+            <defs id='mdef'>
+                <pattern id='imageleft0' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageleft1' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageleft2' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageleft3' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageleft4' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageleft5' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageright0' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageright1' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageright2' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageright3' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageright4' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+                <pattern id='imageright5' x='0' y='0' height='1' width='1' class="svg-image" >
+                    <image class="pokeimage" x='10' y='10' width='60' height='60' xlink:href=""/>
+                </pattern>
+            </defs>
+        </svg>
     </div>
+            <!--<div class="column-yourteam">
+                <div class="pokeleft1 pokeleft">
+                    <div class="poke1leftImage" id="poke1leftImage">
+                        <img id="frontImgleft1" src="{% static "images/front/0.png" %}" alt="My image"/>
+                    </div>
+                    <button class="btn btn-default btn-xs" type="button" id="closepokeleft1"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <div class="input-group pokeleft1search" id="pokeleft1search">
+                        <input type="text" class="form-control" placeholder="Search Pokemon" id="pokeleft1input">
+                        <span class="input-group-btn" style="width:0;">
+                            <button class="btn btn-default" type="button"  id="addbuttonleft1">Add</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="pokeleft2 pokeleft">
 
+                </div>
+                <div class="pokeleft3 pokeleft">
+
+                </div>
+                <div class="pokeleft4 pokeleft">
+
+                </div>
+                <div class="pokeleft5 pokeleft">
+
+                </div>
+                <div class="pokeleft6 pokeleft">
+
+                </div>
+            </div>
+
+            <div class="column-enemyteam">
+                <div class="pokeright1 pokeright">
+
+                </div>
+                <div class="pokeright2 pokeright">
+
+                </div>
+                <div class="pokeright3 pokeright">
+
+                </div>
+                <div class="pokeright4 pokeright">
+
+                </div>
+                <div class="pokeright5 pokeright">
+
+                </div>
+                <div class="pokeright6 pokeright">
+
+                </div>
+            </div>-->
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="{% static "js/d3.js" %}"></script>
     <script type="text/javascript" src="{% static "js/teamCompare.js" %}"></script>
 
 {% endblock %}
