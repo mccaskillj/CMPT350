@@ -108,11 +108,12 @@
         <hr style="background-color: black">
 
         <!-- Svg bar graph div-->
+
         <div style="height: 534px" >
             <div class="testLeft">
                 <h4 style="padding-left: 200px">Pokemon Stats</h4>
                 <div id="singleChart">
-{#                    <svg id="sChart"></svg>#}
+    {#                    <svg id="sChart"></svg>#}
 
                 </div>
             </div>
@@ -121,11 +122,20 @@
                 <h4 style="padding-left: 160px; padding-top: 10px">Derived Pokemon Stats</h4>
 
                 <div id="singleChart2">
-{#                    <svg id="sChart2"></svg>#}
+    {#                    <svg id="sChart2"></svg>#}
                 </div>
             </div>
 
         </div>
+
+        <div style="padding-top: 140px; padding-left: 40px; padding-right: 40px">
+            <h3 style="padding-bottom: 10px;">Level</h3>
+            <div id="slider">
+                <div id="custom-handle" class="ui-slider-handle"></div>
+            </div>
+        </div>
+
+
     </div>
 
 
@@ -278,6 +288,12 @@
 
         </div>
 
+        <div style="padding-top: 60px; padding-left: 40px; padding-right: 40px">
+            <div id="slider2">
+                <div id="custom-handle2" class="ui-slider-handle"></div>
+            </div>
+        </div>
+
 
     </div>
 
@@ -328,6 +344,7 @@
 
 <!--new JS files-->
 <script type="text/javascript" src="{% static "js/d3.js" %}"></script>
+<script type="text/javascript" src="{% static "js/adjustPokeStats.js" %}"></script>
 <script type="text/javascript" src="{% static "js/pcompareJs/pcompareHelpers.js" %}"></script>
 <script type="text/javascript" src="{% static "js/pcompareJs/singleCompare.js" %}"></script>
 <script type="text/javascript" src="{% static "js/pcompareJs/doubleCompare.js" %}"></script>

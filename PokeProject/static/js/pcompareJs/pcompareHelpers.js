@@ -274,3 +274,17 @@ $("#poke2").keyup(function(event){
 
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
+
+
+
+$( function() {
+    var handle = $( "#custom-handle2" );
+    $( "#slider2" ).slider({
+      create: function() {
+        handle.text( $( this ).slider( "value" ) );
+      },
+      slide: function( event, ui ) {
+        handle.text( ui.value );
+      }
+    });
+  } );
