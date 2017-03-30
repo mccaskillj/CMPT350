@@ -281,61 +281,8 @@ d3.select("#sb")
                     singlePokeData.push(data1);
                     singlePokeData.push(data2);
 
-                    var xScale = d3.scale.ordinal()
-                        .rangeRoundBands([0, width], .1);
-
-                    var yScale = d3.scale.linear()
-                        .range([height, 0]);
-
-                    yScale.domain([0, 255]);
-                    xScale.domain(data1.map(function (d) {
-                        return d.stat;
-                    }));
-
-                    //Update all rects
-                    svg.selectAll("#dOne")
-                        .data(data1)
-                        .transition()
-                        .delay(function (d, i) {
-                            return i / data1.length * 10;   // <-- Where the magic happens
-                        })
-                        .duration(1000)
-                        .attr("fill", "#90caf9")
-                        .attr("x", function (d) {
-                            return xScale(d.stat);
-                        })
-                        .attr("width", xScale.rangeBand())
-                        .attr("y", function (d) {
-                            return yScale(d.value);
-                        })
-                        .attr("height", function (d) {
-                            return height - yScale(d.value);
-                        });
-
-                    yScale.domain([0, 510]);
-                    xScale.domain(data2.map(function (d) {
-                        return d.stat;
-                    }));
-
-                    //Update all rects
-                    svg2.selectAll("#d2")
-                        .data(data2)
-                        .transition()
-                        .delay(function (d, i) {
-                            return i / data2.length * 10;   // <-- Where the magic happens
-                        })
-                        .duration(1000)
-                        .attr("fill", "#5b2eef")
-                        .attr("x", function (d) {
-                            return xScale(d.stat);
-                        })
-                        .attr("width", xScale.rangeBand())
-                        .attr("y", function (d) {
-                            return yScale(d.value);
-                        })
-                        .attr("height", function (d) {
-                            return height - yScale(d.value);
-                        });
+                    redrawGraph(svg, "#dOne", data1, 255, "#90caf9", width, height);
+                    redrawGraph(svg2, "#d2", data2, 510, "#5b2eef", width, height);
 
                     document.getElementById("checkNormal").checked = true;
                     document.getElementById("checkBar").checked = true;
@@ -380,126 +327,12 @@ $( function() {
         },
         slide: function( event, ui ) {
             handle.text( ui.value );
-            console.log(ui.value*singlePokeData[0][0].value);
-            console.log(ui.value*singlePokeData[0][1].value);
-            console.log(ui.value*singlePokeData[0][2].value);
-            console.log(ui.value*singlePokeData[0][3].value);
-            console.log(ui.value*singlePokeData[0][4].value);
-            console.log(ui.value*singlePokeData[0][5].value);
 
-            singlePokeData[2] = [];
+            adjustSingleData(singlePokeData, ui.value);
+            adjustSingleData(singlePokeData, ui.value);
 
-            singlePokeData[2].push({ stat: 'Hp', value: adjustHp(singlePokeData[0][0].value, ui.value), info: 'Hp: Pokemons Health'});
-            singlePokeData[2].push({ stat: 'Attack', value: adjustAttack(singlePokeData[0][1].value, ui.value), info: 'Attack'});
-            singlePokeData[2].push({ stat: 'Sp. Attack', value: adjustDefense(singlePokeData[0][2].value, ui.value), info: 'Special Attack'});
-            singlePokeData[2].push({ stat: 'Defense', value: adjustSpAttack(singlePokeData[0][3].value, ui.value), info: 'Defense'});
-            singlePokeData[2].push({ stat: 'Sp. Defense', value: adjustSpDefense(singlePokeData[0][4].value, ui.value), info: 'Special Defense'});
-            singlePokeData[2].push({ stat: 'Speed', value: adjustSpeed(singlePokeData[0][5].value, ui.value), info: 'Speed'});
-
-
-            var xScale = d3.scale.ordinal()
-                        .rangeRoundBands([0, width], .1);
-
-            var yScale = d3.scale.linear()
-                .range([height, 0]);
-
-            xScale.domain(singlePokeData[2].map(function (d) {
-                return d.stat;
-            }));
-
-            if (d3.max(singlePokeData[2], function(d) { return d.value;}) > 255) {
-                yScale.domain([0, d3.max(singlePokeData[2], function(d) { return d.value;})]);
-            } else {
-                yScale.domain([0, 255]);
-            }
-
-            var yAxis = d3.svg.axis()
-                    .scale(yScale)
-                    .orient("left")
-                    .ticks(10, "%");
-
-
-            //Update all rects
-            svg.selectAll("#dOne")
-                .data(singlePokeData[2])
-                .transition()
-                .delay(function (d, i) {
-                    return i / singlePokeData[2].length * 10;   // <-- Where the magic happens
-                })
-                .duration(1000)
-                .attr("fill", "#90caf9")
-                .attr("x", function (d) {
-                    return xScale(d.stat);
-                })
-                .attr("width", xScale.rangeBand())
-                .attr("y", function (d) {
-                    return yScale(d.value);
-                })
-                .attr("height", function (d) {
-                    return height - yScale(d.value);
-                });
-
-            svg.selectAll("g.y.axis")
-                .transition()
-                .delay(function (d, i) {
-                    return i / singlePokeData[2].length * 10;   // <-- Where the magic happens
-                })
-                .duration(1000)
-                .call(yAxis);
-
-            var wall = singlePokeData[2][0].value + singlePokeData[2][3].value + singlePokeData[2][4].value;
-            var pTank = singlePokeData[2][1].value + singlePokeData[2][3].value;
-            var sTank = singlePokeData[2][2].value + singlePokeData[2][4].value;
-            var pSweeper = singlePokeData[2][1].value + singlePokeData[2][5].value;
-            var sSweeper = singlePokeData[2][2].value + singlePokeData[2][5].value;
-
-            singlePokeData[3] = [];
-            singlePokeData[3].push({ stat: 'Wall', value: wall, info: 'Wall = HP + Defense + Sp. Defense'});
-            singlePokeData[3].push({ stat: 'Phys. Tank', value: pTank, info: 'Physical Tank = Attack + Defense'});
-            singlePokeData[3].push({ stat: 'Sp. Tank', value: sTank, info: 'Special Tank = Sp. Attack + Sp. Defense'});
-            singlePokeData[3].push({ stat: 'Phys. Sweeper', value: pSweeper, info: 'Physical Sweeper = Attack + Speed'});
-            singlePokeData[3].push({ stat: 'Sp. Sweeper', value: sSweeper, info: 'Special Sweeper = Sp. Attack + Speed'});
-
-            console.log(singlePokeData[3]);
-
-            if (d3.max(singlePokeData[3], function(d) { return d.value;}) > 510) {
-                yScale.domain([0, d3.max(singlePokeData[3], function(d) { return d.value;})]);
-            } else {
-                yScale.domain([0, 510]);
-            }
-
-            xScale.domain(singlePokeData[3].map(function (d) {
-                return d.stat;
-            }));
-
-            //Update all rects
-            svg2.selectAll("#d2")
-                .data(singlePokeData[3])
-                .transition()
-                .delay(function (d, i) {
-                    return i / singlePokeData[3].length * 10;   // <-- Where the magic happens
-                })
-                .duration(1000)
-                .attr("fill", "#5b2eef")
-                .attr("x", function (d) {
-                    return xScale(d.stat);
-                })
-                .attr("width", xScale.rangeBand())
-                .attr("y", function (d) {
-                    return yScale(d.value);
-                })
-                .attr("height", function (d) {
-                    return height - yScale(d.value);
-                });
-
-            svg2.selectAll("g.y.axis")
-                .transition()
-                .delay(function (d, i) {
-                    return i / singlePokeData[3].length * 10;   // <-- Where the magic happens
-                })
-                .duration(1000)
-                .call(yAxis);
-
+            redrawGraph(svg, "#dOne", singlePokeData[2], 255, "#90caf9", width, height);
+            redrawGraph(svg2, "#d2", singlePokeData[3], 510, "#5b2eef", width, height);
         }
 
     });
