@@ -185,6 +185,105 @@ function openCity(evt, cityName) {
         evt.currentTarget.className += " active";
 }
 
+function adjustDoubleData(data, level){
+    // Poke 1
+    data[2] = [];
+    data[2].push({ stat: 'Hp', value: adjustHp(data[0][0].value, level), info: 'Hp: Pokemons Health'});
+    data[2].push({ stat: 'Attack', value: adjustAttack(data[0][1].value, level), info: 'Attack'});
+    data[2].push({ stat: 'Sp. Attack', value: adjustDefense(data[0][2].value, level), info: 'Special Attack'});
+    data[2].push({ stat: 'Defense', value: adjustSpAttack(data[0][3].value, level), info: 'Defense'});
+    data[2].push({ stat: 'Sp. Defense', value: adjustSpDefense(data[0][4].value, level), info: 'Special Defense'});
+    data[2].push({ stat: 'Speed', value: adjustSpeed(data[0][5].value, level), info: 'Speed'});
+
+    // Poke 2
+    var wall = data[2][0].value + data[2][3].value + data[2][4].value;
+    var pTank = data[2][1].value + data[2][3].value;
+    var sTank = data[2][2].value + data[2][4].value;
+    var pSweeper = data[2][1].value + data[2][5].value;
+    var sSweeper = data[2][2].value + data[2][5].value;
+
+    data[3] = [];
+    data[3].push({ stat: 'Wall', value: wall, info: 'Wall = HP + Defense + Sp. Defense'});
+    data[3].push({ stat: 'Phys. Tank', value: pTank, info: 'Physical Tank = Attack + Defense'});
+    data[3].push({ stat: 'Sp. Tank', value: sTank, info: 'Special Tank = Sp. Attack + Sp. Defense'});
+    data[3].push({ stat: 'Phys. Sweeper', value: pSweeper, info: 'Physical Sweeper = Attack + Speed'});
+    data[3].push({ stat: 'Sp. Sweeper', value: sSweeper, info: 'Special Sweeper = Sp. Attack + Speed'});
+    data[3].push({ stat: '', value: 0, info: ''});
+}
+
+function redrawGraph(svgelment, chartId, data, value){
+    var xScale = d3.scale.ordinal()
+        .rangeRoundBands([0, w], .1);
+
+    var yScale = d3.scale.linear()
+        .range([h, 0]);
+    var testVal = 0;
+    var color = "#90caf9";
+
+    if (value == "derived") {
+        testVal = 500;
+        color = "#5b2eef";
+    } else {
+        testVal = 255;
+    }
+
+    if (d3.max(data, function(d) { return d.value;}) > testVal) {
+        yScale.domain([0, d3.max(data, function(d) { return d.value;})]);
+    } else {
+        yScale.domain([0, testVal]);
+    }
+
+    xScale.domain(data.map(function(d) { return d.stat; }));
+
+    var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(yScale)
+        .orient("left")
+        .ticks(10, "%");
+
+    //Update all rects
+    svgelment.selectAll(chartId)
+        .data(data)
+        .transition()
+        .delay(function (d, i) {
+            return i / data.length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .attr("fill", color)
+        .attr("x", function (d) {
+            return xScale(d.stat);
+        })
+        .attr("width", xScale.rangeBand())
+        .attr("y", function (d) {
+            return yScale(d.value);
+        })
+        .attr("height", function (d) {
+            return h - yScale(d.value);
+        });
+    svgelment.selectAll("g.y.axis")
+        .transition()
+        .delay(function (d, i) {
+            return i / data.length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .call(yAxis);
+
+    svgelment.selectAll("g.x.axis")
+        .transition()
+        .delay(function (d, i) {
+            return i / data.length * 10;   // <-- Where the magic happens
+        })
+        .duration(1000)
+        .call(xAxis)
+        .selectAll("text")
+        .attr("transform", "rotate(-30)")
+        .style("text-anchor", "end");
+}
+
+
 $( function() {
     var pokemonNames = [];
 
@@ -280,14 +379,3 @@ document.getElementById("defaultOpen").click();
 
 
 
-$( function() {
-    var handle = $( "#custom-handle2" );
-    $( "#slider2" ).slider({
-      create: function() {
-        handle.text( $( this ).slider( "value" ) );
-      },
-      slide: function( event, ui ) {
-        handle.text( ui.value );
-      }
-    });
-  } );

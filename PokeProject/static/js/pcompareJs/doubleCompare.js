@@ -139,37 +139,9 @@ d3.select("#doubleClick")
                     doublePokeDataOne.push(data1);
                     doublePokeDataOne.push(data2);
 
-                    var xScale = d3.scale.ordinal()
-                        .rangeRoundBands([0, w], .1);
+                    var value = document.querySelector('input[name = "optradio5"]:checked').value;
 
-                    var yScale = d3.scale.linear()
-                        .range([h, 0]);
-
-                    yScale.domain([0, 255]);
-                    xScale.domain(doublePokeDataOne[0].map(function (d) {
-                        return d.stat;
-                    }));
-
-                    //Update all rects
-
-                    doublesvg.selectAll("#double")
-                            .data(doublePokeDataOne[0])
-                            .transition()
-                            .delay(function (d, i) {
-                                return i / doublePokeDataOne[0].length * 10;   // <-- Where the magic happens
-                            })
-                            .duration(1000)
-                            .attr("fill", "#90caf9")
-                            .attr("x", function (d) {
-                                return xScale(d.stat);
-                            })
-                            .attr("width", xScale.rangeBand())
-                            .attr("y", function (d) {
-                                return yScale(d.value);
-                            })
-                            .attr("height", function (d) {
-                                return h - yScale(d.value);
-                            });
+                    redrawGraph(doublesvg, "#double", doublePokeDataOne[0], value);
 
                     document.getElementById("checkNormal").checked = true;
                     document.getElementById("checkBarDouble").checked = true;
@@ -300,38 +272,9 @@ d3.select("#doubleClick2")
                         doublePokeDataTwo.push(data1);
                         doublePokeDataTwo.push(data2);
 
+                        var value = document.querySelector('input[name = "optradio5"]:checked').value;
 
-                        var xScale = d3.scale.ordinal()
-                            .rangeRoundBands([0, w], .1);
-
-                        var yScale = d3.scale.linear()
-                            .range([h, 0]);
-
-                        yScale.domain([0, 255]);
-                        xScale.domain(doublePokeDataTwo[0].map(function (d) {
-                            return d.stat;
-                        }));
-
-                        //Update all rects
-
-                        doublesvg2.selectAll("#double2")
-                            .data(doublePokeDataTwo[0])
-                            .transition()
-                            .delay(function (d, i) {
-                                return i / doublePokeDataTwo[0].length * 10;   // <-- Where the magic happens
-                            })
-                            .duration(1000)
-                            .attr("fill", "#90caf9")
-                            .attr("x", function (d) {
-                                return xScale(d.stat);
-                            })
-                            .attr("width", xScale.rangeBand())
-                            .attr("y", function (d) {
-                                return yScale(d.value);
-                            })
-                            .attr("height", function (d) {
-                                return h - yScale(d.value);
-                            });
+                        redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[0], value);
 
                         document.getElementById("checkNormal").checked = true;
                         document.getElementById("checkBarDouble").checked = true;
@@ -348,216 +291,45 @@ d3.select("#doubleClick2")
     });
 
 $('#normalStatus').on("click",function(){
-    xAxis = d3.svg.axis()
-    .scale(xScale)
-    .orient("bottom");
 
-    yAxis = d3.svg.axis()
-    .scale(yScale)
-    .orient("left")
-    .ticks(10, "%");
+    var value = document.querySelector('input[name = "optradio5"]:checked').value;
 
-    xScale = d3.scale.ordinal()
-        .rangeRoundBands([0, w], .1);
-
-    yScale = d3.scale.linear()
-        .range([h, 0]);
-
-    yScale.domain([0, 255]);
-    xScale.domain(doublePokeDataOne[0].map(function(d) { return d.stat; }));
-
-    //Update all rects
-
-    doublesvg.selectAll("#double")
-        .data(doublePokeDataOne[0])
-        .transition()
-        .delay(function (d, i) {
-            return i / doublePokeDataOne[0].length * 10;   // <-- Where the magic happens
-        })
-        .duration(1000)
-        .attr("fill", "#90caf9")
-        .attr("x", function (d) {
-            return xScale(d.stat);
-        })
-        .attr("width", xScale.rangeBand())
-        .attr("y", function (d) {
-            return yScale(d.value);
-        })
-        .attr("height", function (d) {
-            return h - yScale(d.value);
-        });
-    doublesvg.selectAll("g.y.axis")
-        .transition()
-        .delay(function (d, i) {
-            return i / doublePokeDataOne[0].length * 10;   // <-- Where the magic happens
-        })
-        .duration(1000)
-        .call(yAxis);
-
-    doublesvg.selectAll("g.x.axis")
-        .transition()
-        .delay(function (d, i) {
-            return i / doublePokeDataOne[0].length * 10;   // <-- Where the magic happens
-        })
-        .duration(1000)
-        .call(xAxis)
-        .selectAll("text")
-        .attr("transform", "rotate(-30)")
-        .style("text-anchor", "end");
-
-    // Pokemon 2
-    xScale = d3.scale.ordinal()
-        .rangeRoundBands([0, w], .1);
-
-    yScale = d3.scale.linear()
-        .range([h, 0]);
-
-    yScale.domain([0, 255]);
-    xScale.domain(doublePokeDataTwo[0].map(function(d) { return d.stat; }));
-
-    //Update all rects
-
-    doublesvg2.selectAll("#double2")
-        .data(doublePokeDataTwo[0])
-        .transition()
-        .delay(function (d, i) {
-            return i / doublePokeDataTwo[0].length * 10;   // <-- Where the magic happens
-        })
-        .duration(1000)
-        .attr("fill", "#90caf9")
-        .attr("x", function (d) {
-            return xScale(d.stat);
-        })
-        .attr("width", xScale.rangeBand())
-        .attr("y", function (d) {
-            return yScale(d.value);
-        })
-        .attr("height", function (d) {
-            return h - yScale(d.value);
-        });
-    doublesvg2.selectAll("g.y.axis")
-        .transition()
-        .delay(function (d, i) {
-            return i / doublePokeDataTwo[0].length * 10;   // <-- Where the magic happens
-        })
-        .duration(1000)
-        .call(yAxis);
-
-    doublesvg2.selectAll("g.x.axis")
-        .transition()
-        .delay(function (d, i) {
-            return i / doublePokeDataTwo[0].length * 10;   // <-- Where the magic happens
-        })
-        .duration(1000)
-        .call(xAxis)
-        .selectAll("text")
-        .attr("transform", "rotate(-30)")
-        .style("text-anchor", "end");
-
+    redrawGraph(doublesvg, "#double", doublePokeDataOne[0], value);
+    redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[0], value);
 
 });
 
 $('#dreivedStatus').on("click",function(){
-    xAxis = d3.svg.axis()
-    .scale(xScale)
-    .orient("bottom");
 
-    yAxis = d3.svg.axis()
-    .scale(yScale)
-    .orient("left")
-    .ticks(10, "%");
+    var value = document.querySelector('input[name = "optradio5"]:checked').value;
 
-    xScale = d3.scale.ordinal()
-        .rangeRoundBands([0, w], .1);
-
-    yScale = d3.scale.linear()
-        .range([h, 0]);
-
-    yScale.domain([0, 500]);
-    xScale.domain(doublePokeDataOne[1].map(function(d) { return d.stat; }));
-
-    //Update all rects
-
-    doublesvg.selectAll("#double")
-        .data(doublePokeDataOne[1])
-        .transition()
-        .delay(function (d, i) {
-            return i / doublePokeDataOne[1].length * 10;   // <-- Where the magic happens
-        })
-        .duration(1000)
-        .attr("fill", "#5b2eef")
-        .attr("x", function (d) {
-            return xScale(d.stat);
-        })
-        .attr("width", xScale.rangeBand())
-        .attr("y", function (d) {
-            return yScale(d.value);
-        })
-        .attr("height", function (d) {
-            return h - yScale(d.value);
-        });
-    doublesvg.selectAll("g.y.axis")
-        .transition()
-        .delay(function (d, i) {
-            return i / doublePokeDataOne[1].length * 10;   // <-- Where the magic happens
-        })
-        .duration(1000)
-        .call(yAxis);
-
-    doublesvg.selectAll("g.x.axis")
-        .transition()
-        .delay(function (d, i) {
-            return i / doublePokeDataOne[1].length * 10;   // <-- Where the magic happens
-        })
-        .duration(1000)
-        .call(xAxis)
-        .selectAll("text")
-        .attr("transform", "rotate(-30)")
-        .style("text-anchor", "end");
-
-
-    // Pokemon 2
-
-    yScale.domain([0, 500]);
-    xScale.domain(doublePokeDataTwo[1].map(function(d) { return d.stat; }));
-
-    //Update all rects
-
-    doublesvg2.selectAll("#double2")
-        .data(doublePokeDataTwo[1])
-        .transition()
-        .delay(function (d, i) {
-            return i / doublePokeDataTwo[1].length * 10;   // <-- Where the magic happens
-        })
-        .duration(1000)
-        .attr("fill", "#5b2eef")
-        .attr("x", function (d) {
-            return xScale(d.stat);
-        })
-        .attr("width", xScale.rangeBand())
-        .attr("y", function (d) {
-            return yScale(d.value);
-        })
-        .attr("height", function (d) {
-            return h - yScale(d.value);
-        });
-
-    doublesvg2.selectAll("g.y.axis")
-        .transition()
-        .delay(function (d, i) {
-            return i / doublePokeDataTwo[1].length * 10;   // <-- Where the magic happens
-        })
-        .duration(1000)
-        .call(yAxis);
-
-    doublesvg2.selectAll("g.x.axis")
-        .transition()
-        .delay(function (d, i) {
-            return i / doublePokeDataTwo[1].length * 10;   // <-- Where the magic happens
-        })
-        .duration(1000)
-        .call(xAxis)
-        .selectAll("text")
-        .attr("transform", "rotate(-30)")
-        .style("text-anchor", "end");
+    redrawGraph(doublesvg, "#double", doublePokeDataOne[1], value);
+    redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[1], value);
 });
+
+
+$( function() {
+    var handle2 = $( "#custom-handle2" );
+    $( "#slider2" ).slider({
+        create: function() {
+            handle2.text( $( this ).slider( "value" ) );
+        },
+        slide: function( event, ui ) {
+            handle2.text( ui.value );
+
+            adjustDoubleData(doublePokeDataOne, ui.value);
+            adjustDoubleData(doublePokeDataTwo, ui.value);
+
+            var value = document.querySelector('input[name = "optradio5"]:checked').value;
+
+            if (value == 'derived') {
+                redrawGraph(doublesvg, "#double", doublePokeDataOne[3], value);
+                redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[3], value);
+            }else {
+                redrawGraph(doublesvg, "#double", doublePokeDataOne[2], value);
+                redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[2], value);
+            }
+
+        }
+    });
+} );
