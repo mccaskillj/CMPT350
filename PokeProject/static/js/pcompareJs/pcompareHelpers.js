@@ -211,21 +211,38 @@ function adjustDoubleData(data, level){
     data[3].push({ stat: '', value: 0, info: ''});
 }
 
-function redrawGraph(svgelment, chartId, data, value){
+function adjustSingleData(data, level){
+    // Poke 1
+    data[2] = [];
+    data[2].push({ stat: 'Hp', value: adjustHp(data[0][0].value, level), info: 'Hp: Pokemons Health'});
+    data[2].push({ stat: 'Attack', value: adjustAttack(data[0][1].value, level), info: 'Attack'});
+    data[2].push({ stat: 'Sp. Attack', value: adjustDefense(data[0][2].value, level), info: 'Special Attack'});
+    data[2].push({ stat: 'Defense', value: adjustSpAttack(data[0][3].value, level), info: 'Defense'});
+    data[2].push({ stat: 'Sp. Defense', value: adjustSpDefense(data[0][4].value, level), info: 'Special Defense'});
+    data[2].push({ stat: 'Speed', value: adjustSpeed(data[0][5].value, level), info: 'Speed'});
+
+    // Poke 2
+    var wall = data[2][0].value + data[2][3].value + data[2][4].value;
+    var pTank = data[2][1].value + data[2][3].value;
+    var sTank = data[2][2].value + data[2][4].value;
+    var pSweeper = data[2][1].value + data[2][5].value;
+    var sSweeper = data[2][2].value + data[2][5].value;
+
+    data[3] = [];
+    data[3].push({ stat: 'Wall', value: wall, info: 'Wall = HP + Defense + Sp. Defense'});
+    data[3].push({ stat: 'Phys. Tank', value: pTank, info: 'Physical Tank = Attack + Defense'});
+    data[3].push({ stat: 'Sp. Tank', value: sTank, info: 'Special Tank = Sp. Attack + Sp. Defense'});
+    data[3].push({ stat: 'Phys. Sweeper', value: pSweeper, info: 'Physical Sweeper = Attack + Speed'});
+    data[3].push({ stat: 'Sp. Sweeper', value: sSweeper, info: 'Special Sweeper = Sp. Attack + Speed'});
+}
+
+function redrawGraph(svgelment, chartId, data, testVal, color, barWidth, barHeight){
     var xScale = d3.scale.ordinal()
-        .rangeRoundBands([0, w], .1);
+        .rangeRoundBands([0, barWidth], .1);
 
     var yScale = d3.scale.linear()
-        .range([h, 0]);
-    var testVal = 0;
-    var color = "#90caf9";
+        .range([barHeight, 0]);
 
-    if (value == "derived") {
-        testVal = 500;
-        color = "#5b2eef";
-    } else {
-        testVal = 255;
-    }
 
     if (d3.max(data, function(d) { return d.value;}) > testVal) {
         yScale.domain([0, d3.max(data, function(d) { return d.value;})]);
@@ -261,7 +278,7 @@ function redrawGraph(svgelment, chartId, data, value){
             return yScale(d.value);
         })
         .attr("height", function (d) {
-            return h - yScale(d.value);
+            return barHeight - yScale(d.value);
         });
     svgelment.selectAll("g.y.axis")
         .transition()

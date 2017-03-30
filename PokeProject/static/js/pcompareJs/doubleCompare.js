@@ -139,9 +139,7 @@ d3.select("#doubleClick")
                     doublePokeDataOne.push(data1);
                     doublePokeDataOne.push(data2);
 
-                    var value = document.querySelector('input[name = "optradio5"]:checked').value;
-
-                    redrawGraph(doublesvg, "#double", doublePokeDataOne[0], value);
+                    redrawGraph(doublesvg, "#double", doublePokeDataOne[0], 255, "#90caf9", w, h);
 
                     document.getElementById("checkNormal").checked = true;
                     document.getElementById("checkBarDouble").checked = true;
@@ -272,9 +270,7 @@ d3.select("#doubleClick2")
                         doublePokeDataTwo.push(data1);
                         doublePokeDataTwo.push(data2);
 
-                        var value = document.querySelector('input[name = "optradio5"]:checked').value;
-
-                        redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[0], value);
+                        redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[0], 255, "#90caf9", w, h);
 
                         document.getElementById("checkNormal").checked = true;
                         document.getElementById("checkBarDouble").checked = true;
@@ -292,19 +288,15 @@ d3.select("#doubleClick2")
 
 $('#normalStatus').on("click",function(){
 
-    var value = document.querySelector('input[name = "optradio5"]:checked').value;
-
-    redrawGraph(doublesvg, "#double", doublePokeDataOne[0], value);
-    redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[0], value);
+    redrawGraph(doublesvg, "#double", doublePokeDataOne[0], 255, "#90caf9", w, h);
+    redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[0], 255, "#90caf9", w, h);
 
 });
 
 $('#dreivedStatus').on("click",function(){
 
-    var value = document.querySelector('input[name = "optradio5"]:checked').value;
-
-    redrawGraph(doublesvg, "#double", doublePokeDataOne[1], value);
-    redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[1], value);
+    redrawGraph(doublesvg, "#double", doublePokeDataOne[1], 500, "#5b2eef", w, h);
+    redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[1], 500, "#5b2eef", w, h);
 });
 
 
@@ -323,11 +315,11 @@ $( function() {
             var value = document.querySelector('input[name = "optradio5"]:checked').value;
 
             if (value == 'derived') {
-                redrawGraph(doublesvg, "#double", doublePokeDataOne[3], value);
-                redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[3], value);
+                redrawGraph(doublesvg, "#double", doublePokeDataOne[3], 500, "#5b2eef", w, h);
+                redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[3], 500, "#5b2eef", w, h);
             }else {
-                redrawGraph(doublesvg, "#double", doublePokeDataOne[2], value);
-                redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[2], value);
+                redrawGraph(doublesvg, "#double", doublePokeDataOne[2], 255, "#90caf9", w, h);
+                redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[2], 255, "#90caf9", w, h);
             }
 
         }
