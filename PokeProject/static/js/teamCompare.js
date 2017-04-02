@@ -280,7 +280,7 @@ d3.select("#addbuttonleft").on("click",function () {
                     }
                     })
                     .attr("stroke",function (d) {
-                        return typeColor(d[8])
+                        return typeColor(d[3])
                     })
                     .attr("stroke-width","5");
                 boxlabels.text(function (d) {
@@ -391,7 +391,7 @@ d3.select("#addbuttonright").on("click",function () {
                         }
                     })
                     .attr("stroke",function (d) {
-                        return typeColor(d[8])
+                        return typeColor(d[3])
                     })
                     .attr("stroke-width","5");
                 boxlabelsright.text(function (d) {
