@@ -1,24 +1,42 @@
-var dataset = [[0,"",0,0,0,0,0,0,"",""],
-    [0,"",0,0,0,0,0,0,"",""],
-    [0,"",0,0,0,0,0,0,"",""],
-    [0,"",0,0,0,0,0,0,"",""],
-    [0,"",0,0,0,0,0,0,"",""],
-    [0,"",0,0,0,0,0,0,"",""]];
+var dataset = [[0,"",0,"",""],
+    [0,"",0,"",""],
+    [0,"",0,"",""],
+    [0,"",0,"",""],
+    [0,"",0,"",""],
+    [0,"",0,"",""]];
 
-var datasetright = [[0,"",0,0,0,0,0,0,"",""],
-    [0,"",0,0,0,0,0,0,"",""],
-    [0,"",0,0,0,0,0,0,"",""],
-    [0,"",0,0,0,0,0,0,"",""],
-    [0,"",0,0,0,0,0,0,"",""],
-    [0,"",0,0,0,0,0,0,"",""]];
+var datasetbarleft = [[0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0]];
+
+var datasetright = [[0,"",0,"",""],
+    [0,"",0,"",""],
+    [0,"",0,"",""],
+    [0,"",0,"",""],
+    [0,"",0,"",""],
+    [0,"",0,"",""]];
+
+var datasetbarright = [[0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0]];
 
 var w = 1224;
-var h = 1000;
+var h = 800;
+var h2 = 700;
 var x = 0;
 var datapos = 0;
 var dataposright = 0;
+var datapostable = 0;
+var datapostableright = 0;
 
 var svg = d3.select('#maindiv').append('svg').attr('height', h).attr('width', w);
+var svgbar = d3.select('#barchart').append('svg').attr('height', h2).attr('width', w);
 
 var boxes = svg.selectAll("rect").data(dataset);
                 boxes.enter()
@@ -30,6 +48,10 @@ var boxes = svg.selectAll("rect").data(dataset);
                     })
                     .attr("width", 450)
                     .attr("height", 105)
+                    // .attr("id",function (i) {
+                    //     console.log("index",i);
+                    //     return "leftbox0";
+                    // })
                     .attr("fill", "#bdbec0")
                     .attr("stroke","black")
                     .attr("shape-rendering","crispEdges")
@@ -86,8 +108,8 @@ var rectfront = svg.selectAll('rect.bar')
     .attr("stroke","black")
     .attr("opacity",0);
 
-var circles = svg.selectAll('circle').
-    data(dataset)
+var circles = svg.selectAll('circle')
+    .data(dataset)
     .enter()
     .append("circle")
     .attr("cx",70)
@@ -103,15 +125,23 @@ var circles = svg.selectAll('circle').
     //.attr("stroke","black")
     .attr("opacity",1);
 
-//$('#imageleft0' + ' image').attr("xlink:href", frontPath + '4' + '.png').attr("opacity",0);
 
-// for (var i = 0; i<6; i++){
-//     var num = 67 + i;
-//     $('#imageleft' + i + ' image').attr("xlink:href", frontPath + num + '.png').attr("opacity",1);
-// }
+var types = svg.selectAll("foreignObject.left")
+    .data(dataset)
+    .enter()
+    .append("foreignObject")
+    .attr('id','fleft')
+    .attr("width", 20)
+    .attr("height", 5)
+    .attr('x',180)
+    .attr("opacity",1)
+    .attr("y", function (d,i) {
+        return ((110*i)+7)
+    })
+    .append("xhtml:test1")
+    .html('');
 
 
-//frontPath + num + '.png'
 
 //
 //###################################################################
@@ -185,7 +215,7 @@ rectfrontright.enter()
     .attr("opacity",0);
 
 var circlesright = svg.selectAll('circle.right').
-    data(dataset)
+    data(datasetright)
     .enter()
     .append("circle")
     .attr("cx",784)
@@ -200,6 +230,20 @@ var circlesright = svg.selectAll('circle.right').
     .attr("stroke-width",0)
     //.attr("stroke","black")
     .attr("opacity",1);
+
+var typesright = svg.selectAll("foreignObject.right")
+    .data(datasetright)
+    .enter()
+    .append("foreignObject")
+    .attr("width", 20)
+    .attr("height", 5)
+    .attr('x',894)
+    .attr("opacity",1)
+    .attr("y", function (d,i) {
+        return ((110*i)+7)
+    })
+    .append("xhtml:test")
+    .html('');
 
 
 d3.select("#addbuttonleft").on("click",function () {
@@ -216,13 +260,14 @@ d3.select("#addbuttonleft").on("click",function () {
                 dataset[datapos][0] = pokemons[0].id;
                 dataset[datapos][1] = pokemons[0].name;
                 dataset[datapos][2] = pokemons[0].hp;
-                dataset[datapos][3] = pokemons[0].attack;
-                dataset[datapos][4] = pokemons[0].defense;
-                dataset[datapos][5] = pokemons[0].sp_attack;
-                dataset[datapos][6] = pokemons[0].sp_defense;
-                dataset[datapos][7] = pokemons[0].speed;
-                dataset[datapos][8] = pokemons[0].type_1;
-                dataset[datapos][9] = pokemons[0].type_2;
+                dataset[datapos][3] = pokemons[0].type_1;
+                dataset[datapos][4] = pokemons[0].type_2;
+                datasetbarleft[datapos][0] = pokemons[0].hp;
+                datasetbarleft[datapos][1] = pokemons[0].attack;
+                datasetbarleft[datapos][2] = pokemons[0].defense;
+                datasetbarleft[datapos][3] = pokemons[0].sp_attack;
+                datasetbarleft[datapos][4] = pokemons[0].sp_defense;
+                datasetbarleft[datapos][5] = pokemons[0].speed;
                 datapos++;
                 console.log(datapos);
                 boxes.transition()
@@ -233,7 +278,11 @@ d3.select("#addbuttonleft").on("click",function () {
                     } else {
                         return 0;
                     }
-                });
+                    })
+                    .attr("stroke",function (d) {
+                        return typeColor(d[3])
+                    })
+                    .attr("stroke-width","5");
                 boxlabels.text(function (d) {
                     //console.log("Pokemon:", d[1]);
                     return d[1];
@@ -271,6 +320,31 @@ d3.select("#addbuttonleft").on("click",function () {
                         }
                     });
 
+                // svg.selectAll("foreignObject").attr("opacity",function (d) {
+                //         if (d[0] != 0) {
+                //             return 1;
+                //         } else {
+                //             return 0;
+                //         }
+                //     });
+
+                types.attr("opacity", function (d) {
+                        if (d[0] != 0) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    })
+                    .html(function (d) {
+                        if (d[3] == ''){
+                            return '';
+                        }
+                        else if (d[4] == ''){
+                            return addType(d[3])+'<br>';
+                        }else{
+                            return addType(d[3])+'<br>'+addType(d[4]);
+                        }
+                    });
                 $('#imageleft' + (datapos-1) + ' image').attr("xlink:href", frontPath + dataset[datapos-1][0] + '.png');
             }
 
@@ -293,21 +367,18 @@ d3.select("#addbuttonright").on("click",function () {
             data: {"name": pokeName},
             dataType: 'JSON',                //data format
             success: function (pokemons) {
-                // dataset.push({
-                //     d: pokemons[0].id,
-                //     name: pokemons[0].name,
-                //     Hp: pokemons[0].hp
-                // });
                 datasetright[dataposright][0] = pokemons[0].id;
                 datasetright[dataposright][1] = pokemons[0].name;
                 datasetright[dataposright][2] = pokemons[0].hp;
-                datasetright[dataposright][3] = pokemons[0].attack;
-                datasetright[dataposright][4] = pokemons[0].defense;
-                datasetright[dataposright][5] = pokemons[0].sp_attack;
-                datasetright[dataposright][6] = pokemons[0].sp_defense;
-                datasetright[dataposright][7] = pokemons[0].speed;
-                datasetright[dataposright][8] = pokemons[0].type_1;
-                datasetright[dataposright][9] = pokemons[0].type_2;
+                datasetright[dataposright][3] = pokemons[0].type_1;
+                datasetright[dataposright][4] = pokemons[0].type_2;
+
+                datasetbarright[dataposright][0] = pokemons[0].hp;
+                datasetbarright[dataposright][1] = pokemons[0].attack;
+                datasetbarright[dataposright][2] = pokemons[0].defense;
+                datasetbarright[dataposright][3] = pokemons[0].sp_attack;
+                datasetbarright[dataposright][4] = pokemons[0].sp_defense;
+                datasetbarright[dataposright][5] = pokemons[0].speed;
                 dataposright++;
                 //console.log(dataset);
                 boxesright.transition()
@@ -318,7 +389,11 @@ d3.select("#addbuttonright").on("click",function () {
                         } else {
                             return 0;
                         }
-                    });
+                    })
+                    .attr("stroke",function (d) {
+                        return typeColor(d[3])
+                    })
+                    .attr("stroke-width","5");
                 boxlabelsright.text(function (d) {
                     //console.log("Pokemon:", d[1]);
                     return d[1];
@@ -350,7 +425,20 @@ d3.select("#addbuttonright").on("click",function () {
                     })
                     .attr("opacity", 1);
 
+                typesright
+                    .html(function (d) {
+                        if (d[3] == ''){
+                            return '';
+                        }
+                        else if (d[4] == ''){
+                            return addType(d[3])+'<br>';
+                        }else{
+                            return addType(d[3])+'<br>'+addType(d[4]);
+                        }
+                    });
+
                 $('#imageright' + (dataposright-1) + ' image').attr("xlink:href", frontPath + datasetright[dataposright-1][0] + '.png');
+
             }
         });
     }else{
@@ -395,81 +483,123 @@ $( function() {
 
 
 
+function addType(type){
+    switch(type) {
+        case 'Fire':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge fireBadge">Fire</span>';
+            break;
+        case 'Water':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge waterBadge">Water</span>';
+            break;
+        case 'Grass':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge grassBadge">Grass</span>';
+            break;
+        case 'Fighting':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge fightingBadge">Fighting</span>';
+            break;
+        case 'Steel':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge steelBadge">Steel</span>';
+            break;
+        case 'Electric':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge electricBadge">Electric</span>';
+            break;
+        case 'Ice':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge iceBadge">Ice</span>';
+            break;
+        case 'Normal':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge normalBadge">Normal</span>';
+            break;
+        case 'Bug':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge bugBadge">Bug</span>';
+            break;
+        case 'Dragon':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge dragonBadge">Dragon</span>';
+            break;
+        case 'Psychic':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge psychicBadge">Psychic</span>';
+            break;
+        case 'Ghost':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge ghostBadge">Ghost</span>';
+            break;
+        case 'Poison':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge poisonBadge">Poison</span>';
+            break;
+        case 'Fairy':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge fairyBadge">Fairy</span>';
+            break;
+        case 'Dark':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge darkBadge">Dark</span>';
+            break;
+        case 'Rock':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge rockBadge">Rock</span>';
+            break;
+        case 'Ground':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge groundBadge">Ground</span>';
+            break;
+        case 'Flying':
+            return '<span style="width: auto; height: 20px;font-size: 10pt" class="badge flyingBadge">Flying</span>';
+            break;
+        default:
+            break;
+    }
+}
+
+
+function typeColor(type) {
+    if (type == "Grass")
+        return "#6cb649";
+
+    if (type == "Fire")
+        return "#ff5d55";
+
+    if (type == "Water")
+        return "#5382ea";
+
+    if (type == "Fighting")
+        return "#a02a26";
+
+    if (type == "Steel")
+        return "#a7a8be";
+
+    if (type == "Electric")
+        return "#f2c735";
+
+    if (type == "Ice")
+        return "#84cfcf";
+
+    if (type == "Normal")
+        return "#99986a";
+
+    if (type == "Bug")
+        return "#95a22c";
+
+    if (type == "Dragon")
+        return "#5b2eef";
+
+    if (type == "Psychic")
+        return "#f54378";
+
+    if (type == "Ghost")
+        return "#5d4b7e";
+
+    if (type == "Poison")
+        return "#933f93";
+
+    if (type == "Fairy")
+        return "#e287e2";
+
+    if (type == "Dark")
+        return "#5d483d";
+
+    if (type == "Rock")
+        return "#a48f3a";
+
+    if (type == "Ground")
+        return "#d9b34a";
+
+    if (type == "Flying")
+        return "#9d88db";
+}
 
 
 
-
-
-
-
-
-
-// $(document).ready(function() {
-//     $("#addbuttonleft1").click(function () {
-//         //alert( "Handler for .click() called." );
-//         $('#pokeleft1search').toggle();
-//         document.getElementById("closepokeleft1").style.visibility="visible";
-//         document.getElementById("poke1leftImage").style.visibility="visible";
-//     });
-//     $("#closepokeleft1").click(function () {
-//         $('#pokeleft1search').toggle();
-//         $('#pokeleft1input').val('');
-//         document.getElementById("closepokeleft1").style.visibility="hidden";
-//         document.getElementById("poke1leftImage").style.visibility="hidden";
-//     });
-// });
-
-// d3.select("#addbuttonleft1").on("click", function() {
-//     var selectPoke = document.getElementById("pokeleft1input").value;
-//     console.log("Selected Poke: ", selectPoke);
-//     var validPoke = checkPoke(selectPoke);
-//     console.log("Selected pokemon is valid",validPoke);
-//     if (validPoke == 1) {
-//             $.ajax({
-//                 type: "GET",
-//                 url: 'ajax/get_single_pokemon/', //the script to call to get data
-//                 data: {"name": selectPoke},
-//                 dataType: 'JSON',                //data format
-//                 success: function (pokemons) {
-//                     console.log("HERE");
-//                     var unwantedFirst = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
-//                         'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
-//                         'phys_sweeper', 'sp_sweeper', 'wall', 'phys_tank', 'sp_tank'];
-//                     var unwantedSecond = ['color', 'name', 'id', 'body_style', 'is_legendary', 'catch_rate',
-//                             'generation', 'egg_group_1', 'egg_group_2', 'type_2', 'type_1', 'height', 'width', 'total',
-//                             'hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed'];
-//
-//                     var id = pokemons[0]['id'];
-//
-//                     $("#frontImgleft1").attr('src', frontPath + id + '.png');
-//                 }
-//             })
-//     }
-//     else{
-//         alert("Invalid Pokemon");
-//     }
-//
-// });
-
-
-// function checkPoke(pokename){
-//     var poke = 0;
-//
-//     $.ajax({
-//          type: "GET",
-//          url: 'ajax/exists', //the script to call to get data
-//          data: {"name": pokename},
-//          dataType: 'JSON',                //data format
-//          success: function(pokemons) {
-//              poke = pokemons['val'];
-//              console.log("Poke:", poke);
-//              return poke;
-//
-//          },
-//          failure: function(pokemons) {
-//              alert('Got an error dude');
-//              return 1;
-//          }
-//      });
-//
-// }
