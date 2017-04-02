@@ -14,7 +14,7 @@
 
 .container-fluid{
     width: 1224px;
-    height: 1000px;
+    height: 800px;
     padding-top: 30px;
     background-color: white;
 }
@@ -63,4 +63,11 @@
 
 .clear{
     stop-opacity: 0;
+}
+
+.barchart{
+    width: 1224px;
+    height: 700px;
+    padding-top: 30px;
+    background-color: white;
 }
