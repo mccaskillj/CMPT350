@@ -503,6 +503,22 @@ svg2.selectAll("circle")
                     $("#team" + j + " image").attr('xlink:href', '');
                 }
             }
+
+            svg2.selectAll("circle")
+                .attr("stroke-width", function (d) {
+                    if (d[14] != ""){
+                        return 3;
+                    } else {
+                        return 1;
+                    }
+                })
+                .style("stroke",function (d) {
+                    if (d[14] != ""){
+                        return typeColor(d[14]);
+                    } else {
+                        return typeColor("Dark");
+                    }
+                });
         }
     });
 
@@ -814,6 +830,10 @@ d3.select('#navbar').on('mouseover', function () {
     d3.select("#popupS").classed("hidden",true);
 });
 
+d3.select('#compareT').on('click',function () {
+    console.log("clicked");
+})
+
 d3.select('#buttonTeam1').on('click', function () {
     if (teamPos[0]<6){
         for(var i = 2;i<16;i++){
@@ -827,6 +847,22 @@ d3.select('#buttonTeam1').on('click', function () {
             }
         }
         teamPos[0]=teamPos[0] + 1;
+
+        svg2.selectAll("circle")
+            .attr("stroke-width", function (d) {
+                if (d[14] != ""){
+                    return 3;
+                } else {
+                    return 1;
+                }
+            })
+            .style("stroke", function (d) {
+                if (d[14] != ""){
+                    return typeColor(d[14]);
+                } else {
+                    return typeColor("Dark");
+                }
+            });
     }
 });
 
@@ -843,6 +879,22 @@ d3.select('#buttonTeam2').on('click', function () {
             }
         }
         teamPos[1]=teamPos[1] + 1;
+
+        svg2.selectAll("circle")
+            .attr("stroke-width", function (d) {
+                if (d[14] != ""){
+                    return 3;
+                } else {
+                    return 1;
+                }
+            })
+            .style("stroke", function (d) {
+                if (d[14] != ""){
+                    return typeColor(d[14]);
+                } else {
+                    return typeColor("Dark");
+                }
+            });
     }
 });
 
