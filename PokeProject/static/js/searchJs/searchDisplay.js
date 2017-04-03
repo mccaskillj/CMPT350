@@ -547,7 +547,6 @@ svg2.selectAll("circle")
 
             for (var j = 0; j < 12; j++) {
                 if (teams[j][3] != 0) {
-                    console.log("#team" + j + " image");
                     $("#team" + j + " image").attr('xlink:href', frontPath + teams[j][3] + '.png');
                 } else {
                     $("#team" + j + " image").attr('xlink:href', '');
@@ -682,7 +681,6 @@ $.ajax({
     "radio": radio},
     dataType: 'json',                //data format
 success: function(pokemons) {
-    console.log(pokemons);
     dataset[23] = pokemons;
     var pos = 0;
     for (var i = 0 ; i < 23; i++){
@@ -942,7 +940,31 @@ d3.select('#navbar').on('mouseover', function () {
 });
 
 d3.select('#compareT').on('click',function () {
-    console.log("clicked");
+    var team1 = "Team 1: ";
+    var front1 = 0;
+    for (var i = 0; i<6; i++){
+        if (teams[i][4] != ""){
+            if (front1 != 0){
+                team1 = team1 + ", "+ teams[i][4];
+            } else {
+                team1 = team1 + teams[i][4];
+                front1++;
+            }
+        }
+    }
+    var team2 = "Team 2: ";
+    var front2 = 0;
+    for (var i = 6; i<12; i++){
+        if (teams[i][4] != ""){
+            if (front2 != 0){
+                team2 = team2 + ", "+ teams[i][4];
+            } else {
+                team2 = team2 + teams[i][4];
+                front2++;
+            }
+        }
+    }
+    alert("Export Teams\n\n" + team1 + "\n" + team2 + "\n\nOr it would if that was working...");
 })
 
 d3.select('#buttonTeam1').on('click', function () {
