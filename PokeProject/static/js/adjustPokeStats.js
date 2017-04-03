@@ -2,44 +2,53 @@
  * Created by carmichael on 2017-03-07.
  */
 
+function adjustHp(hp, level){
+    var iv = 24;
+    var ev = 74;
 
-function adjustPokemonStats(poke, level) {
-    var ivHp = 24;
-    var evHp = 74;
-    var ivAttack = 12;
-    var evAttack = 190;
-    var ivDefense = 30;
-    var evDefense = 91;
-    var ivSpAttack = 16;
-    var evSpAttack = 48;
-    var ivSpDefense = 23;
-    var evSpDefense = 84;
-    var ivSpeed = 5;
-    var evSpeed = 23;
-    var ivTotal = 110;
-    var evTotal = 510;
-    var newStats = {};
-
-    // Adjust Hp
-    newStats['hp'] = ((2 * poke['hp'] + ivHp + (evHp/4) * level)/ 100) + level;
-
-    // Adjust Attack
-    newStats['attack']= ((2 * poke['attack'] + ivAttack + (evAttack/4) * level)/ 100) + level;
-
-    // Adjust Defense
-    newStats['defense']  = ((2 * poke['defense'] + ivDefense + (evDefense/4) * level)/ 100) + level;
-
-    // Adjust Special Attack
-    newStats['sp_attack'] = ((2 * poke['sp_attack'] + ivSpAttack + (evSpAttack/4) * level)/ 100) + level;
-
-    // Adjust Special Defense
-    newStats['sp_defense']  = ((2 * poke['sp_defense'] + ivSpDefense + (evSpDefense/4) * level)/ 100) + level;
-
-    // Adjust Speed
-    newStats['speed'] = ((2 * poke['speed'] + ivSpeed + (evSpeed/4) * level)/ 100) + level;
-
-    // Adjust Total
-    newStats['total'] = ((2 * poke['total'] + ivTotal + (evTotal/4) * level)/ 100) + level;
-
-    return newStats;
+    return Math.floor(((2 * hp + iv + (ev/4) * level)/ 100) + level + hp);
 }
+
+function adjustAttack(attack, level) {
+    var iv = 12;
+    var ev = 190;
+
+    return Math.floor(((2 * attack + iv + (ev/4) * level)/ 100) + level + attack);
+}
+
+function adjustDefense(defense, level){
+    var iv = 30;
+    var ev = 91;
+
+    return Math.floor(((2 * defense + iv + (ev/4) * level)/ 100) + level + defense);
+}
+
+function adjustSpAttack(sp_attack, level){
+    var iv = 16;
+    var ev = 48;
+
+    return Math.floor(((2 * sp_attack + iv + (ev/4) * level)/ 100) + level + sp_attack);
+}
+
+function adjustSpDefense(sp_defense, level){
+    var iv = 23;
+    var ev = 84;
+
+    return Math.floor(((2 * sp_defense + iv + (ev/4) * level)/ 100) + level + sp_defense);
+}
+
+function adjustSpeed(speed, level){
+    var iv = 5;
+    var ev = 23;
+
+    return Math.floor(((2 *speed + iv + (ev/4) * level)/ 100) + level + speed);
+}
+
+function adjustTotal(total, level){
+    var iv = 110;
+    var ev = 510;
+
+    return Math.floor(((2 * total + iv + (ev/4) * level)/ 100) + level);
+}
+
+

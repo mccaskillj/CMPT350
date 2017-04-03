@@ -281,61 +281,8 @@ d3.select("#sb")
                     singlePokeData.push(data1);
                     singlePokeData.push(data2);
 
-                    var xScale = d3.scale.ordinal()
-                        .rangeRoundBands([0, width], .1);
-
-                    var yScale = d3.scale.linear()
-                        .range([height, 0]);
-
-                    yScale.domain([0, 255]);
-                    xScale.domain(data1.map(function (d) {
-                        return d.stat;
-                    }));
-
-                    //Update all rects
-                    svg.selectAll("#dOne")
-                        .data(data1)
-                        .transition()
-                        .delay(function (d, i) {
-                            return i / data1.length * 10;   // <-- Where the magic happens
-                        })
-                        .duration(1000)
-                        .attr("fill", "#90caf9")
-                        .attr("x", function (d) {
-                            return xScale(d.stat);
-                        })
-                        .attr("width", xScale.rangeBand())
-                        .attr("y", function (d) {
-                            return yScale(d.value);
-                        })
-                        .attr("height", function (d) {
-                            return height - yScale(d.value);
-                        });
-
-                    yScale.domain([0, 510]);
-                    xScale.domain(data2.map(function (d) {
-                        return d.stat;
-                    }));
-
-                    //Update all rects
-                    svg2.selectAll("#d2")
-                        .data(data2)
-                        .transition()
-                        .delay(function (d, i) {
-                            return i / data2.length * 10;   // <-- Where the magic happens
-                        })
-                        .duration(1000)
-                        .attr("fill", "#5b2eef")
-                        .attr("x", function (d) {
-                            return xScale(d.stat);
-                        })
-                        .attr("width", xScale.rangeBand())
-                        .attr("y", function (d) {
-                            return yScale(d.value);
-                        })
-                        .attr("height", function (d) {
-                            return height - yScale(d.value);
-                        });
+                    redrawGraph(svg, "#dOne", data1, 255, "#90caf9", width, height);
+                    redrawGraph(svg2, "#d2", data2, 510, "#5b2eef", width, height);
 
                     document.getElementById("checkNormal").checked = true;
                     document.getElementById("checkBar").checked = true;
@@ -351,7 +298,7 @@ d3.select("#sb")
     });
 
 // Double
-$('#checkBar').on("click",function(){
+$('#checkBar').change(function(){
     $( "#singlee" ).removeClass('hidden');
     $("#single2").removeClass('hidden');
 
@@ -359,13 +306,38 @@ $('#checkBar').on("click",function(){
 
 });
 
-$('#pieRadio').on("click",function(){
+$('#pieRadio').change(function(){
     $("#singlee").addClass('hidden');
     $("#single2").addClass('hidden');
+
 
     drawPie(singlePokeData[0], '#singleChart');
     drawPie(singlePokeData[1], '#singleChart2');
 });
+
+d3.select('#slider').on('click', function () {
+
+});
+
+$( function() {
+    var handle = $( "#custom-handle" );
+    $( "#slider" ).slider({
+        create: function() {
+            handle.text( $( this ).slider( "value" ) );
+        },
+        slide: function( event, ui ) {
+            handle.text( ui.value );
+
+            adjustSingleData(singlePokeData, ui.value);
+            adjustSingleData(singlePokeData, ui.value);
+
+            redrawGraph(svg, "#dOne", singlePokeData[2], 255, "#90caf9", width, height);
+            redrawGraph(svg2, "#d2", singlePokeData[3], 510, "#5b2eef", width, height);
+        }
+
+    });
+  } );
+
 
 
 function drawPie(data, ID) {
