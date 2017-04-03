@@ -472,6 +472,7 @@ svg2.selectAll("circle")
         return 'url(#team'+i+')';
     })
     .on("click", function (d,i) {
+        d3.select("#tooltipS").classed("hidden", true);
         if(d[3] != 0) {
             d[3] = 0;
             d[4] = "";
@@ -488,6 +489,55 @@ svg2.selectAll("circle")
             d[15] = "";
 
             shiftAll();
+
+            if (d[14] != ""){
+                d3.select("#tooltipS").classed("hidden", false);
+                d3.select("#tooltipS")
+                    .select("#name")
+                    .text("#"+ d[3] + " " +d[4]);
+
+                d3.select("#tooltipS")
+                    .select("#height")
+                    .text(d[5]);
+
+                d3.select("#tooltipS")
+                    .select("#weight")
+                    .text(d[6]);
+
+                d3.select("#tooltipS")
+                    .select("#hp")
+                    .text(d[8]);
+
+                d3.select("#tooltipS")
+                    .select("#attack")
+                    .text(d[9]);
+
+                d3.select("#tooltipS")
+                    .select("#defense")
+                    .text(d[10]);
+
+                d3.select("#tooltipS")
+                    .select("#sp_attack")
+                    .text(d[11]);
+
+                d3.select("#tooltipS")
+                    .select("#sp_defense")
+                    .text(d[12]);
+
+                d3.select("#tooltipS")
+                    .select("#speed")
+                    .text(d[13]);
+
+                d3.select("#tooltipS")
+                    .select("#type")
+                    .text(function () {
+                        if (d[15] != ""){
+                            return d[14]+"/"+d[15];
+                        } else {
+                            return d[14];
+                        }
+                    });
+            }
 
             if (i < 6) {
                 teamPos[0] = teamPos[0] - 1;
@@ -520,6 +570,67 @@ svg2.selectAll("circle")
                     }
                 });
         }
+    })
+    .on("mouseover",function (d) {
+        //Get this bar's x/y values, then augment for the tooltip
+        var xPosition = parseFloat(d3.select(this).attr("cx"))+275+60;
+        var yPosition = parseFloat(d3.select(this).attr("cy"))+560;
+        //Update the tooltip position and value
+        d3.select("#tooltipS")
+            .style("left", xPosition + "px")
+            .style("top", yPosition + "px")
+            .select("#name")
+            .text("#"+ d[3] + " " +d[4]);
+
+        d3.select("#tooltipS")
+            .select("#height")
+            .text(d[5]);
+
+        d3.select("#tooltipS")
+            .select("#weight")
+            .text(d[6]);
+
+        d3.select("#tooltipS")
+            .select("#hp")
+            .text(d[8]);
+
+        d3.select("#tooltipS")
+            .select("#attack")
+            .text(d[9]);
+
+        d3.select("#tooltipS")
+            .select("#defense")
+            .text(d[10]);
+
+        d3.select("#tooltipS")
+            .select("#sp_attack")
+            .text(d[11]);
+
+        d3.select("#tooltipS")
+            .select("#sp_defense")
+            .text(d[12]);
+
+        d3.select("#tooltipS")
+            .select("#speed")
+            .text(d[13]);
+
+        d3.select("#tooltipS")
+            .select("#type")
+            .text(function () {
+                if (d[15] != ""){
+                    return d[14]+"/"+d[15];
+                } else {
+                    return d[14];
+                }
+            });
+
+        //Show the tooltip
+        if (d[14] != "") {
+            d3.select("#tooltipS").classed("hidden", false);
+        }
+    })
+    .on("mouseout", function () {
+        d3.select("#tooltipS").classed("hidden", true);
     });
 
 function shiftAll() {
