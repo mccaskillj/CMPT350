@@ -1,9 +1,9 @@
-var dataset = [[0,"",0,"",""],
-    [0,"",0,"",""],
-    [0,"",0,"",""],
-    [0,"",0,"",""],
-    [0,"",0,"",""],
-    [0,"",0,"",""]];
+var dataset = [[0,"",0,"","",0],
+    [0,"",0,"","",0],
+    [0,"",0,"","",0],
+    [0,"",0,"","",0],
+    [0,"",0,"","",0],
+    [0,"",0,"","",0]];
 
 var datasetbarleft = [[0,0,0,0,0,0],
     [0,0,0,0,0,0],
@@ -12,12 +12,19 @@ var datasetbarleft = [[0,0,0,0,0,0],
     [0,0,0,0,0,0],
     [0,0,0,0,0,0]];
 
-var datasetright = [[0,"",0,"",""],
-    [0,"",0,"",""],
-    [0,"",0,"",""],
-    [0,"",0,"",""],
-    [0,"",0,"",""],
-    [0,"",0,"",""]];
+var datasetbartest = [[3,3,50,3,3,3],
+    [3,56,4,4,20,3],
+    [5,1,4,5,5,5],
+    [2,200,2,200,2,2],
+    [6,6,15,6,200,6],
+    [7,109,7,7,3,7]];
+
+var datasetright = [[0,"",0,"","",0],
+    [0,"",0,"","",0],
+    [0,"",0,"","",0],
+    [0,"",0,"","",0],
+    [0,"",0,"","",0],
+    [0,"",0,"","",0]];
 
 var datasetbarright = [[0,0,0,0,0,0],
     [0,0,0,0,0,0],
@@ -26,36 +33,88 @@ var datasetbarright = [[0,0,0,0,0,0],
     [0,0,0,0,0,0],
     [0,0,0,0,0,0]];
 
+var advantages = [{"name":"Normal","immunes":["Ghost"],"weaknesses":["Rock","Steel"],"strengths":[]},
+{"name":"Fire","immunes":[],"weaknesses":["Fire","Water","Rock","Dragon"],"strengths":["Grass","Ice","Bug","Steel"]},
+{"name":"Water","immunes":[],"weaknesses":["Water","Grass","Dragon"],"strengths":["Fire","Ground","Rock"]},
+{"name":"Electric","immunes":["Ground"],"weaknesses":["Electric","Grass","Dragon"],"strengths":["Water","Flying"]},
+{"name":"Grass","immunes":[],"weaknesses":["Fire","Grass","Poison","Flying","Bug","Dragon","Steel"],"strengths":["Water","Ground","Rock"]},
+{"name":"Ice","immunes":[],"weaknesses":["Fire","Water","Ice","Steel"],"strengths":["Grass","Ground","Flying","Dragon"]},
+{"name":"Fighting","immunes":["Ghost"],"weaknesses":["Poison","Flying","Psychic","Bug","Fairy"],"strengths":["Normal","Ice","Rock","Dark","Steel"]},
+{"name":"Poison","immunes":["Steel"],"weaknesses":["Poison","Ground","Rock","Ghost"],"strengths":["Grass","Fairy"]},
+{"name":"Ground","immunes":["Flying"],"weaknesses":["Grass","Bug"],"strengths":["Fire","Electric","Poison","Rock","Steel"]},
+{"name":"Flying","immunes":[],"weaknesses":["Electric","Rock","Steel"],"strengths":["Grass","Fighting","Bug"]},
+{"name":"Psychic","immunes":["Dark"],"weaknesses":["Psychic","Steel"],"strengths":["Fighting","Poison"]},
+{"name":"Bug","immunes":[],"weaknesses":["Fire","Fighting","Poison","Flying","Ghost","Steel","Fairy"],"strengths":["Grass","Psychic","Dark"]},
+{"name":"Rock","immunes":[],"weaknesses":["Fighting","Ground","Steel"],"strengths":["Fire","Ice","Flying","Bug"]},
+{"name":"Ghost","immunes":["Normal"],"weaknesses":["Dark"],"strengths":["Psychic","Ghost"]},
+{"name":"Dragon","immunes":["Fairy"],"weaknesses":["Steel"],"strengths":["Dragon"]},
+{"name":"Dark","immunes":[],"weaknesses":["Fighting","Dark","Fairy"],"strengths":["Psychic","Ghost"]},
+{"name":"Steel","immunes":[],"weaknesses":["Fire","Water","Electric","Steel"],"strengths":["Ice","Rock","Fairy"]},
+{"name":"Fairy","immunes":[],"weaknesses":["Fire","Poison","Steel"],"strengths":["Fighting","Dragon","Dark"]}];
+
+// var testad = [{"Normal":{"immunes":["Ghost"],"weaknesses":["Rock","Steel"],"strengths":[]}},
+//              {"Fire":{"immunes":[],"weaknesses":["Fire","Water","Rock","Dragon"],"strengths":["Grass","Ice","Bug","Steel"]}}];
+
+
+var items = ["Hp", "Attack", "Defense", "Sp. Attack", "Sp. Defense", "Speed"];
+
 var w = 1224;
 var h = 800;
+var w2 = 612;
 var h2 = 700;
-var x = 0;
 var datapos = 0;
 var dataposright = 0;
 var datapostable = 0;
 var datapostableright = 0;
 
 var svg = d3.select('#maindiv').append('svg').attr('height', h).attr('width', w);
-var svgbar = d3.select('#barchart').append('svg').attr('height', h2).attr('width', w);
 
 var boxes = svg.selectAll("rect").data(dataset);
-                boxes.enter()
-                    .append("rect")
-                    .attr("x", 10)
-                    .attr("y", function (d,i) {
-                        //console.log('Here');
-                        return ((110*i))
-                    })
-                    .attr("width", 450)
-                    .attr("height", 105)
-                    // .attr("id",function (i) {
-                    //     console.log("index",i);
-                    //     return "leftbox0";
-                    // })
-                    .attr("fill", "#bdbec0")
-                    .attr("stroke","black")
-                    .attr("shape-rendering","crispEdges")
-                    .attr("opacity", 0);
+    boxes.enter()
+        .append("rect")
+        .attr("x", 10)
+        .attr("y", function (d,i) {
+            return ((110*i))
+        })
+        .attr("width", 450)
+        .attr("height", 105)
+        .attr("fill", "#bdbec0")
+        .attr("stroke","black")
+        .attr("shape-rendering","crispEdges")
+        .attr("opacity", 0)
+        .on("mouseover", function (d, i){
+        //d3.select(this).attr("opacity",0);
+            //var curselect = d3.select(this);
+            //console.log(d[3],d[4]);
+            var currenttype1 = d[3];
+            var currenttype2 = d[4];
+            adhelper(currenttype1,currenttype2);
+            //d3.select("#rightbox1").attr("opacity",1);
+            $.each(advantages,function (key,value) {
+                //console.log(value.name);
+            })
+        })
+        ;
+
+curpoke = [];
+
+function adhelper(type1,type2) {
+    var immunelist = [];
+    console.log($.inArray("Normal",advantages));
+    // for (var i = 0; i<18; i++){
+    //     if (advantages[i]["name"] == type1 || advantages[i]["name"] == type2){
+    //         curpoke=({
+    //             immunes: advantages[i]["immunes"],
+    //             weaknesses: advantages[i]["weaknesses"],
+    //             strengths: advantages[i]["strengths"]
+    //         })
+    //
+    //     }
+    // }
+    // console.log(curpoke);
+
+
+}
 
 var boxlabels = svg.selectAll("text")
     .data(dataset);
@@ -118,7 +177,7 @@ var circles = svg.selectAll('circle')
     })
     .attr("r",40)
     .style("fill",function (d,i) {
-        console.log(i);
+        //console.log(i);
         return 'url(#imageleft' +i+')';
     })
     .attr("stroke-width",0)
@@ -141,7 +200,146 @@ var types = svg.selectAll("foreignObject.left")
     .append("xhtml:test1")
     .html('');
 
+var hplabels = svg.selectAll("text.hp")
+    .data(dataset)
+    .enter()
+    .append("text")
+    .attr("text-anchor","right")
+    .attr("x",325)
+    .attr("y",function(d,i){
+        return ((110*i)+50)
+    })
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "18px")
+    .attr("opacity",0)
+    .attr("fill", "black");
 
+
+var advantagegroup = svg.selectAll("g.adavantage")
+    .data(dataset)
+    .enter()
+    .append("g")
+    .attr("id",function (d,i) {
+            //console.log("leftbox"+i);
+            return "leftbox"+i;
+        })
+    .attr("opacity", 0);
+
+advantagegroup.append("rect")
+        .attr("x", 470)
+        .attr("y", function (d,i) {
+            //console.log('Here');
+            return ((110*i))
+        })
+        .attr("width", 105)
+        .attr("height", 105)
+        .attr("fill", "#bdbec0")
+        .attr("stroke","black")
+        .attr("shape-rendering","crispEdges");
+
+
+advantagegroup.append("text")
+    .text("1x")
+    .attr("text-anchor","middle")
+    .attr("x", 522.5)
+    .attr("y", function (d,i) {
+            //console.log('Here');
+            return ((110*i)+70)
+        })
+    .attr("text-anchor", "middle")
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "50px")
+    .attr("font-weight","bold")
+    .attr("fill", "black");
+
+
+var margin = {top: 20, right: 50, bottom: 30, left: 10},
+        width = 612 - margin.left - margin.right,
+        height = 700 - margin.top - margin.bottom;
+
+var x = d3.scale.ordinal()
+        .rangeRoundBands([0, width], .35);
+
+var y = d3.scale.linear()
+        .rangeRound([height, 0]);
+
+var color = d3.scale.category10();
+
+var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("right")
+    .ticks(10, "%");
+
+//console.log("before map: ",datasetbartest);
+
+var svgbar = d3.select('#chartarea').append('svg').attr('height', height + margin.top + margin.bottom).attr('width', width + margin.left + margin.right).append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var datamapped = ["Hp", "Attack", "Defense", "Sp. Attack", "Sp. Defense", "Speed"].map(function (d1,ii) {
+    //console.log('ii=',ii);
+    //console.log('d1=',d1);
+    return datasetbartest.map(function (d,i) {
+        //console.log("d=",d);
+        //console.log('i=',i);
+        return {x: items[i], y: d[ii]};
+    })
+});
+
+
+//console.log(datamapped);
+
+var stack = d3.layout.stack();
+stack(datamapped);
+
+//domain
+x.domain(datamapped[0].map(function (d) {
+    return d.x;
+}));
+
+y.domain([0,
+    d3.max(datamapped[datamapped.length - 1],
+            function (d) { return d.y0 + d.y;})
+    ])
+  .nice();
+
+
+var layer = svgbar.selectAll(".stack")
+        .data(datamapped)
+        .enter().append("g")
+        .attr("class", "stack")
+        .style("fill", function (d, i) {
+            return color(i);
+        });
+
+layer.selectAll("rect")
+        .data(function (d) {
+            return d;
+        })
+        .enter().append("rect")
+        .attr("x", function (d) {
+            return x(d.x);
+        })
+        .attr("y", function (d) {
+            return y(d.y + d.y0);
+        })
+        .attr("height", function (d) {
+            return y(d.y0) - y(d.y + d.y0);
+        })
+        .attr("width", x.rangeBand());
+
+svgbar.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+svgbar.append("g")
+        .attr("class", "yaxis")
+        //.attr("transform", "translate(0,0)")
+        .call(yAxis);
 
 //
 //###################################################################
@@ -214,8 +412,8 @@ rectfrontright.enter()
     .attr("stroke","black")
     .attr("opacity",0);
 
-var circlesright = svg.selectAll('circle.right').
-    data(datasetright)
+var circlesright = svg.selectAll('circle.right')
+    .data(datasetright)
     .enter()
     .append("circle")
     .attr("cx",784)
@@ -224,7 +422,7 @@ var circlesright = svg.selectAll('circle.right').
     })
     .attr("r",40)
     .style("fill",function (d,i) {
-        console.log(i);
+        //console.log(i);
         return 'url(#imageright' +i+')';
     })
     .attr("stroke-width",0)
@@ -244,6 +442,57 @@ var typesright = svg.selectAll("foreignObject.right")
     })
     .append("xhtml:test")
     .html('');
+
+var hplabelsright = svg.selectAll("text.hpright")
+    .data(datasetright)
+    .enter()
+    .append("text")
+    .attr("text-anchor","right")
+    .attr("x",1039)
+    .attr("y",function(d,i){
+        return ((110*i)+50)
+    })
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "18px")
+    .attr("opacity",0)
+    .attr("fill", "black");
+
+var advantagegroupright = svg.selectAll("g.adavantageright")
+    .data(datasetright)
+    .enter()
+    .append("g")
+    .attr("id",function (d,i) {
+            //console.log("rightbox"+i);
+            return "rightbox"+i;
+        })
+    .attr("opacity", 0);
+
+advantagegroupright.append("rect")
+        .attr("x", 609)
+        .attr("y", function (d,i) {
+            //console.log('Here');
+            return ((110*i))
+        })
+        .attr("width", 105)
+        .attr("height", 105)
+        .attr("fill", "#bdbec0")
+        .attr("stroke","black")
+        .attr("shape-rendering","crispEdges");
+
+
+advantagegroupright.append("text")
+    .text("1x")
+    .attr("text-anchor","middle")
+    .attr("x", 661.5)
+    .attr("y", function (d,i) {
+            //console.log('Here');
+            return ((110*i)+70)
+        })
+    .attr("text-anchor", "middle")
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "50px")
+    .attr("font-weight","bold")
+    .attr("fill", "black");
 
 
 d3.select("#addbuttonleft").on("click",function () {
@@ -345,6 +594,20 @@ d3.select("#addbuttonleft").on("click",function () {
                             return addType(d[3])+'<br>'+addType(d[4]);
                         }
                     });
+
+                hplabels.text(function (d) {
+                    return "HP: "+d[2]+"/255";
+                    })
+                    .transition()
+                    .duration(500)
+                    .attr("opacity", function (d) {
+                        if (d[0] != 0) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    });
+
                 $('#imageleft' + (datapos-1) + ' image').attr("xlink:href", frontPath + dataset[datapos-1][0] + '.png');
             }
 
@@ -434,6 +697,18 @@ d3.select("#addbuttonright").on("click",function () {
                             return addType(d[3])+'<br>';
                         }else{
                             return addType(d[3])+'<br>'+addType(d[4]);
+                        }
+                    });
+                hplabelsright.text(function (d) {
+                    return "HP: "+d[2]+"/255";
+                    })
+                    .transition()
+                    .duration(500)
+                    .attr("opacity", function (d) {
+                        if (d[0] != 0) {
+                            return 1;
+                        } else {
+                            return 0;
                         }
                     });
 
