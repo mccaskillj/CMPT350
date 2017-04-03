@@ -470,7 +470,84 @@ svg2.selectAll("circle")
     .style('stroke', 'black')
     .style('fill', function (d,i) {
         return 'url(#team'+i+')';
+    })
+    .on("click", function (d,i) {
+        if(d[3] != 0) {
+            d[3] = 0;
+            d[4] = "";
+            d[5] = 0;
+            d[6] = 0;
+            d[7] = 0;
+            d[8] = 0;
+            d[9] = 0;
+            d[10] = 0;
+            d[11] = 0;
+            d[12] = 0;
+            d[13] = 0;
+            d[14] = "";
+            d[15] = "";
+
+            shiftAll();
+
+            if (i < 6) {
+                teamPos[0] = teamPos[0] - 1;
+            } else {
+                teamPos[1] = teamPos[1] - 1;
+            }
+
+            for (var j = 0; j < 12; j++) {
+                if (teams[j][3] != 0) {
+                    console.log("#team" + j + " image");
+                    $("#team" + j + " image").attr('xlink:href', frontPath + teams[j][3] + '.png');
+                } else {
+                    $("#team" + j + " image").attr('xlink:href', '');
+                }
+            }
+
+            svg2.selectAll("circle")
+                .attr("stroke-width", function (d) {
+                    if (d[14] != ""){
+                        return 3;
+                    } else {
+                        return 1;
+                    }
+                })
+                .style("stroke",function (d) {
+                    if (d[14] != ""){
+                        return typeColor(d[14]);
+                    } else {
+                        return typeColor("Dark");
+                    }
+                });
+        }
     });
+
+function shiftAll() {
+    for (var i =0;i<5;i++){
+        slide(i);
+        slide(6+i);
+    }
+}
+
+function slide(pos) {
+    if (teams[pos][4] == "" && teams[pos+1][4] != "") {
+        for (var i = 3; i < 16; i++)
+            teams[pos][i] = teams[pos + 1][i];
+        teams[pos+1][3] = 0;
+        teams[pos+1][4] = "";
+        teams[pos+1][5] = 0;
+        teams[pos+1][6] = 0;
+        teams[pos+1][7] = 0;
+        teams[pos+1][8] = 0;
+        teams[pos+1][9] = 0;
+        teams[pos+1][10] = 0;
+        teams[pos+1][11] = 0;
+        teams[pos+1][12] = 0;
+        teams[pos+1][13] = 0;
+        teams[pos+1][14] = "";
+        teams[pos+1][15] = "";
+    }
+}
 
 svg2.selectAll("text")
     .data(["Team 1","Team 2"])
@@ -753,6 +830,10 @@ d3.select('#navbar').on('mouseover', function () {
     d3.select("#popupS").classed("hidden",true);
 });
 
+d3.select('#compareT').on('click',function () {
+    console.log("clicked");
+})
+
 d3.select('#buttonTeam1').on('click', function () {
     if (teamPos[0]<6){
         for(var i = 2;i<16;i++){
@@ -766,6 +847,22 @@ d3.select('#buttonTeam1').on('click', function () {
             }
         }
         teamPos[0]=teamPos[0] + 1;
+
+        svg2.selectAll("circle")
+            .attr("stroke-width", function (d) {
+                if (d[14] != ""){
+                    return 3;
+                } else {
+                    return 1;
+                }
+            })
+            .style("stroke", function (d) {
+                if (d[14] != ""){
+                    return typeColor(d[14]);
+                } else {
+                    return typeColor("Dark");
+                }
+            });
     }
 });
 
@@ -782,6 +879,22 @@ d3.select('#buttonTeam2').on('click', function () {
             }
         }
         teamPos[1]=teamPos[1] + 1;
+
+        svg2.selectAll("circle")
+            .attr("stroke-width", function (d) {
+                if (d[14] != ""){
+                    return 3;
+                } else {
+                    return 1;
+                }
+            })
+            .style("stroke", function (d) {
+                if (d[14] != ""){
+                    return typeColor(d[14]);
+                } else {
+                    return typeColor("Dark");
+                }
+            });
     }
 });
 

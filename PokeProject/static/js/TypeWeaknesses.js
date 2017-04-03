@@ -1,0 +1,20 @@
+var typeChart = {
+    "Grass":{"Grass":1,"Fire":1,"Water":4,"Fighting":2,"Steel":1,"Electric":2,"Ice":2,"Normal":2,"Bug":1,"Dragon":1,"Psychic":2,"Ghost":2,"Poison":1,"Fairy":2,"Dark":2,"Rock":4,"Ground":4,"Flying":1},
+    "Fire":{"Grass":4,"Fire":1,"Water":1,"Fighting":2,"Steel":4,"Electric":2,"Ice":4,"Normal":2,"Bug":4,"Dragon":1,"Psychic":2,"Ghost":2,"Poison":2,"Fairy":2,"Dark":2,"Rock":1,"Ground":2,"Flying":2},
+    "Water":{"Grass":1,"Fire":4,"Water":1,"Fighting":2,"Steel":2,"Electric":2,"Ice":2,"Normal":2,"Bug":2,"Dragon":1,"Psychic":2,"Ghost":2,"Poison":2,"Fairy":2,"Dark":2,"Rock":4,"Ground":4,"Flying":2},
+    "Fighting":{"Grass":2,"Fire":2,"Water":2,"Fighting":2,"Steel":4,"Electric":2,"Ice":4,"Normal":4,"Bug":1,"Dragon":2,"Psychic":1,"Ghost":0,"Poison":1,"Fairy":1,"Dark":4,"Rock":4,"Ground":2,"Flying":1},
+    "Steel":{"Grass":2,"Fire":1,"Water":1,"Fighting":2,"Steel":1,"Electric":1,"Ice":4,"Normal":2,"Bug":2,"Dragon":2,"Psychic":2,"Ghost":2,"Poison":2,"Fairy":4,"Dark":2,"Rock":4,"Ground":2,"Flying":2},
+    "Electric":{"Grass":1,"Fire":2,"Water":4,"Fighting":2,"Steel":2,"Electric":1,"Ice":2,"Normal":2,"Bug":2,"Dragon":1,"Psychic":2,"Ghost":2,"Poison":2,"Fairy":2,"Dark":2,"Rock":2,"Ground":0,"Flying":4},
+    "Ice":{"Grass":4,"Fire":1,"Water":1,"Fighting":2,"Steel":1,"Electric":2,"Ice":1,"Normal":2,"Bug":2,"Dragon":4,"Psychic":2,"Ghost":2,"Poison":2,"Fairy":2,"Dark":2,"Rock":2,"Ground":4,"Flying":4},
+    "Normal":{"Grass":2,"Fire":2,"Water":2,"Fighting":2,"Steel":1,"Electric":2,"Ice":2,"Normal":2,"Bug":2,"Dragon":2,"Psychic":2,"Ghost":0,"Poison":2,"Fairy":2,"Dark":2,"Rock":1,"Ground":2,"Flying":2},
+    "Bug":{"Grass":4,"Fire":1,"Water":2,"Fighting":1,"Steel":1,"Electric":2,"Ice":2,"Normal":2,"Bug":2,"Dragon":2,"Psychic":4,"Ghost":1,"Poison":1,"Fairy":1,"Dark":4,"Rock":2,"Ground":2,"Flying":1},
+    "Dragon":{"Grass":2,"Fire":2,"Water":2,"Fighting":2,"Steel":1,"Electric":2,"Ice":2,"Normal":2,"Bug":2,"Dragon":4,"Psychic":2,"Ghost":2,"Poison":2,"Fairy":0,"Dark":2,"Rock":2,"Ground":2,"Flying":2},
+    "Psychic":{"Grass":2,"Fire":2,"Water":2,"Fighting":4,"Steel":1,"Electric":2,"Ice":2,"Normal":2,"Bug":2,"Dragon":2,"Psychic":1,"Ghost":2,"Poison":4,"Fairy":2,"Dark":0,"Rock":2,"Ground":2,"Flying":2},
+    "Ghost":{"Grass":2,"Fire":2,"Water":2,"Fighting":2,"Steel":2,"Electric":2,"Ice":2,"Normal":0,"Bug":2,"Dragon":2,"Psychic":4,"Ghost":4,"Poison":2,"Fairy":2,"Dark":1,"Rock":2,"Ground":2,"Flying":2},
+    "Poison":{"Grass":4,"Fire":2,"Water":2,"Fighting":2,"Steel":0,"Electric":2,"Ice":2,"Normal":2,"Bug":2,"Dragon":2,"Psychic":2,"Ghost":1,"Poison":1,"Fairy":4,"Dark":2,"Rock":1,"Ground":1,"Flying":2},
+    "Fairy":{"Grass":2,"Fire":1,"Water":2,"Fighting":4,"Steel":1,"Electric":2,"Ice":2,"Normal":2,"Bug":2,"Dragon":4,"Psychic":2,"Ghost":2,"Poison":1,"Fairy":2,"Dark":4,"Rock":2,"Ground":2,"Flying":2},
+    "Dark":{"Grass":2,"Fire":2,"Water":2,"Fighting":1,"Steel":2,"Electric":2,"Ice":2,"Normal":2,"Bug":2,"Dragon":2,"Psychic":4,"Ghost":4,"Poison":2,"Fairy":1,"Dark":1,"Rock":2,"Ground":2,"Flying":2},
+    "Rock":{"Grass":2,"Fire":4,"Water":2,"Fighting":1,"Steel":1,"Electric":2,"Ice":4,"Normal":2,"Bug":4,"Dragon":2,"Psychic":2,"Ghost":2,"Poison":2,"Fairy":2,"Dark":2,"Rock":2,"Ground":1,"Flying":4},
+    "Ground":{"Grass":1,"Fire":4,"Water":2,"Fighting":2,"Steel":4,"Electric":4,"Ice":2,"Normal":2,"Bug":1,"Dragon":2,"Psychic":2,"Ghost":2,"Poison":4,"Fairy":2,"Dark":2,"Rock":4,"Ground":2,"Flying":0},
+    "Flying":{"Grass":4,"Fire":2,"Water":2,"Fighting":4,"Steel":1,"Electric":1,"Ice":2,"Normal":2,"Bug":4,"Dragon":2,"Psychic":2,"Ghost":2,"Poison":2,"Fairy":2,"Dark":2,"Rock":1,"Ground":2,"Flying":2}
+};
