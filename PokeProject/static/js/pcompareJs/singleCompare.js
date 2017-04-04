@@ -279,6 +279,15 @@ d3.select("#sb")
                     addType(pokemons[0]['type_1'], 'singleType');
                     addType(pokemons[0]['type_2'], 'singleType');
 
+
+                    $("#singleStrong  span").remove();
+                    $("#singleWeak  span").remove();
+
+                    AddDamage(pokemons[0]['type_1'], "singleWeak", "singleStrong");
+                    if (pokemons[0]['type_2'] != "") {
+                        AddDamage(pokemons[0]['type_2'], "singleWeak", "singleStrong");
+                    }
+
                     var data1 = getValuesForReg(pokemons, unwantedFirst);
                     var data2 = getValuesForDerivedOriginal(pokemons, unwantedSecond);
 

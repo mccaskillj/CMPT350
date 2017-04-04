@@ -82,10 +82,18 @@
                 </div>
                 <div>
                     <div>
-                        Egg Group:
+                        Effective Against:
                     </div>
-                    <div style="padding-left: 60px" id="singleEgg">
-                        <span class="badge monsterBadge">Monster</span>
+                    <div style="padding-left: 60px" id="singleStrong">
+                        <span class="badge">none</span>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        Weak Against:
+                    </div>
+                    <div style="padding-left: 60px" id="singleWeak">
+                        <span class="badge">none</span>
                     </div>
                 </div>
             </div>
@@ -216,6 +224,22 @@
                         <span class="badge">None</span>
                     </div>
                 </div>
+                <div>
+                    <div>
+                        Effective Against:
+                    </div>
+                    <div style="padding-left: 60px" id="doubleStrong">
+                        <span class="badge">none</span>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        Weak Against:
+                    </div>
+                    <div style="padding-left: 60px" id="doubleWeak">
+                        <span class="badge">none</span>
+                    </div>
+                </div>
 
             </div>
             <div class="doubleStatsRight fontStyleSinglePoke">
@@ -242,6 +266,23 @@
                         <span class="badge">None</span>
                     </div>
                 </div>
+                <div>
+                    <div>
+                        Effective Against:
+                    </div>
+                    <div style="padding-left: 60px" id="doubleStrong2">
+                        <span class="badge">none</span>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        Weak Against:
+                    </div>
+                    <div style="padding-left: 60px" id="doubleWeak2">
+                        <span class="badge">none</span>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -346,6 +387,7 @@
 <!--new JS files-->
 <script type="text/javascript" src="{% static "js/d3.js" %}"></script>
 <script type="text/javascript" src="{% static "js/adjustPokeStats.js" %}"></script>
+<script type="text/javascript" src="{% static "js/TypeWeaknesses.js" %}"></script>
 <script type="text/javascript" src="{% static "js/pcompareJs/pcompareHelpers.js" %}"></script>
 <script type="text/javascript" src="{% static "js/pcompareJs/singleCompare.js" %}"></script>
 <script type="text/javascript" src="{% static "js/pcompareJs/doubleCompare.js" %}"></script>

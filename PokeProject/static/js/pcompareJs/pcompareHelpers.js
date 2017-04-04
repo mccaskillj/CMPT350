@@ -521,3 +521,19 @@ document.getElementById("doublePie").disabled=true;
 document.getElementById("checkNormalD").disabled=true;
 document.getElementById("dreivedStatus").disabled=true;
 
+
+function AddDamage(type, weakId, StrongID) {
+
+    var typeDam = typeChart[type];
+
+    var typeArry = Object.keys(typeDam);
+
+    for (var index = 0; index < typeArry.length; ++index) {
+        if (typeDam[typeArry[index]] == 1) {
+            addType(typeArry[index], weakId);
+        }
+        if (typeDam[typeArry[index]] == 4) {
+            addType(typeArry[index], StrongID);
+        }
+    }
+}

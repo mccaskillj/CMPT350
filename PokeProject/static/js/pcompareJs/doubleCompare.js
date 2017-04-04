@@ -133,6 +133,14 @@ d3.select("#doubleClick")
                     addType(pokemons[0]['type_1'], "singleTypeDouble");
                     addType(pokemons[0]['type_2'], "singleTypeDouble");
 
+                    $("#doubleWeak  span").remove();
+                    $("#doubleStrong  span").remove();
+
+                    AddDamage(pokemons[0]['type_1'], "doubleWeak", "doubleStrong");
+                    if (pokemons[0]['type_2'] != "") {
+                        AddDamage(pokemons[0]['type_2'], "doubleWeak", "doubleStrong");
+                    }
+
                     var data1 = getValuesForReg(pokemons, unwantedFirst);
                     var data2 = getValuesForDerived(pokemons, unwantedSecond);
 
@@ -269,6 +277,14 @@ d3.select("#doubleClick2")
                         $("#singleTypeDouble2  span").remove();
                         addType(pokemons[0]['type_1'], "singleTypeDouble2");
                         addType(pokemons[0]['type_2'], "singleTypeDouble2");
+
+                        $("#doubleWeak2  span").remove();
+                        $("#doubleStrong2  span").remove();
+
+                        AddDamage(pokemons[0]['type_1'], "doubleWeak2", "doubleStrong2");
+                        if (pokemons[0]['type_2'] != "") {
+                            AddDamage(pokemons[0]['type_2'], "doubleWeak2", "doubleStrong2");
+                        }
 
 
                         var data1 = getValuesForReg(pokemons, unwantedFirst);
