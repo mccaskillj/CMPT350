@@ -1,3 +1,4 @@
+//ID, Name , HP, Type 1, Type 2, x rating
 var dataset = [[0,"",0,"","",0],
     [0,"",0,"","",0],
     [0,"",0,"","",0],
@@ -83,7 +84,13 @@ var boxes = svg.selectAll("rect").data(dataset);
         .attr("fill", "#bdbec0")
         .attr("stroke","black")
         .attr("shape-rendering","crispEdges")
-        .attr("opacity", 0)
+        .attr("opacity", function (d) {
+            if (d[0] != 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+        })
         .on("mouseover", function (d, i){
         //d3.select(this).attr("opacity",0);
             //var curselect = d3.select(this);
@@ -511,12 +518,18 @@ d3.select("#addbuttonleft").on("click",function () {
                 dataset[datapos][2] = pokemons[0].hp;
                 dataset[datapos][3] = pokemons[0].type_1;
                 dataset[datapos][4] = pokemons[0].type_2;
-                datasetbarleft[0][datapos] = pokemons[0].hp;
-                datasetbarleft[1][datapos] = pokemons[0].attack;
-                datasetbarleft[2][datapos] = pokemons[0].defense;
-                datasetbarleft[3][datapos] = pokemons[0].sp_attack;
-                datasetbarleft[4][datapos] = pokemons[0].sp_defense;
-                datasetbarleft[5][datapos] = pokemons[0].speed;
+                // datasetbarleft[0][datapos] = pokemons[0].hp;
+                // datasetbarleft[1][datapos] = pokemons[0].attack;
+                // datasetbarleft[2][datapos] = pokemons[0].defense;
+                // datasetbarleft[3][datapos] = pokemons[0].sp_attack;
+                // datasetbarleft[4][datapos] = pokemons[0].sp_defense;
+                // datasetbarleft[5][datapos] = pokemons[0].speed;
+                datasetbarleft[datapos][0] = pokemons[0].hp;
+                datasetbarleft[datapos][1] = pokemons[0].attack;
+                datasetbarleft[datapos][2] = pokemons[0].defense;
+                datasetbarleft[datapos][3] = pokemons[0].sp_attack;
+                datasetbarleft[datapos][4] = pokemons[0].sp_defense;
+                datasetbarleft[datapos][5] = pokemons[0].speed;
                 // datasetbarleft.push({
                 //         Hp: pokemons[0].hp,
                 //         Attack: pokemons[0].attack,
@@ -615,7 +628,7 @@ d3.select("#addbuttonleft").on("click",function () {
                             return 0;
                         }
                     });
-
+                //For loop to load from other page
                 $('#imageleft' + (datapos-1) + ' image').attr("xlink:href", frontPath + dataset[datapos-1][0] + '.png');
 
 
