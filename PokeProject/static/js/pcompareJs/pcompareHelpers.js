@@ -527,13 +527,27 @@ function AddDamage(type, weakId, StrongID) {
     var typeDam = typeChart[type];
 
     var typeArry = Object.keys(typeDam);
+    var strong = 0;
+    var weak = 0;
 
     for (var index = 0; index < typeArry.length; ++index) {
         if (typeDam[typeArry[index]] == 1) {
             addType(typeArry[index], weakId);
+            weak++;
         }
         if (typeDam[typeArry[index]] == 4) {
             addType(typeArry[index], StrongID);
+            strong++;
         }
     }
+
+    // if (weak == 0) {
+    //     var elem = document.getElementById(weakId);
+    //     elem.innerHTML += '<span class="badge">None</span>';
+    // }
+    // if (strong == 0) {
+    //     elem = document.getElementById(StrongID);
+    //     elem.innerHTML += '<span class="badge">None</span>';
+    // }
+
 }
