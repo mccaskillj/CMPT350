@@ -30,6 +30,7 @@ var yAxis = d3.svg.axis()
 //create svg container
 var doublesvg = d3.select("#doubleChart")
     .append("svg")
+    .attr("id", "doublesvg")
     .attr("width", w + margin.left + margin.right)
     .attr("height", h + margin.top + margin.bottom)
     .append("g")
@@ -132,6 +133,14 @@ d3.select("#doubleClick")
                     addType(pokemons[0]['type_1'], "singleTypeDouble");
                     addType(pokemons[0]['type_2'], "singleTypeDouble");
 
+                    $("#doubleWeak  span").remove();
+                    $("#doubleStrong  span").remove();
+
+                    AddDamage(pokemons[0]['type_1'], "doubleWeak", "doubleStrong");
+                    if (pokemons[0]['type_2'] != "") {
+                        AddDamage(pokemons[0]['type_2'], "doubleWeak", "doubleStrong");
+                    }
+
                     var data1 = getValuesForReg(pokemons, unwantedFirst);
                     var data2 = getValuesForDerived(pokemons, unwantedSecond);
 
@@ -141,6 +150,12 @@ d3.select("#doubleClick")
 
                     redrawGraph(doublesvg, "#double", doublePokeDataOne[0], 255, "#90caf9", w, h);
 
+                    document.getElementById("normalDouble").disabled=false;
+                    document.getElementById("shinnyDouble").disabled=false;
+                    document.getElementById("checkBarDouble").disabled=false;
+                    document.getElementById("doublePie").disabled=false;
+                    document.getElementById("checkNormalD").disabled=false;
+                    document.getElementById("dreivedStatus").disabled=false;
                     document.getElementById("checkNormal").checked = true;
                     document.getElementById("checkBarDouble").checked = true;
                     document.getElementById("checkNormalD").checked = true;
@@ -158,6 +173,7 @@ d3.select("#doubleClick")
 //create svg container
 var doublesvg2 = d3.select("#doubleChart2")
     .append("svg")
+    .attr("id", "doublesvg2")
     .attr("width", w + margin.left + margin.right)
     .attr("height", h + margin.top + margin.bottom)
     .append("g")
@@ -262,6 +278,14 @@ d3.select("#doubleClick2")
                         addType(pokemons[0]['type_1'], "singleTypeDouble2");
                         addType(pokemons[0]['type_2'], "singleTypeDouble2");
 
+                        $("#doubleWeak2  span").remove();
+                        $("#doubleStrong2  span").remove();
+
+                        AddDamage(pokemons[0]['type_1'], "doubleWeak2", "doubleStrong2");
+                        if (pokemons[0]['type_2'] != "") {
+                            AddDamage(pokemons[0]['type_2'], "doubleWeak2", "doubleStrong2");
+                        }
+
 
                         var data1 = getValuesForReg(pokemons, unwantedFirst);
                         var data2 = getValuesForDerived(pokemons, unwantedSecond);
@@ -286,7 +310,7 @@ d3.select("#doubleClick2")
             });
     });
 
-$('#normalStatus').on("click",function(){
+$('#checkNormalD').on("click",function(){
 
     redrawGraph(doublesvg, "#double", doublePokeDataOne[0], 255, "#90caf9", w, h);
     redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[0], 255, "#90caf9", w, h);
@@ -308,7 +332,7 @@ $( function() {
         },
         slide: function( event, ui ) {
             handle2.text( ui.value );
-
+            console.log(ui.value);
             adjustDoubleData(doublePokeDataOne, ui.value);
             adjustDoubleData(doublePokeDataTwo, ui.value);
 
@@ -325,3 +349,37 @@ $( function() {
         }
     });
 } );
+
+// Double
+$('#checkBarDouble').change(function(){
+    $("#doublesvg" ).removeClass('hidden');
+    $("#doublesvg2").removeClass('hidden');
+
+    d3.selectAll("#mypie").remove();
+
+    document.getElementById("checkBarDouble").disabled=true;
+    document.getElementById("doublePie").disabled=false;
+});
+
+$('#doublePie').change(function(){
+    $("#doublesvg").addClass('hidden');
+    $("#doublesvg2").addClass('hidden');
+
+    var val = document.getElementById("custom-handle2").innerHTML;
+    console.log(val);
+
+    adjustDoubleData(doublePokeDataOne, val);
+    adjustDoubleData(doublePokeDataTwo, val);
+
+    var value = document.querySelector('input[name = "optradio5"]:checked').value;
+
+    if (value == 'derived') {
+        drawPie(doublePokeDataOne[3], '#doubleChart');
+        drawPie(doublePokeDataTwo[3], '#doubleChart2');
+    }else {
+        drawPie(doublePokeDataOne[2], '#doubleChart');
+        drawPie(doublePokeDataTwo[2], '#doubleChart2');
+    }
+    document.getElementById("checkBarDouble").disabled=false;
+    document.getElementById("doublePie").disabled=true;
+});

@@ -186,6 +186,10 @@ function openCity(evt, cityName) {
 }
 
 function adjustDoubleData(data, level){
+    if (level == 0) {
+        level = 1;
+    }
+
     // Poke 1
     data[2] = [];
     data[2].push({ stat: 'Hp', value: adjustHp(data[0][0].value, level), info: 'Hp: Pokemons Health'});
@@ -300,6 +304,115 @@ function redrawGraph(svgelment, chartId, data, testVal, color, barWidth, barHeig
         .style("text-anchor", "end");
 }
 
+function drawPie(data, ID) {
+    var margin = {top: 20, right: 20, bottom: 20, left: 20};
+    var widthP = 450 - margin.left - margin.right;
+    var heightP = widthP+100 - margin.top - margin.bottom;
+
+    var piechartS = d3.select(ID)
+        .append('svg')
+        .attr('id', "mypie")
+        .attr('class', 'temp')
+        .attr("width", widthP + margin.left + margin.right+50)
+        .attr("height", heightP + margin.top + margin.bottom+50)
+        .append("g")
+        .attr("transform", "translate(" + ((widthP / 2) + margin.left) + "," + ((heightP / 2) + margin.top) + ")");
+
+
+    var radius = Math.min(widthP, heightP) / 2;
+
+    var color = d3.scale.ordinal()
+        .range(["#90caf9", "#92d36e", "#ff5d55", "#fefb64", "#f54378", "#5d4b7e"]);
+
+    var arc = d3.svg.arc()
+        .outerRadius(radius)
+        .innerRadius(radius - 80);
+
+    var pie = d3.layout.pie()
+        .sort(null)
+        .startAngle(1.1 * Math.PI)
+        .endAngle(3.1 * Math.PI)
+        .value(function (d) {
+            return d.value;
+        });
+
+
+    var g = piechartS.selectAll(".arc")
+        .data(pie(data))
+        .enter().append("g")
+        .attr("class", "arc")
+        .on("mouseover", function (d, i) {
+            //Get this bar's x/y values, then augment for the tooltip
+            var xPosition = parseFloat(d3.select(this).attr("x")) + 1000;
+            var yPosition = parseFloat(d3.select(this).attr("y")) + 133;
+            //Update the tooltip position and value
+            d3.select("#tooltip2")
+                .style("left", xPosition + "px")
+                .style("top", yPosition + "px")
+                .select("#value")
+                .text(d.value);
+
+            d3.select("#tooltip2")
+                .select("#header")
+                .text(data[i].info);
+
+            //Show the tooltip
+            d3.select("#tooltip2").classed("hidden", false);
+        })
+        .on("mouseout", function () {
+
+            //Hide the tooltip
+            d3.select("#tooltip2").classed("hidden", true);
+
+        });
+
+    g.append("path")
+        .attr("fill", function (d, i) {
+            return color(i);
+        })
+        .transition()
+        .ease("exp")
+        .duration(1000)
+        .attrTween("d", tweenPie);
+
+    function tweenPie(b) {
+        var i = d3.interpolate({startAngle: 1.1 * Math.PI, endAngle: 1.1 * Math.PI}, b);
+        return function (t) {
+            return arc(i(t));
+        };
+    }
+
+    var legendRectSize = 18;
+    var legendSpacing = 4;
+
+// Draw legend
+    var legend = piechartS.selectAll('.legend')
+        .data(color.domain())
+        .enter()
+        .append('g')
+        .attr('class', 'legend')
+        .attr('transform', function (d, i) {
+            var height = legendRectSize + legendSpacing;
+            var offset = height * color.domain().length / 2;
+            var horz = -2 * legendRectSize;
+            var vert = i * height - offset;
+            return 'translate(' + horz + ',' + vert + ')';
+        });
+
+    legend.append('rect')
+        .attr('width', legendRectSize)
+        .attr('height', legendRectSize)
+        .style('fill', color)
+        .style('stroke', color);
+
+    legend.append('text')
+        .attr('x', legendRectSize + legendSpacing)
+        .attr('y', legendRectSize - legendSpacing)
+        .text(function (d, i) {
+            return data[i].stat;
+        });
+}
+
 
 $( function() {
     var pokemonNames = [];
@@ -344,7 +457,7 @@ $('#shinny').on("click",function(){
     $("#backImg").attr('src', shinyBackPath + id + '.png');
 });
 
-$('#normal').on("click",function(){
+$('#checkNormal').on("click",function(){
     var id = document.getElementById('pokedex').innerHTML;
 
     $("#frontImg").attr('src', frontPath + id + '.png');
@@ -392,7 +505,49 @@ $("#poke2").keyup(function(event){
 });
 
 // Get the element with id="defaultOpen" and click on it
+// Single disable
 document.getElementById("defaultOpen").click();
 
+document.getElementById("checkBar").disabled=true;
+document.getElementById("pieRadio").disabled=true;
+document.getElementById("checkNormal").disabled=true;
+document.getElementById("shinny").disabled=true;
+
+// Double disable
+document.getElementById("normalDouble").disabled=true;
+document.getElementById("shinnyDouble").disabled=true;
+document.getElementById("checkBarDouble").disabled=true;
+document.getElementById("doublePie").disabled=true;
+document.getElementById("checkNormalD").disabled=true;
+document.getElementById("dreivedStatus").disabled=true;
 
 
+function AddDamage(type, weakId, StrongID) {
+
+    var typeDam = typeChart[type];
+
+    var typeArry = Object.keys(typeDam);
+    var strong = 0;
+    var weak = 0;
+
+    for (var index = 0; index < typeArry.length; ++index) {
+        if (typeDam[typeArry[index]] == 1) {
+            addType(typeArry[index], weakId);
+            weak++;
+        }
+        if (typeDam[typeArry[index]] == 4) {
+            addType(typeArry[index], StrongID);
+            strong++;
+        }
+    }
+
+    // if (weak == 0) {
+    //     var elem = document.getElementById(weakId);
+    //     elem.innerHTML += '<span class="badge">None</span>';
+    // }
+    // if (strong == 0) {
+    //     elem = document.getElementById(StrongID);
+    //     elem.innerHTML += '<span class="badge">None</span>';
+    // }
+
+}
