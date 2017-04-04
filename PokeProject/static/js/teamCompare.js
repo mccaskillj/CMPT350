@@ -1,3 +1,4 @@
+//ID, Name , HP, Type 1, Type 2, x rating
 var dataset = [[0,"",0,"","",0],
     [0,"",0,"","",0],
     [0,"",0,"","",0],
@@ -15,9 +16,11 @@ var datasetbarleft = [[0,0,0,0,0,0],
 var datasetbartest = [[3,3,50,3,3,3],
     [3,56,4,4,20,3],
     [5,1,4,5,5,5],
-    [2,200,2,200,2,2],
+    [2,200,2,2000,2,2],
     [6,6,15,6,200,6],
     [7,109,7,7,3,7]];
+
+// var datasetbarleft = [];
 
 var datasetright = [[0,"",0,"","",0],
     [0,"",0,"","",0],
@@ -81,7 +84,13 @@ var boxes = svg.selectAll("rect").data(dataset);
         .attr("fill", "#bdbec0")
         .attr("stroke","black")
         .attr("shape-rendering","crispEdges")
-        .attr("opacity", 0)
+        .attr("opacity", function (d) {
+            if (d[0] != 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+        })
         .on("mouseover", function (d, i){
         //d3.select(this).attr("opacity",0);
             //var curselect = d3.select(this);
@@ -100,7 +109,7 @@ curpoke = [];
 
 function adhelper(type1,type2) {
     var immunelist = [];
-    console.log($.inArray("Normal",advantages));
+    //console.log($.inArray("Normal",advantages));
     // for (var i = 0; i<18; i++){
     //     if (advantages[i]["name"] == type1 || advantages[i]["name"] == type2){
     //         curpoke=({
@@ -253,7 +262,7 @@ advantagegroup.append("text")
     .attr("fill", "black");
 
 
-var margin = {top: 20, right: 50, bottom: 30, left: 10},
+var margin = {top: 20, right: 50, bottom: 30, left: 40},
         width = 612 - margin.left - margin.right,
         height = 700 - margin.top - margin.bottom;
 
@@ -271,31 +280,29 @@ var xAxis = d3.svg.axis()
 
 var yAxis = d3.svg.axis()
     .scale(y)
-    .orient("right")
+    .orient("left")
     .ticks(10, "%");
-
-//console.log("before map: ",datasetbartest);
 
 var svgbar = d3.select('#chartarea').append('svg').attr('height', height + margin.top + margin.bottom).attr('width', width + margin.left + margin.right).append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+// var datamapped=["Hp", "Attack", "Defense", "Sp. Attack", "Sp. Defense", "Speed"].map(function(key,i){
+//     return datasetbarleft.map(function(d,j){
+//         return {x: items[i], y: d[key] };
+//     })
+// });
+
+console.log(datamapped);
+
 var datamapped = ["Hp", "Attack", "Defense", "Sp. Attack", "Sp. Defense", "Speed"].map(function (d1,ii) {
-    //console.log('ii=',ii);
-    //console.log('d1=',d1);
-    return datasetbartest.map(function (d,i) {
-        //console.log("d=",d);
-        //console.log('i=',i);
+    return datasetbarleft.map(function (d,i) {
         return {x: items[i], y: d[ii]};
     })
 });
 
-
-//console.log(datamapped);
-
 var stack = d3.layout.stack();
 stack(datamapped);
 
-//domain
 x.domain(datamapped[0].map(function (d) {
     return d.x;
 }));
@@ -332,12 +339,12 @@ layer.selectAll("rect")
         .attr("width", x.rangeBand());
 
 svgbar.append("g")
-        .attr("class", "axis")
+        .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
 svgbar.append("g")
-        .attr("class", "yaxis")
+        .attr("class", "y axis")
         //.attr("transform", "translate(0,0)")
         .call(yAxis);
 
@@ -511,14 +518,28 @@ d3.select("#addbuttonleft").on("click",function () {
                 dataset[datapos][2] = pokemons[0].hp;
                 dataset[datapos][3] = pokemons[0].type_1;
                 dataset[datapos][4] = pokemons[0].type_2;
+                // datasetbarleft[0][datapos] = pokemons[0].hp;
+                // datasetbarleft[1][datapos] = pokemons[0].attack;
+                // datasetbarleft[2][datapos] = pokemons[0].defense;
+                // datasetbarleft[3][datapos] = pokemons[0].sp_attack;
+                // datasetbarleft[4][datapos] = pokemons[0].sp_defense;
+                // datasetbarleft[5][datapos] = pokemons[0].speed;
                 datasetbarleft[datapos][0] = pokemons[0].hp;
                 datasetbarleft[datapos][1] = pokemons[0].attack;
                 datasetbarleft[datapos][2] = pokemons[0].defense;
                 datasetbarleft[datapos][3] = pokemons[0].sp_attack;
                 datasetbarleft[datapos][4] = pokemons[0].sp_defense;
                 datasetbarleft[datapos][5] = pokemons[0].speed;
+                // datasetbarleft.push({
+                //         Hp: pokemons[0].hp,
+                //         Attack: pokemons[0].attack,
+                //         Defense: pokemons[0].defense,
+                //         "Sp. Attack": pokemons[0].sp_attack,
+                //         "Sp. Defense": pokemons[0].sp_defense,
+                //         Speed: pokemons[0].speed
+                //     });
                 datapos++;
-                console.log(datapos);
+                console.log(datasetbarleft);
                 boxes.transition()
                     .duration(500)
                     .attr("opacity", function (d) {
@@ -607,8 +628,105 @@ d3.select("#addbuttonleft").on("click",function () {
                             return 0;
                         }
                     });
-
+                //For loop to load from other page
                 $('#imageleft' + (datapos-1) + ' image').attr("xlink:href", frontPath + dataset[datapos-1][0] + '.png');
+
+
+                var x = d3.scale.ordinal()
+                    .rangeRoundBands([0, width], .35);
+
+                var y = d3.scale.linear()
+                    .rangeRound([height, 0]);
+
+                var color = d3.scale.category10();
+
+                var xAxis = d3.svg.axis()
+                    .scale(x)
+                    .orient("bottom");
+
+                var yAxis = d3.svg.axis()
+                    .scale(y)
+                    .orient("left")
+                    .ticks(10, "%");
+
+
+                var datamapped = ["Hp", "Attack", "Defense", "Sp. Attack", "Sp. Defense", "Speed"].map(function (d1,ii) {
+                    return datasetbarleft.map(function (d,i) {
+                        return {x: items[i], y: d[ii]};
+                    })
+                });
+
+                // var datamapped = ["Hp", "Attack", "Defense", "Sp. Attack", "Sp. Defense", "Speed"].map(function (d1,ii) {
+                //     return datasetbarleft.map(function (d,i) {
+                //         console.log("d[ii]: ",d[ii], "datapos-1: ",datapos-1, "i: ",i,"datasetbarleft[datapos-1+ii][i]: ", datasetbarleft[datapos-1+ii][i]);
+                //         return {x: items[i], y: datasetbarleft[datapos-1+ii][i]};
+                //     })
+                // });
+
+                var stack = d3.layout.stack();
+                stack(datamapped);
+
+                console.log(datamapped);
+
+                x.domain(datamapped[0].map(function (d) {
+                    return d.x;
+                }));
+
+                y.domain([0,
+                    d3.max(datamapped[datamapped.length - 1],
+                        function (d) { return d.y0 + d.y;})
+                ])
+                    .nice();
+
+                svgbar.selectAll(".stack").remove();
+
+                var layer = svgbar.selectAll(".stack")
+                    .data(datamapped)
+                    .enter().append("g")
+                    .attr("class", "stack")
+                    .style("fill", function (d, i) {
+                        return color(i);
+                    });
+
+                layer.selectAll("rect")
+                    .data(function (d) {
+                        return d;
+                    })
+                    .enter().append("rect")
+                    .transition()
+                    .delay(function (d, i) {
+                        return i / 6 * 10;   // <-- Where the magic happens
+                    })
+                    .duration(1000)
+                    .attr("x", function (d) {
+                        return x(d.x);
+                    })
+                    .attr("y", function (d) {
+                        return y(d.y + d.y0);
+                    })
+                    .attr("height", function (d) {
+                        return y(d.y0) - y(d.y + d.y0);
+                    })
+                    .attr("width", x.rangeBand());
+
+                svgbar.selectAll("g.x.axis")
+                        .transition()
+                        .delay(function (d, i) {
+                            return i / 6 * 10;   // <-- Where the magic happens
+                        })
+                        .duration(1000)
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis);
+
+                svgbar.selectAll("g.y.axis")
+                    .transition()
+                        .delay(function (d, i) {
+                            return i / 6 * 10;   // <-- Where the magic happens
+                        })
+                        .duration(1000)
+                    .attr("transform", "translate(0,0)")
+                    .call(yAxis);
+
             }
 
         });
