@@ -470,7 +470,194 @@ svg2.selectAll("circle")
     .style('stroke', 'black')
     .style('fill', function (d,i) {
         return 'url(#team'+i+')';
+    })
+    .on("click", function (d,i) {
+        d3.select("#tooltipS").classed("hidden", true);
+        if(d[3] != 0) {
+            d[3] = 0;
+            d[4] = "";
+            d[5] = 0;
+            d[6] = 0;
+            d[7] = 0;
+            d[8] = 0;
+            d[9] = 0;
+            d[10] = 0;
+            d[11] = 0;
+            d[12] = 0;
+            d[13] = 0;
+            d[14] = "";
+            d[15] = "";
+
+            shiftAll();
+
+            if (d[14] != ""){
+                d3.select("#tooltipS").classed("hidden", false);
+                d3.select("#tooltipS")
+                    .select("#name")
+                    .text("#"+ d[3] + " " +d[4]);
+
+                d3.select("#tooltipS")
+                    .select("#height")
+                    .text(d[5]);
+
+                d3.select("#tooltipS")
+                    .select("#weight")
+                    .text(d[6]);
+
+                d3.select("#tooltipS")
+                    .select("#hp")
+                    .text(d[8]);
+
+                d3.select("#tooltipS")
+                    .select("#attack")
+                    .text(d[9]);
+
+                d3.select("#tooltipS")
+                    .select("#defense")
+                    .text(d[10]);
+
+                d3.select("#tooltipS")
+                    .select("#sp_attack")
+                    .text(d[11]);
+
+                d3.select("#tooltipS")
+                    .select("#sp_defense")
+                    .text(d[12]);
+
+                d3.select("#tooltipS")
+                    .select("#speed")
+                    .text(d[13]);
+
+                d3.select("#tooltipS")
+                    .select("#type")
+                    .text(function () {
+                        if (d[15] != ""){
+                            return d[14]+"/"+d[15];
+                        } else {
+                            return d[14];
+                        }
+                    });
+            }
+
+            if (i < 6) {
+                teamPos[0] = teamPos[0] - 1;
+            } else {
+                teamPos[1] = teamPos[1] - 1;
+            }
+
+            for (var j = 0; j < 12; j++) {
+                if (teams[j][3] != 0) {
+                    $("#team" + j + " image").attr('xlink:href', frontPath + teams[j][3] + '.png');
+                } else {
+                    $("#team" + j + " image").attr('xlink:href', '');
+                }
+            }
+
+            svg2.selectAll("circle")
+                .attr("stroke-width", function (d) {
+                    if (d[14] != ""){
+                        return 3;
+                    } else {
+                        return 1;
+                    }
+                })
+                .style("stroke",function (d) {
+                    if (d[14] != ""){
+                        return typeColor(d[14]);
+                    } else {
+                        return typeColor("Dark");
+                    }
+                });
+        }
+    })
+    .on("mouseover",function (d) {
+        //Get this bar's x/y values, then augment for the tooltip
+        var xPosition = parseFloat(d3.select(this).attr("cx"))+275+60;
+        var yPosition = parseFloat(d3.select(this).attr("cy"))+560;
+        //Update the tooltip position and value
+        d3.select("#tooltipS")
+            .style("left", xPosition + "px")
+            .style("top", yPosition + "px")
+            .select("#name")
+            .text("#"+ d[3] + " " +d[4]);
+
+        d3.select("#tooltipS")
+            .select("#height")
+            .text(d[5]);
+
+        d3.select("#tooltipS")
+            .select("#weight")
+            .text(d[6]);
+
+        d3.select("#tooltipS")
+            .select("#hp")
+            .text(d[8]);
+
+        d3.select("#tooltipS")
+            .select("#attack")
+            .text(d[9]);
+
+        d3.select("#tooltipS")
+            .select("#defense")
+            .text(d[10]);
+
+        d3.select("#tooltipS")
+            .select("#sp_attack")
+            .text(d[11]);
+
+        d3.select("#tooltipS")
+            .select("#sp_defense")
+            .text(d[12]);
+
+        d3.select("#tooltipS")
+            .select("#speed")
+            .text(d[13]);
+
+        d3.select("#tooltipS")
+            .select("#type")
+            .text(function () {
+                if (d[15] != ""){
+                    return d[14]+"/"+d[15];
+                } else {
+                    return d[14];
+                }
+            });
+
+        //Show the tooltip
+        if (d[14] != "") {
+            d3.select("#tooltipS").classed("hidden", false);
+        }
+    })
+    .on("mouseout", function () {
+        d3.select("#tooltipS").classed("hidden", true);
     });
+
+function shiftAll() {
+    for (var i =0;i<5;i++){
+        slide(i);
+        slide(6+i);
+    }
+}
+
+function slide(pos) {
+    if (teams[pos][4] == "" && teams[pos+1][4] != "") {
+        for (var i = 3; i < 16; i++)
+            teams[pos][i] = teams[pos + 1][i];
+        teams[pos+1][3] = 0;
+        teams[pos+1][4] = "";
+        teams[pos+1][5] = 0;
+        teams[pos+1][6] = 0;
+        teams[pos+1][7] = 0;
+        teams[pos+1][8] = 0;
+        teams[pos+1][9] = 0;
+        teams[pos+1][10] = 0;
+        teams[pos+1][11] = 0;
+        teams[pos+1][12] = 0;
+        teams[pos+1][13] = 0;
+        teams[pos+1][14] = "";
+        teams[pos+1][15] = "";
+    }
+}
 
 svg2.selectAll("text")
     .data(["Team 1","Team 2"])
@@ -494,7 +681,6 @@ $.ajax({
     "radio": radio},
     dataType: 'json',                //data format
 success: function(pokemons) {
-    console.log(pokemons);
     dataset[23] = pokemons;
     var pos = 0;
     for (var i = 0 ; i < 23; i++){
@@ -753,6 +939,34 @@ d3.select('#navbar').on('mouseover', function () {
     d3.select("#popupS").classed("hidden",true);
 });
 
+d3.select('#compareT').on('click',function () {
+    var team1 = "Team 1: ";
+    var front1 = 0;
+    for (var i = 0; i<6; i++){
+        if (teams[i][4] != ""){
+            if (front1 != 0){
+                team1 = team1 + ", "+ teams[i][4];
+            } else {
+                team1 = team1 + teams[i][4];
+                front1++;
+            }
+        }
+    }
+    var team2 = "Team 2: ";
+    var front2 = 0;
+    for (var i = 6; i<12; i++){
+        if (teams[i][4] != ""){
+            if (front2 != 0){
+                team2 = team2 + ", "+ teams[i][4];
+            } else {
+                team2 = team2 + teams[i][4];
+                front2++;
+            }
+        }
+    }
+    alert("Export Teams\n\n" + team1 + "\n" + team2 + "\n\nOr it would if that was working...");
+})
+
 d3.select('#buttonTeam1').on('click', function () {
     if (teamPos[0]<6){
         for(var i = 2;i<16;i++){
@@ -766,6 +980,22 @@ d3.select('#buttonTeam1').on('click', function () {
             }
         }
         teamPos[0]=teamPos[0] + 1;
+
+        svg2.selectAll("circle")
+            .attr("stroke-width", function (d) {
+                if (d[14] != ""){
+                    return 3;
+                } else {
+                    return 1;
+                }
+            })
+            .style("stroke", function (d) {
+                if (d[14] != ""){
+                    return typeColor(d[14]);
+                } else {
+                    return typeColor("Dark");
+                }
+            });
     }
 });
 
@@ -782,6 +1012,22 @@ d3.select('#buttonTeam2').on('click', function () {
             }
         }
         teamPos[1]=teamPos[1] + 1;
+
+        svg2.selectAll("circle")
+            .attr("stroke-width", function (d) {
+                if (d[14] != ""){
+                    return 3;
+                } else {
+                    return 1;
+                }
+            })
+            .style("stroke", function (d) {
+                if (d[14] != ""){
+                    return typeColor(d[14]);
+                } else {
+                    return typeColor("Dark");
+                }
+            });
     }
 });
 
