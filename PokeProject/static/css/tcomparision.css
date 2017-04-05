@@ -15,8 +15,7 @@
 .container-fluid{
     width: 1224px;
     height: 800px;
-    padding-top: 30px;
-    background-color: white;
+    background-color: #a4a4ff;
 }
 
 .pokeleft{
@@ -36,7 +35,6 @@
 .pokesearch{
     margin: 20px auto;
     position: relative;
-    z-index: 10;
 }
 
 #closepokeleft1{
@@ -67,7 +65,31 @@
 
 .barchart{
     width: 1224px;
-    height: 700px;
-    padding-top: 30px;
+    height: 720px;
+    padding: 6px 12px;
     background-color: white;
+}
+
+.toparea{
+    width: 1224px;
+    height: 50px;
+    padding-top: 30px;
+    display: table;
+    background-color: #f0f0ff;
+}
+
+.leftbar{
+    width:40%;
+    height: 700px;
+    float:left;
+}
+
+.rightbar{
+    width:40%;
+    height: 700px;
+    float:right;
+}
+
+#chartarea,#chartarearight{
+    display: block;
 }

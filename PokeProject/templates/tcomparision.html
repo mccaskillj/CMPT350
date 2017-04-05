@@ -3,7 +3,7 @@
 
 {% block content %}
     <link rel="stylesheet" type="text/css" href="{% static "css/tcomparision.css" %}" />
-    <div class="container-fluid" id="maindiv">
+    <div class="toparea">
         <div class="input-group pokesearch" id="pokesearch">
                 <span class="input-group-btn" style="width:0;">
                     <button class="btn btn-default" type="button"  id="addbuttonleft">Add to my team</button>
@@ -13,6 +13,8 @@
                     <button class="btn btn-default" type="button"  id="addbuttonright">Add to enemy team</button>
                 </span>
         </div>
+    </div>
+    <div class="container-fluid" id="maindiv">
         <svg id='mySvg' width='0' height='0' xmlns:xlink='http://www.w3.org/1999/xlink'>
             <defs id='mdef'>
                 <pattern id='imageleft0' x='0' y='0' height='1' width='1' class="svg-image" >
@@ -55,11 +57,18 @@
         </svg>
     </div>
     <div class="barchart" id="barchart">
+        <div class="leftbar" id="leftbar">
+            <div id="chartarea"></div>
+        </div>
+        <div class="rightbar" id="rightbar">
+            <div id="chartarearight"></div>
+        </div>
 
     </div>
     <!-- Scripts -->
     <script type="text/javascript" src="{% static "js/d3.js" %}"></script>
     <script type="text/javascript" src="{% static "js/teamCompare.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/TypeWeaknesses.js" %}"></script>
 
 {% endblock %}
 
