@@ -37,13 +37,6 @@ This was linked on the D3 homepage.
 .node--leaf{
 }
 
-#tooltipX{
-    opacity: 0;
-}
-#tooltipX:hover{
-    opacity: 1;
-}
-
 div.tooltipT {
     visibility:hidden;
     background: lightblue;
@@ -56,6 +49,8 @@ div.tooltipT {
 <svg width="1224" height="1224"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
+
+var shown = false;
 
 var svg = d3.select("svg"),
     margin = 20,
@@ -91,7 +86,41 @@ d3.json("{% static 'flare.json' %}", function(error, root) {
       .style("fill", function(d) { return d.children ? d.data.color : "#f0f0ff"; })
       .attr("text", function(d) { return d.parent ? d.children ? null : d.data.name : null})
       //.attr("xlink:href", function(d) { return d.parent ? d.children ? null : frontPath + d.data.pokeId +'.png' : null; })
-      .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
+      .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); })
+      .on("mouseover", function(d) {
+          if (d.parent) {
+              if (d.children) {}
+              else{
+                  if (!shown) {
+                      var x = d3.event.pageX;
+                      var y = d3.event.pageY;
+                      //Update the tooltip position and value
+                      d3.select("#tooltipS")
+                          .style("left", x - 125 + "px")
+                          .style("top", y - 250 + "px")
+                          .select("#value")
+                          .text(d.data.name);
+
+                      d3.select("#tooltipS")
+                          .select("#header")
+                          .text(d.info);
+                  }
+                  shown = false;
+
+                  //Show the tooltip
+                  d3.select("#tooltipS").classed("hidden", false);
+              }
+          }
+       })
+       .on("mouseout", function (d) {
+           if (d.parent) {
+              if (d.children) {}
+              else{
+                  //Show the tooltip
+                  d3.select("#tooltipS").classed("hidden", true);
+              }
+          }
+       });
 
    var image = g.selectAll("image")
     .data(nodes)
@@ -99,17 +128,13 @@ d3.json("{% static 'flare.json' %}", function(error, root) {
       .attr("xlink:href", function(d) { return frontPath + d.data.pokeId + '.png'})
       .style("fill-opacity", function(d) { return d.depth === 2 ? 1 : 0; })
       .style("display", function(d) { return d.depth === 3 ? null : "none"; })
-       .on("mouseover", function(d) {
+      .on("mouseover", function(d) {
           if (d.parent) {
               if (d.children) {}
               else{
-                  //Get this bar's x/y values, then augment for the tooltip
-                  var xPosition = parseFloat(d3.select(this).attr("cx"))+500+parseFloat(d3.select(this).attr("r"));
-                  var yPosition = parseFloat(d3.select(this).attr("cy"))+50;
+                  shown = true;
                   //Update the tooltip position and value
                   d3.select("#tooltipS")
-                      .style("left", xPosition + "px")
-                      .style("top", yPosition + "px")
                       .select("#value")
                       .text(d.data.name);
 
@@ -121,6 +146,15 @@ d3.json("{% static 'flare.json' %}", function(error, root) {
                   d3.select("#tooltipS").classed("hidden", false);
               }
           }
+       })
+       .on("mouseout", function (d) {
+           if (d.parent) {
+              if (d.children) {}
+              else{
+                  //Show the tooltip
+                  d3.select("#tooltipS").classed("hidden", true);
+              }
+          }
        });
 
   var text = g.selectAll("text")
@@ -129,8 +163,7 @@ d3.json("{% static 'flare.json' %}", function(error, root) {
       .attr("class", "label")
       .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
       .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
-      .attr("id", function(d) { return d.parent ? d.children ? null : "tooltipX": null})
-      .text(function(d) { return d.children ? d.data.name : d.data.name;});
+      .text(function(d) { return d.children ? d.data.name : null;});
 
   var node = g.selectAll("circle,text,image");
 
@@ -177,7 +210,7 @@ d3.json("{% static 'flare.json' %}", function(error, root) {
 
     <div class="mouse tooltip" >Mouse-tracking HTML Tip</div>
 
-<div id="tooltipS" class="hidden">
+<div id="tooltipS" class="hidden" style="top: 0px; left: 0px;">
         <!--<p><strong id="header">Important Label Heading</strong></p>-->
         <p><span id="value">100</span></p>
 </div>
