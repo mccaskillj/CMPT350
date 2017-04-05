@@ -79,13 +79,13 @@
 }
 
 .leftbar{
-    width:40%;
+    width:50%;
     height: 700px;
     float:left;
 }
 
 .rightbar{
-    width:40%;
+    width:50%;
     height: 700px;
     float:right;
 }

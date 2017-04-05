@@ -53,23 +53,24 @@ var datasetbarright = [[0,0,0,0,0,0],
 //Line needed in jordan js
 //sessionStorage.setItem('myArray', teamsData);
 
-// var myArray = sessionStorage.getItem('myArray');
-// alert(myArray);
-//
-//
-// if (myArray != undefined && myArray != null && myArray.length < 1){
-//     console.log('HERE');
-//     if (myArray[0].length != 0){
-//         dataset = myArray[0];
-//         datasetbarleft = myArray[1];
-//     }
-//     if (myArray[2]){
-//         datasetright = myArray[2];
-//         datasetbarright = myArray[3];
-//     }
-// }
+//var myArray = sessionStorage.getItem('myArray');
+var myArray = JSON.parse(sessionStorage.getItem("myArray"));
 
-//sessionStorage.clear();
+console.log(myArray);
+
+if (myArray !== undefined && myArray !== null && myArray.length > 0){
+    console.log('HERE');
+    if (myArray[0].length != 0){
+        dataset = myArray[0];
+        datasetbarleft = myArray[1];
+    }
+    if (myArray[2]){
+        datasetright = myArray[2];
+        datasetbarright = myArray[3];
+    }
+}
+
+sessionStorage.clear();
 
 var items = ["Hp", "Attack", "Defense", "Sp. Attack", "Sp. Defense", "Speed"];
 var emptyaddition = [0,"",0,"","",0];
@@ -199,27 +200,38 @@ var maingroup = svg.selectAll("g.main")
 
         })
         .on("click",function (d,i) {
-            console.log("the index is", i);
-            dataset.splice(i,1);
-            dataset.splice(dataset.length,0,emptyaddition);
-            //console.log("after dataset: ",dataset);
-            for (var j=0;j<6;j++){
-                datasetbarleft[j].splice(i,1);
-                datasetbarleft[j].splice(datasetbarleft.length,0,0);
-            }
-            //datapos--;
-            //console.log("after datasetbar: ",datasetbarleft);
-            //console.log(d3.select(this));
-            //d3.select(this).remove();
-            console.log("after dataset: ",dataset);
-            console.log("after datasetbar: ",datasetbarleft);
-            maingroup.attr("opacity", function (d) {
-                if (d[0] != 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            })
+            // console.log("the index is", i);
+            // //dataset[i] = [0,"","",0,"","",0];
+            // dataset.splice(dataset.length,0,emptyaddition);
+            // //console.log("after dataset: ",dataset);
+            // for (var j=0;j<6;j++){
+            //     datasetbarleft[j].splice(i,1);
+            //     datasetbarleft[j].splice(datasetbarleft.length,0,0);
+            // }
+            // //datapos--;
+            // //console.log("after datasetbar: ",datasetbarleft);
+            // //console.log(d3.select(this));
+            // //d3.select(this).remove();
+            // console.log("after dataset: ",dataset);
+            // console.log("after datasetbar: ",datasetbarleft);
+
+            // maingroup.select("#leftboxes")
+            //     .data(function (d) {
+            //         return d;
+            //     })
+            //     .enter().append("rect");
+
+            // maingroup.select("#leftboxes")
+            //     .selectAll("rect")
+            //     .attr("opacity", function (d) {
+            //         if (d[0] != 0){
+            //             return 1;
+            //         } else {
+            //             return 0;
+            //         }
+            //     });
+
+
         })
     ;
 
@@ -466,8 +478,8 @@ advantagegroup.append("text")
 //  Left bar chart
 //######################################################################################################################
 
-var margin = {top: 20, right: 0, bottom: 60, left: 40},
-        width = 570 - margin.left - margin.right,
+var margin = {top: 20, right: 10, bottom: 60, left: 40},
+        width = 500 - margin.left - margin.right,
         height = 700 - margin.top - margin.bottom;
 
 var x = d3.scale.ordinal()
@@ -880,8 +892,8 @@ advantagegroupright.append("text")
 //  Right bar chart
 //######################################################################################################################
 
-var marginright = {top: 20, right: 100, bottom: 60, left: 0},
-        widthright = 570 - marginright.left - marginright.right,
+var marginright = {top: 20, right: 10, bottom: 60, left: 40},
+        widthright = 500 - marginright.left - marginright.right,
         heightright = 700 - marginright.top - marginright.bottom;
 
 var xright = d3.scale.ordinal()
@@ -1407,7 +1419,7 @@ d3.select("#addbuttonright").on("click",function () {
                     .orient("bottom");
 
                 var yAxisright = d3.svg.axis()
-                    .scale(y)
+                    .scale(yright)
                     .orient("left")
                     .ticks(10, "%");
 
@@ -1477,7 +1489,7 @@ d3.select("#addbuttonright").on("click",function () {
                             return i / 6 * 10;   // <-- Where the magic happens
                         })
                         .duration(1000)
-                    .attr("transform", "translate(0," + height + ")")
+                    .attr("transform", "translate(0," + heightright + ")")
                     .selectAll("text")
                     .style("text-anchor", "end")
                     .call(xAxisright);
