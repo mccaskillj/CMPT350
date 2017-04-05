@@ -145,6 +145,8 @@ d3.select("#doubleClick")
                     doublePokeDataOne.push(data1);
                     doublePokeDataOne.push(data2);
 
+                    adjustDoubleData(doublePokeDataOne, 1);
+
                     redrawGraph(doublesvg, "#double", doublePokeDataOne[0], 255, "#90caf9", w, h);
 
                     document.getElementById("normalDouble").disabled=false;
@@ -290,6 +292,7 @@ d3.select("#doubleClick2")
                         doublePokeDataTwo.push(data1);
                         doublePokeDataTwo.push(data2);
 
+                        adjustDoubleData(doublePokeDataTwo, 1);
                         redrawGraph(doublesvg2, "#double2", doublePokeDataTwo[0], 255, "#90caf9", w, h);
 
                         document.getElementById("checkNormal").checked = true;
