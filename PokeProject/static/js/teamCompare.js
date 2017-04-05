@@ -203,8 +203,31 @@ var maingroup = svg.selectAll("g.main")
         })
         .on("click",function (d,i) {
             console.log("the index is", i);
-            //dataset[i] = [0,"","",0,"","",0];
-            dataset.splice(dataset.length,0,emptyaddition);
+            // var k = i;
+            // while (dataset[k+1][0] != 0 && k+1 != 6){
+            //     for (var l = 0; l<6;l++){
+            //         dataset[k][l]=dataset[k+1][l];
+            //     }
+            //     k++;
+            // }
+            // dataset[k][0] = 0;
+            // dataset[k][1] = "";
+            // dataset[k][2] = 0;
+            // dataset[k][3] = "";
+            // dataset[k][4] = "";
+            // dataset[k][5] = 0;
+
+            if (datapos != 0) {
+                dataset[datapos - 1][0] = 0;
+                dataset[datapos - 1][1] = "";
+                dataset[datapos - 1][2] = 0;
+                dataset[datapos - 1][3] = "";
+                dataset[datapos - 1][4] = "";
+                dataset[datapos - 1][5] = 0;
+                datapos--;
+            }
+            // dataset.splice(i,1);
+            // dataset.splice(dataset.length,0,emptyaddition);
             //console.log("after dataset: ",dataset);
             for (var j=0;j<6;j++){
                 datasetbarleft[j].splice(i,1);
@@ -217,23 +240,14 @@ var maingroup = svg.selectAll("g.main")
             console.log("after dataset: ",dataset);
             console.log("after datasetbar: ",datasetbarleft);
 
-            // maingroup.select("#leftboxes")
-            //     .data(function (d) {
-            //         return d;
-            //     })
-            //     .enter().append("rect");
-
-            // maingroup.select("#leftboxes")
-            //     .selectAll("rect")
-            //     .attr("opacity", function (d) {
-            //         if (d[0] != 0){
-            //             return 1;
-            //         } else {
-            //             return 0;
-            //         }
-            //     });
-
-
+            maingroup
+                .attr('opacity', function (d) {
+                    if(d[0] != 0){
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                })
         })
     ;
 
@@ -657,6 +671,54 @@ var maingroupright = svg.selectAll("g.mainright")
                 d3.select("#leftbox"+i).attr("opacity",0)
             }
             d3.select(this).select("rect").attr("fill","#bdbec0");
+        })
+        .on("click",function (d,i) {
+            console.log("the index is", i);
+            // var k = i;
+            // while (dataset[k+1][0] != 0 && k+1 != 6){
+            //     for (var l = 0; l<6;l++){
+            //         dataset[k][l]=dataset[k+1][l];
+            //     }
+            //     k++;
+            // }
+            // dataset[k][0] = 0;
+            // dataset[k][1] = "";
+            // dataset[k][2] = 0;
+            // dataset[k][3] = "";
+            // dataset[k][4] = "";
+            // dataset[k][5] = 0;
+
+            if (dataposright != 0) {
+                datasetright[dataposright - 1][0] = 0;
+                datasetright[dataposright - 1][1] = "";
+                datasetright[dataposright - 1][2] = 0;
+                datasetright[dataposright - 1][3] = "";
+                datasetright[dataposright - 1][4] = "";
+                datasetright[dataposright - 1][5] = 0;
+                dataposright--;
+            }
+            // dataset.splice(i,1);
+            // dataset.splice(dataset.length,0,emptyaddition);
+            //console.log("after dataset: ",dataset);
+            for (var j=0;j<6;j++){
+                datasetbarright[j].splice(i,1);
+                datasetbarright[j].splice(datasetbarright.length,0,0);
+            }
+            //datapos--;
+            //console.log("after datasetbar: ",datasetbarleft);
+            //console.log(d3.select(this));
+            //d3.select(this).remove();
+            console.log("after dataset: ",datasetright);
+            console.log("after datasetbar: ",datasetbarright);
+
+            maingroupright
+                .attr('opacity', function (d) {
+                    if(d[0] != 0){
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                })
         })
     ;
 
