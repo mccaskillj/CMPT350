@@ -158,8 +158,10 @@ var maingroup = svg.selectAll("g.main")
                         }
                     })
                         .select("rect").attr("fill",function(){
-                        if (datasetright[i][5] == 4){
+                        if (datasetright[i][5] == 4) {
                             return "#73d216";
+                        }else if (datasetright[i][5] >= 8){
+                            return "#FFD700";
                         }else if (datasetright[i][5] == 2){
                             return "#4e9a06";
                         }else if (datasetright[i][5] == 0.5){
@@ -200,20 +202,20 @@ var maingroup = svg.selectAll("g.main")
 
         })
         .on("click",function (d,i) {
-            // console.log("the index is", i);
-            // //dataset[i] = [0,"","",0,"","",0];
-            // dataset.splice(dataset.length,0,emptyaddition);
-            // //console.log("after dataset: ",dataset);
-            // for (var j=0;j<6;j++){
-            //     datasetbarleft[j].splice(i,1);
-            //     datasetbarleft[j].splice(datasetbarleft.length,0,0);
-            // }
-            // //datapos--;
-            // //console.log("after datasetbar: ",datasetbarleft);
-            // //console.log(d3.select(this));
-            // //d3.select(this).remove();
-            // console.log("after dataset: ",dataset);
-            // console.log("after datasetbar: ",datasetbarleft);
+            console.log("the index is", i);
+            //dataset[i] = [0,"","",0,"","",0];
+            dataset.splice(dataset.length,0,emptyaddition);
+            //console.log("after dataset: ",dataset);
+            for (var j=0;j<6;j++){
+                datasetbarleft[j].splice(i,1);
+                datasetbarleft[j].splice(datasetbarleft.length,0,0);
+            }
+            //datapos--;
+            //console.log("after datasetbar: ",datasetbarleft);
+            //console.log(d3.select(this));
+            //d3.select(this).remove();
+            console.log("after dataset: ",dataset);
+            console.log("after datasetbar: ",datasetbarleft);
 
             // maingroup.select("#leftboxes")
             //     .data(function (d) {
@@ -614,8 +616,10 @@ var maingroupright = svg.selectAll("g.mainright")
 
                     }
                     d3.select("#leftbox"+i).attr("opacity",1).select("rect").attr("fill",function(){
-                        if (dataset[i][5] == 4){
+                        if (dataset[i][5] == 4) {
                             return "#73d216";
+                        }else if (dataset[i][5] >= 8){
+                            return "#FFD700";
                         }else if (dataset[i][5] == 2){
                             return "#4e9a06";
                         }else if (dataset[i][5] == 0.5){
