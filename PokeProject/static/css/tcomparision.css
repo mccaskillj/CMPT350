@@ -90,6 +90,6 @@
     float:right;
 }
 
-#chartarea{
+#chartarea,#chartarearight{
     display: block;
 }
