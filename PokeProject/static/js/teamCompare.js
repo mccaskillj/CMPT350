@@ -96,7 +96,7 @@ var svg = d3.select('#maindiv').append('svg').attr('height', h).attr('width', w)
 for (var i = 0; i < 6; i++){
     if (dataset[i][0] != 0){
         datapos++;
-    }else if (datasetright[i][0] != 0){
+    }if (datasetright[i][0] != 0){
         dataposright++;
     }
 }
@@ -166,7 +166,7 @@ var maingroup = svg.selectAll("g.main")
                             return "#4e9a06";
                         }else if (datasetright[i][5] == 0.5){
                             return "#a40000";
-                        }else if (datasetright[i][5] == 0.25) {
+                        }else if (datasetright[i][5] <= 0.25) {
                             return "#7c0000";
                         }else if (datasetright[i][5] == 0){
                             return "#000000"
@@ -175,7 +175,7 @@ var maingroup = svg.selectAll("g.main")
                         }
                     });
                     d3.select("#rightbox"+i).select("text").text(function () {
-                        if (datasetright[i][5] == 0.25){
+                        if (datasetright[i][5] <= 0.25){
                             return "¼"+"x"
                         }else if (datasetright[i][5] == 0.5){
                             return "½"+"x"
@@ -624,7 +624,7 @@ var maingroupright = svg.selectAll("g.mainright")
                             return "#4e9a06";
                         }else if (dataset[i][5] == 0.5){
                             return "#a40000";
-                        }else if (dataset[i][5] == 0.25) {
+                        }else if (dataset[i][5] <= 0.25) {
                             return "#7c0000";
                         }else if (dataset[i][5] == 0){
                             return "#000000"
@@ -633,7 +633,7 @@ var maingroupright = svg.selectAll("g.mainright")
                         }
                     });
                     d3.select("#leftbox"+i).select("text").text(function () {
-                        if (dataset[i][5] == 0.25){
+                        if (dataset[i][5] <= 0.25){
                             return "¼"+"x"
                         }else if (dataset[i][5] == 0.5){
                             return "½"+"x"
