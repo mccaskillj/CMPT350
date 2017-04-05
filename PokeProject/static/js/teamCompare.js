@@ -107,6 +107,7 @@ var maingroup = svg.selectAll("g.main")
             }
         })
         .on("mouseover", function (d, i){
+            d3.select(this).select("rect").attr("fill","#848484");
             var currenttype1 = d[3];
             var currenttype2 = d[4];
             //console.log(dataset);
@@ -155,6 +156,8 @@ var maingroup = svg.selectAll("g.main")
                             return "#a40000";
                         }else if (datasetright[i][5] == 0.25) {
                             return "#7c0000";
+                        }else if (datasetright[i][5] == 0){
+                            return "#000000"
                         }else{
                             return "#ffffff";
                         }
@@ -167,7 +170,14 @@ var maingroup = svg.selectAll("g.main")
                         }else {
                             return datasetright[i][5] + "x"
                         }
-                    });
+                    }).attr("fill",function(){
+                        if (datasetright[i][5] == 0){
+                            return "#ffffff"
+                        }else{
+                            return "#000000"
+                        }
+                    })
+                    ;
                 }
             }
         })
@@ -176,6 +186,7 @@ var maingroup = svg.selectAll("g.main")
                 datasetright[i][5] = 0;
                 d3.select("#rightbox"+i).attr("opacity",0)
             }
+            d3.select(this).select("rect").attr("fill","#bdbec0");
 
         })
     ;
@@ -480,6 +491,7 @@ layer.selectAll("rect")
             return d;
         })
         .enter().append("rect")
+        .attr("class", "barleft")
         .attr("x", function (d) {
             return x(d.x);
         })
@@ -526,6 +538,7 @@ var maingroupright = svg.selectAll("g.mainright")
             }
         })
         .on("mouseover", function (d, i){
+            d3.select(this).select("rect").attr("fill","#848484");
             var currenttype1 = d[3];
             var currenttype2 = d[4];
             for (i=0; i < 6 ; i++){
@@ -565,6 +578,8 @@ var maingroupright = svg.selectAll("g.mainright")
                             return "#a40000";
                         }else if (dataset[i][5] == 0.25) {
                             return "#7c0000";
+                        }else if (dataset[i][5] == 0){
+                            return "#000000"
                         }else{
                             return "#ffffff";
                         }
@@ -577,7 +592,14 @@ var maingroupright = svg.selectAll("g.mainright")
                         }else {
                             return dataset[i][5] + "x"
                         }
-                    });
+                    }).attr("fill",function(){
+                        if (dataset[i][5] == 0){
+                            return "#ffffff"
+                        }else{
+                            return "#000000"
+                        }
+                    })
+                    ;
                 }
             }
         })
@@ -586,7 +608,7 @@ var maingroupright = svg.selectAll("g.mainright")
                 dataset[i][5] = 0;
                 d3.select("#leftbox"+i).attr("opacity",0)
             }
-
+            d3.select(this).select("rect").attr("fill","#bdbec0");
         })
     ;
 
@@ -1162,6 +1184,8 @@ d3.select("#addbuttonleft").on("click",function () {
                         })
                         .duration(1000)
                     .attr("transform", "translate(0," + height + ")")
+                    .selectAll("text")
+                    .style("text-anchor", "end")
                     .call(xAxis);
 
                 svgbar.selectAll("g.y.axis")
@@ -1421,7 +1445,9 @@ d3.select("#addbuttonright").on("click",function () {
                         })
                         .duration(1000)
                     .attr("transform", "translate(0," + height + ")")
-                    .call(xAxis);
+                    .selectAll("text")
+                    .style("text-anchor", "end")
+                    .call(xAxisright);
 
                 svgbarright.selectAll("g.y.axis")
                     .transition()
