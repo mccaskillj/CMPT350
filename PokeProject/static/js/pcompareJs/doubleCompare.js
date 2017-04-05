@@ -136,10 +136,7 @@ d3.select("#doubleClick")
                     $("#doubleWeak  span").remove();
                     $("#doubleStrong  span").remove();
 
-                    AddDamage(pokemons[0]['type_1'], "doubleWeak", "doubleStrong");
-                    if (pokemons[0]['type_2'] != "") {
-                        AddDamage(pokemons[0]['type_2'], "doubleWeak", "doubleStrong");
-                    }
+                    AddDamage(pokemons[0]['type_1'], pokemons[0]['type_2'], "doubleWeak", "doubleStrong");
 
                     var data1 = getValuesForReg(pokemons, unwantedFirst);
                     var data2 = getValuesForDerived(pokemons, unwantedSecond);
@@ -159,6 +156,9 @@ d3.select("#doubleClick")
                     document.getElementById("checkNormal").checked = true;
                     document.getElementById("checkBarDouble").checked = true;
                     document.getElementById("checkNormalD").checked = true;
+
+                    $("#slider2").slider('value', 0);
+                    $( "#custom-handle2" ).text(0);
                 }
                 else{
                     alert("Pokemon Does not exist")
@@ -281,11 +281,7 @@ d3.select("#doubleClick2")
                         $("#doubleWeak2  span").remove();
                         $("#doubleStrong2  span").remove();
 
-                        AddDamage(pokemons[0]['type_1'], "doubleWeak2", "doubleStrong2");
-                        if (pokemons[0]['type_2'] != "") {
-                            AddDamage(pokemons[0]['type_2'], "doubleWeak2", "doubleStrong2");
-                        }
-
+                        AddDamage(pokemons[0]['type_1'], pokemons[0]['type_2'], "doubleWeak2", "doubleStrong2");
 
                         var data1 = getValuesForReg(pokemons, unwantedFirst);
                         var data2 = getValuesForDerived(pokemons, unwantedSecond);
@@ -299,6 +295,9 @@ d3.select("#doubleClick2")
                         document.getElementById("checkNormal").checked = true;
                         document.getElementById("checkBarDouble").checked = true;
                         document.getElementById("checkNormalD").checked = true;
+
+                        $("#slider2").slider('value', 0);
+                        $( "#custom-handle2" ).text(0);
                     }
                     else {
                         alert("Pokemon Does not exist")

@@ -521,33 +521,77 @@ document.getElementById("doublePie").disabled=true;
 document.getElementById("checkNormalD").disabled=true;
 document.getElementById("dreivedStatus").disabled=true;
 
+function AddDamage(type, type2, weakId, StrongID) {
 
-function AddDamage(type, weakId, StrongID) {
+    var typesArray = Object.keys(typeChart[type]);
 
-    var typeDam = typeChart[type];
+    var typeChosen = typeChart[type];
 
-    var typeArry = Object.keys(typeDam);
-    var strong = 0;
-    var weak = 0;
+    var weakArray = [];
+    var strongArray = [];
 
-    for (var index = 0; index < typeArry.length; ++index) {
-        if (typeDam[typeArry[index]] == 1) {
-            addType(typeArry[index], weakId);
-            weak++;
-        }
-        if (typeDam[typeArry[index]] == 4) {
-            addType(typeArry[index], StrongID);
-            strong++;
+    for (var index = 0; index < typesArray.length; ++index) {
+        if (typeChosen[typesArray[index]] == 4) {
+            if (isInArray(typesArray[index], strongArray) != true) {
+                addType(typesArray[index], StrongID);
+                strongArray.push(typesArray[index]);
+            }
         }
     }
 
-    // if (weak == 0) {
-    //     var elem = document.getElementById(weakId);
-    //     elem.innerHTML += '<span class="badge">None</span>';
-    // }
-    // if (strong == 0) {
-    //     elem = document.getElementById(StrongID);
-    //     elem.innerHTML += '<span class="badge">None</span>';
-    // }
+    if (type2 != "") {
+        typesArray = Object.keys(typeChart[type2]);
+        typeChosen = typeChart[type2];
 
+        for (index = 0; index < typesArray.length; ++index) {
+            if (typeChosen[typesArray[index]] == 4) {
+                if (isInArray(typesArray[index], strongArray) != true) {
+                    addType(typesArray[index], StrongID);
+                    strongArray.push(typesArray[index]);
+                }
+            }
+        }
+    }
+    console.log("Strong: ", strongArray);
+    weakArray = getWeakType(type, type2);
+    console.log(weakArray);
+
+    for (index = 0; index < weakArray.length; ++index) {
+        addType(weakArray[index], weakId);
+    }
+
+    if (weakArray.length == 0) {
+        var elem = document.getElementById(weakId);
+        elem.innerHTML += '<span class="badge">None</span>';
+    }
+    if (strongArray.length == 0) {
+        elem = document.getElementById(StrongID);
+        elem.innerHTML += '<span class="badge">None</span>';
+    }
+}
+
+function getWeakType(type, type2){
+
+    var typesArray = Object.keys(typeChart);
+    var weakArray = [];
+
+    for (var index = 0; index < typesArray.length; ++index) {
+        if (typeChart[typesArray[index]][type] == 4) {
+            if (isInArray(typesArray[index], weakArray) != true) {
+                weakArray.push(typesArray[index]);
+            }
+        }
+
+        if (typeChart[typesArray[index]][type2] == 4) {
+            if (isInArray(typesArray[index], weakArray) != true) {
+                weakArray.push(typesArray[index]);
+            }
+        }
+    }
+
+    return weakArray;
+}
+
+function isInArray(value, array) {
+  return array.indexOf(value) > -1;
 }
