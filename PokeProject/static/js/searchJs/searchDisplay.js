@@ -950,8 +950,8 @@ d3.select('#compareT').on('click',function () {
     var team1Stats = [];
     var team2Stats = [];
     for (var i = 0; i<6;i++){
-        team1Over[i] = [teams[i][3],teams[i][4],teams[i][14],teams[i][15],0];
-        team2Over[i] = [teams[6+i][3],teams[6+i][4],teams[6+i][14],teams[6+i][15],0];
+        team1Over[i] = [teams[i][3],teams[i][4],teams[i][8],teams[i][14],teams[i][15],0];
+        team2Over[i] = [teams[6+i][3],teams[6+i][4],teams[6+i][8],teams[6+i][14],teams[6+i][15],0];
     }
     for (var i = 8;i<14;i++){
         team1Stats[i-8] = [teams[0][i],teams[1][i],teams[2][i],teams[3][i],teams[4][i],teams[5][i]];
