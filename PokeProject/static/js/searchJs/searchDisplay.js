@@ -960,6 +960,10 @@ d3.select('#compareT').on('click',function () {
     teamsData = [team1Over,team1Stats,team2Over,team2Stats];
 
     console.log(teamsData);
+
+    //sessionStorage.setItem('myArray', teamsData);
+    sessionStorage.setItem("myArray", JSON.stringify(teamsData));
+    document.location.href = "http://localhost:8000/PokeVis/teamCompare";
 });
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------

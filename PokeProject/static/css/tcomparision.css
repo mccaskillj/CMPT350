@@ -73,23 +73,33 @@
 .toparea{
     width: 1224px;
     height: 50px;
-    padding-top: 30px;
+    /*padding-top: 30px;*/
     display: table;
     background-color: #f0f0ff;
 }
 
 .leftbar{
-    width:40%;
+    width:50%;
     height: 700px;
     float:left;
 }
 
 .rightbar{
-    width:40%;
+    width:50%;
     height: 700px;
     float:right;
 }
 
 #chartarea,#chartarearight{
     display: block;
+}
+
+.toptext{
+    text-align: center;
+}
+
+.table-bordered{
+    table-layout: fixed;
+    width: 100%;
+    margin-top: 10px;
 }

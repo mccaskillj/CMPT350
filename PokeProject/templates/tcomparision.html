@@ -4,6 +4,14 @@
 {% block content %}
     <link rel="stylesheet" type="text/css" href="{% static "css/tcomparision.css" %}" />
     <div class="toparea">
+{#        <h4 class="toptext">#}
+{#            <span style="background:#990000;">¼x = Extremely Ineffective</span>#}
+{#            <span style="background:#c20000;">½x = Ineffective</span>#}
+{#            <span style="background:#000000; color: white">0x = No Damage</span>#}
+{#            <span style="background:#ffffff;">1x = Normal</span>#}
+{#            <span style="background:#4e9a06;">2x = Effective</span>#}
+{#            <span style="background:#73d216;">4x = Super-Effective</span>#}
+{#        </h4>#}
         <div class="input-group pokesearch" id="pokesearch">
                 <span class="input-group-btn" style="width:0;">
                     <button class="btn btn-default" type="button"  id="addbuttonleft">Add to my team</button>
@@ -13,6 +21,28 @@
                     <button class="btn btn-default" type="button"  id="addbuttonright">Add to enemy team</button>
                 </span>
         </div>
+        <table class="table-bordered">
+            <thead>
+            <tr>
+                <th style="text-align: center;color: white; background-color: black">¼x</th>
+                <th style="text-align: center;color: white; background-color: black">½x</th>
+                <th style="text-align: center;color: white; background-color: black">0x</th>
+                <th style="text-align: center;color: white; background-color: black">1x</th>
+                <th style="text-align: center;color: white; background-color: black">2x</th>
+                <th style="text-align: center;color: white; background-color: black">4x</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="background:#7c0000;text-align: center; color: white">Extremely Ineffective</td>
+                <td style="background:#a40000;text-align: center; color: white">Ineffective</td>
+                <td style="background:#000000;text-align: center; color: white">No Damage</td>
+                <td style="background:#ffffff;text-align: center">Normal</td>
+                <td style="background:#4e9a06;text-align: center; color: white">Effective</td>
+                <td style="background:#73d216;text-align: center; color: white">Super-Effective</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
     <div class="container-fluid" id="maindiv">
         <svg id='mySvg' width='0' height='0' xmlns:xlink='http://www.w3.org/1999/xlink'>
@@ -67,8 +97,10 @@
     </div>
     <!-- Scripts -->
     <script type="text/javascript" src="{% static "js/d3.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/searchJs/searchDisplay.js" %}"></script>
     <script type="text/javascript" src="{% static "js/teamCompare.js" %}"></script>
     <script type="text/javascript" src="{% static "js/TypeWeaknesses.js" %}"></script>
+
 
 {% endblock %}
 
