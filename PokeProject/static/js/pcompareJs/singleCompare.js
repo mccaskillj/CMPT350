@@ -283,10 +283,8 @@ d3.select("#sb")
                     $("#singleStrong  span").remove();
                     $("#singleWeak  span").remove();
 
-                    AddDamage(pokemons[0]['type_1'], "singleWeak", "singleStrong");
-                    if (pokemons[0]['type_2'] != "") {
-                        AddDamage(pokemons[0]['type_2'], "singleWeak", "singleStrong");
-                    }
+                    AddDamage(pokemons[0]['type_1'], pokemons[0]['type_2'], "singleWeak", "singleStrong");
+
 
                     var data1 = getValuesForReg(pokemons, unwantedFirst);
                     var data2 = getValuesForDerivedOriginal(pokemons, unwantedSecond);
@@ -304,6 +302,10 @@ d3.select("#sb")
                     document.getElementById("pieRadio").disabled=false;
                     document.getElementById("checkNormal").checked = true;
                     document.getElementById("checkBar").checked = true;
+
+                    $("#slider").slider('value', 0);
+                    $( "#custom-handle" ).text(0);
+
                 }
                 else{
                     alert("Pokemon Does not exist")
