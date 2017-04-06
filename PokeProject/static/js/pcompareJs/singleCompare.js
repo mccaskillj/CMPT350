@@ -293,6 +293,9 @@ d3.select("#sb")
                     singlePokeData.push(data1);
                     singlePokeData.push(data2);
 
+                    adjustSingleData(singlePokeData, 1);
+                    adjustSingleData(singlePokeData, 1);
+
                     redrawGraph(svg, "#dOne", data1, 255, "#90caf9", width, height);
                     redrawGraph(svg2, "#d2", data2, 510, "#5b2eef", width, height);
 
@@ -324,7 +327,8 @@ $('#checkBar').change(function(){
     $( "#singlee" ).removeClass('hidden');
     $("#single2").removeClass('hidden');
 
-    d3.selectAll("#mypie").remove();
+    d3.selectAll("#normSing").remove();
+    d3.selectAll("#derivSing").remove();
 
     document.getElementById("checkBar").disabled=true;
     document.getElementById("pieRadio").disabled=false;
@@ -334,9 +338,8 @@ $('#pieRadio').change(function(){
     $("#singlee").addClass('hidden');
     $("#single2").addClass('hidden');
 
-
-    drawPie(singlePokeData[0], '#singleChart');
-    drawPie(singlePokeData[1], '#singleChart2');
+    drawPie(singlePokeData[2], '#singleChart', 'normSing');
+    drawPie(singlePokeData[3], '#singleChart2', 'derivSing');
 
     document.getElementById("checkBar").disabled=false;
     document.getElementById("pieRadio").disabled=true;
@@ -360,6 +363,9 @@ $( function() {
 
             redrawGraph(svg, "#dOne", singlePokeData[2], 255, "#90caf9", width, height);
             redrawGraph(svg2, "#d2", singlePokeData[3], 510, "#5b2eef", width, height);
+
+            change(singlePokeData[2], 'normSing');
+            change(singlePokeData[3], 'derivSing');
         }
 
     });

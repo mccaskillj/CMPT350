@@ -304,14 +304,14 @@ function redrawGraph(svgelment, chartId, data, testVal, color, barWidth, barHeig
         .style("text-anchor", "end");
 }
 
-function drawPie(data, ID) {
+function drawPie(data, ID, pieId) {
     var margin = {top: 20, right: 20, bottom: 20, left: 20};
     var widthP = 450 - margin.left - margin.right;
     var heightP = widthP+100 - margin.top - margin.bottom;
 
     var piechartS = d3.select(ID)
         .append('svg')
-        .attr('id', "mypie")
+        .attr('id', pieId)
         .attr('class', 'temp')
         .attr("width", widthP + margin.left + margin.right+50)
         .attr("height", heightP + margin.top + margin.bottom+50)
@@ -412,6 +412,28 @@ function drawPie(data, ID) {
             return data[i].stat;
         });
 }
+
+function change(data, id){
+    var pie = d3.layout.pie()
+        .sort(null)
+        .startAngle(1.1 * Math.PI)
+        .endAngle(3.1 * Math.PI)
+        .value(function (d) {
+            return d.value;
+        });
+
+    var path = d3.selectAll(id);
+    path.data(pie(data));
+    path.transition().duration(750).attrTween("d", tweenPie); // redraw the arcs
+
+    function tweenPie(b) {
+        var i = d3.interpolate({startAngle: 1.1 * Math.PI, endAngle: 1.1 * Math.PI}, b);
+        return function (t) {
+            return arc(i(t));
+        };
+    }
+}
+
 
 
 $( function() {
@@ -552,9 +574,7 @@ function AddDamage(type, type2, weakId, StrongID) {
             }
         }
     }
-    console.log("Strong: ", strongArray);
     weakArray = getWeakType(type, type2);
-    console.log(weakArray);
 
     for (index = 0; index < weakArray.length; ++index) {
         addType(weakArray[index], weakId);

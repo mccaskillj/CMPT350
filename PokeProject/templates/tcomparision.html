@@ -3,7 +3,7 @@
 
 {% block content %}
     <link rel="stylesheet" type="text/css" href="{% static "css/tcomparision.css" %}" />
-    <div class="toparea">
+    <div class="toparea" style="background-color: #F0F0FF; border-radius: 5px; border: 4px solid black;">
 {#        <h4 class="toptext">#}
 {#            <span style="background:#990000;">¼x = Extremely Ineffective</span>#}
 {#            <span style="background:#c20000;">½x = Ineffective</span>#}
@@ -21,32 +21,34 @@
                     <button class="btn btn-default" type="button"  id="addbuttonright">Add to enemy team</button>
                 </span>
         </div>
-        <table class="table-bordered">
-            <thead>
-            <tr>
-                <th style="text-align: center;color: white; background-color: black">¼x</th>
-                <th style="text-align: center;color: white; background-color: black">½x</th>
-                <th style="text-align: center;color: white; background-color: black">0x</th>
-                <th style="text-align: center;color: white; background-color: black">1x</th>
-                <th style="text-align: center;color: white; background-color: black">2x</th>
-                <th style="text-align: center;color: white; background-color: black">4x</th>
-                <th style="text-align: center;color: white; background-color: black">8x</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td style="background:#7c0000;text-align: center; color: white">Extremely Ineffective</td>
-                <td style="background:#a40000;text-align: center; color: white">Ineffective</td>
-                <td style="background:#000000;text-align: center; color: white">No Damage</td>
-                <td style="background:#ffffff;text-align: center">Normal</td>
-                <td style="background:#4e9a06;text-align: center; color: white">Effective</td>
-                <td style="background:#73d216;text-align: center; color: white">Super-Effective</td>
-                <td style="background:#FFD700;text-align: center; color: white">Overkill</td>
-            </tr>
-            </tbody>
-        </table>
+        <div style="padding-right: 20px; padding-left: 20px; padding-bottom: 20px">
+            <table class="table-bordered">
+                <thead>
+                <tr>
+                    <th style="text-align: center;color: white; background-color: black">¼x</th>
+                    <th style="text-align: center;color: white; background-color: black">½x</th>
+                    <th style="text-align: center;color: white; background-color: black">0x</th>
+                    <th style="text-align: center;color: white; background-color: black">1x</th>
+                    <th style="text-align: center;color: white; background-color: black">2x</th>
+                    <th style="text-align: center;color: white; background-color: black">4x</th>
+                    <th style="text-align: center;color: white; background-color: black">8x</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="background:#7c0000;text-align: center; color: white">Extremely Ineffective</td>
+                    <td style="background:#a40000;text-align: center; color: white">Ineffective</td>
+                    <td style="background:#000000;text-align: center; color: white">No Damage</td>
+                    <td style="background:#ffffff;text-align: center">Normal</td>
+                    <td style="background:#4e9a06;text-align: center; color: white">Effective</td>
+                    <td style="background:#73d216;text-align: center; color: white">Super-Effective</td>
+                    <td style="background:#FFD700;text-align: center; color: white">Overkill</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="container-fluid" id="maindiv">
+    <div class="container-fluid" id="maindiv" style="background-color: #F0F0FF; border-radius: 5px; border: 4px solid black;">
         <svg id='mySvg' width='0' height='0' xmlns:xlink='http://www.w3.org/1999/xlink'>
             <defs id='mdef'>
                 <pattern id='imageleft0' x='0' y='0' height='1' width='1' class="svg-image" >
@@ -88,7 +90,7 @@
             </defs>
         </svg>
     </div>
-    <div class="barchart" id="barchart">
+    <div class="barchart" id="barchart" style="background-color: #F0F0FF; border-radius: 5px; border: 4px solid black;">
         <div class="leftbar" id="leftbar">
             <div id="chartarea"></div>
         </div>
