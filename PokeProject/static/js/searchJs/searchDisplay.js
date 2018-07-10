@@ -963,7 +963,7 @@ d3.select('#compareT').on('click',function () {
 
     //sessionStorage.setItem('myArray', teamsData);
     sessionStorage.setItem("myArray", JSON.stringify(teamsData));
-    document.location.href = "http://localhost:8000/PokeVis/teamCompare";
+    document.location.href = "http://localhost:8000/teamCompare";
 });
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
