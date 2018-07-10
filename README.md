@@ -3,7 +3,12 @@
 * Ken
 * Jordan
 * Liam
-* Seabiscuit
+* Graham
+
+### Deployment
+* For easy deployment run:
+
+```python manage.py deployment```
 
 ### Notes
 * All pokemon should be in the db.sqlite3, Once cloned it will stay on your side and be ignored by git
@@ -17,17 +22,17 @@
 * https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png
 
 ### URLS for everyone test stuff on
-* http://127.0.0.1:8000/PokeVis/ken
-* http://127.0.0.1:8000/PokeVis/jordan
-* http://127.0.0.1:8000/PokeVis/liam
-* http://127.0.0.1:8000/PokeVis/graham
+* http://127.0.0.1:8000/ken
+* http://127.0.0.1:8000/jordan
+* http://127.0.0.1:8000/liam
+* http://127.0.0.1:8000/graham
 
 ### URLS for Project
-* http://127.0.0.1:8000/PokeVis/overview
-* http://127.0.0.1:8000/PokeVis/pokeCompare
-* http://127.0.0.1:8000/PokeVis/teamCompare
-* http://127.0.0.1:8000/PokeVis/search
-* http://127.0.0.1:8000/PokeVis/battle
+* http://127.0.0.1:8000/overview
+* http://127.0.0.1:8000/pokeCompare
+* http://127.0.0.1:8000/teamCompare
+* http://127.0.0.1:8000/search
+* http://127.0.0.1:8000/battle
 
 ### Other Stat Fields we can calculate
 * Physical Sweeper = Attack + Speed
